@@ -1,2 +1,2 @@
 clear
-phpunit --bootstrap autoload.php tests intests
+phpunit --debug --bootstrap autoload.php tests intests
