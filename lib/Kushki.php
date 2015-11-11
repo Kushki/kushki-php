@@ -1,11 +1,11 @@
 <?php
 
-namespace kushki\app\lib;
+namespace kushki\lib;
 
-use kushki\app\lib\ChargeRequestHandler;
-use kushki\app\lib\RequestBuilder;
-use kushki\app\lib\CurlHandler;
-use kushki\app\lib\KushkiConstant;
+use kushki\lib\ChargeRequestHandler;
+use kushki\lib\RequestBuilder;
+use kushki\lib\CurlHandler;
+use kushki\lib\KushkiConstant;
 
 class Kushki
 {
