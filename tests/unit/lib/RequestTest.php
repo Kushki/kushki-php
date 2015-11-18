@@ -2,7 +2,7 @@
 namespace kushki\tests\unit\lib;
 
 use kushki\lib\KushkiConstant;
-use kushki\lib\KushkiCurrencys;
+use kushki\lib\KushkiCurrencies;
 use kushki\lib\KushkiLanguages;
 use kushki\lib\RequestBuilder;
 
@@ -14,7 +14,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     private $params;
     private $randomMerchantId;
     private $language = KushkiLanguages::ES;
-    private $currency = KushkiCurrencys::USD;
+    private $currency = KushkiCurrencies::USD;
     private $randomTransactionAmount;
     private $randomTransactionToken;
     private $randomCardName;
