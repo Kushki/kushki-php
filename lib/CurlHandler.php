@@ -2,6 +2,7 @@
 namespace kushki\lib;
 
 use kushki\lib\Response;
+use \Httpful\Request;
 
 class CurlHandler
 {
