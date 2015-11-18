@@ -4,7 +4,7 @@ namespace kushki\tests\unit\lib;
 use kushki\lib\CurlHandler;
 use kushki\lib\ChargeRequestHandler;
 use kushki\lib\KushkiConstant;
-use kushki\lib\KushkiCurrencys;
+use kushki\lib\KushkiCurrencies;
 use kushki\lib\KushkiLanguages;
 use kushki\lib\RequestBuilder;
 
@@ -35,7 +35,7 @@ class ChargeRequestHandlerIntTest extends \PHPUnit_Framework_TestCase
     private function createRequest($token)
     {
         $amount = rand(1, 1000);
-        $currency = KushkiCurrencys::USD;
+        $currency = KushkiCurrencies::USD;
         $merchantId = "MERCHANT-PRIVATE-ID";
         $request = RequestBuilder::createChargeRequest(KushkiConstant::CHARGE_URL, $token, $amount, $currency, $merchantId, KushkiLanguages::ES);
         return $request;
