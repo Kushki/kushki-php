@@ -2,9 +2,7 @@
 
 namespace kushki\lib;
 
-//use SplEnum;
-
-class KushkiLanguages //extends \SplEnum
+class KushkiLanguages
 {
     const
         __default = 'es',
@@ -12,7 +10,7 @@ class KushkiLanguages //extends \SplEnum
         EN = 'en';
 }
 
-class KushkiCurrencys //extends SplEnum
+class KushkiCurrencies
 {
     const
         __default = 'USD',
