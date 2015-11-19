@@ -2,7 +2,7 @@
 namespace kushki\tests\unit\lib;
 
 use kushki\lib\kushkiConstant;
-use kushki\lib\Response;
+use kushki\lib\KushkiResponse;
 
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +17,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->body = Utils::randomAlphaNumberString(20, 60);
         $this->contentType = KushkiConstant::CONTENT_TYPE;
         $this->responseCode = rand(200, 500);
-        $this->response = new Response($this->contentType, $this->body,
+        $this->response = new KushkiResponse($this->contentType, $this->body,
             $this->responseCode);
     }
 

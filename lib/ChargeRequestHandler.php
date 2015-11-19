@@ -5,14 +5,14 @@ namespace kushki\lib;
 class ChargeRequestHandler extends RequestHandler
 {
 
-    public function __construct($CurlHandler)
+    public function __construct($request)//$CurlHandler)
     {
-        parent::__construct($CurlHandler);
+        parent::__construct($request);//$CurlHandler);
     }
 
-    public function charge($request)
+    public function charge()
     {
-        $response = $this->CurlHandler->call($request);
+        $response = $this->call();
         return $response;
     }
 

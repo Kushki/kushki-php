@@ -1,7 +1,7 @@
 <?php
 namespace kushki\tests\unit\lib;
 
-use kushki\lib\Response;
+use kushki\lib\KushkiResponse;
 use kushki\lib\KushkiConstant;
 
 class ResponseBuilder
@@ -12,7 +12,7 @@ class ResponseBuilder
         $randomTransactionId = Utils::randomAlphaNumberString(15, 40);
         $body = array(KushkiConstant::PARAMETER_TRANSACTION_ID => $randomTransactionId);
         $jsonBody = json_encode($body);
-        $response = new Response(KushkiConstant::CONTENT_TYPE, $jsonBody, 200);
+        $response = new KushkiResponse(KushkiConstant::CONTENT_TYPE, $jsonBody, 200);
         return $response;
     }
 
@@ -25,7 +25,7 @@ class ResponseBuilder
                 $randomErrorMessage),
             KushkiConstant::PARAMETER_ERRORS_CODE => rand(1, 10));
         $jsonBody = json_encode($body);
-        $response = new Response(KushkiConstant::CONTENT_TYPE, $jsonBody, 402);
+        $response = new KushkiResponse(KushkiConstant::CONTENT_TYPE, $jsonBody, 402);
         return $response;
     }
 

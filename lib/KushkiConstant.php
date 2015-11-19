@@ -6,7 +6,6 @@ class KushkiConstant
 {
     const VERSION = '0.0.1';
     const CHARGE_URL = "https://kushki-api.herokuapp.com/v1/charge";
-    const GET_TOKEN_URL = "https://kushki-api.herokuapp.com/v1/charge";
     const PARAMETER_MERCHANT_ID = "merchant_identifier";
     const PARAMETER_LANGUAGE = "language_indicator";
     const PARAMETER_TRANSACTION_TOKEN = "transaction_token";
@@ -26,7 +25,7 @@ class KushkiConstant
     const PARAMETER_ERRORS_MESSAGE = "message";
     const PARAMETER_ERRORS_CODE = "code";
 
-    const CONTENT_TYPE = "Content-Type: application/json";
+    const CONTENT_TYPE = "application/json";
 
 }
 

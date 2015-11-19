@@ -1,7 +1,7 @@
 <?php
 namespace kushki\lib;
 
-use kushki\lib\Request;
+use kushki\lib\KushkiRequest;
 use kushki\lib\KushkiConstant;
 
 class RequestBuilder
@@ -18,7 +18,7 @@ class RequestBuilder
             KushkiConstant::PARAMETER_LANGUAGE => $language
         );
 
-        $request = new Request($url, $params, KushkiConstant::CONTENT_TYPE);
+        $request = new KushkiRequest($url, $params, KushkiConstant::CONTENT_TYPE);
         return $request;
     }
 

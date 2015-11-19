@@ -4,7 +4,7 @@ namespace kushki\lib;
 
 use kushki\lib\KushkiConstant;
 
-class Request
+class KushkiRequest
 {
 
     protected $url = "";
