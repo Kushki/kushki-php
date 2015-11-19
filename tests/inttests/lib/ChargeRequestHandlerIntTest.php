@@ -13,7 +13,6 @@ class ChargeRequestHandlerIntTest extends \PHPUnit_Framework_TestCase
 
     public function testMustGet200ResponseCodeWhenChargeBeOk()
     {
-        //$CurlHandler = new CurlHandler();
         $successToken = "d0099d11-f443-4e54-b7aa-6ede163c94c9";
         $request = $this->createRequest($successToken);
         $requestHandler = new ChargeRequestHandler($request);
@@ -23,7 +22,6 @@ class ChargeRequestHandlerIntTest extends \PHPUnit_Framework_TestCase
 
     public function testMustGet402ResponseCodeWhenChargeBeDeclined()
     {
-        //$CurlHandler = new CurlHandler();
         $declinedToken = "123456789-declined";
         $request = $this->createRequest($declinedToken);
         $requestHandler = new ChargeRequestHandler($request);
