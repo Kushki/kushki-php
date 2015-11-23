@@ -3,9 +3,9 @@
 namespace kushki\lib;
 
 use kushki\lib\ChargeRequestHandler;
+use kushki\lib\KushkiConstant;
 use kushki\lib\RequestBuilder;
 use kushki\lib\HttpHandler;
-use kushki\lib\KushkiConstant;
 
 class Kushki
 {
@@ -33,10 +33,14 @@ class Kushki
      */
     public function charge($token, $amount)
     {
-        $request = RequestBuilder::createChargeRequest(KushkiConstant::CHARGE_URL,
-            $token, $amount, $this->currency,
-            $this->merchantId, $this->language);
-
+        $builder = new RequestBuilder();
+        $builder->setCurrency($this->currency);
+        $builder->setLanguage($this->language);
+        $builder->setMerchantId($this->merchantId);
+        $builder->setAmount($amount);
+        $builder->setToken($token);
+        $builder->setUrl(KushkiConstant::CHARGE_URL);
+        $request = $builder->createChargeRequest();
 
         $this->chargeHandler = new ChargeRequestHandler($request);
 

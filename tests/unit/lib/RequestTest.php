@@ -24,11 +24,15 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->randomTransactionToken = Utils::randomAlphaNumberString();
         $this->randomTransactionAmount = rand(1, 9999);
 
-        $this->request = RequestBuilder::createChargeRequest($this->randomUrl,
-            $this->randomTransactionToken,
-            $this->randomTransactionAmount, $this->currency,
-            $this->randomMerchantId,
-            $this->language);
+        $builder = new RequestBuilder();
+        $builder->setUrl($this->randomUrl);
+        $builder->setToken($this->randomTransactionToken);
+        $builder->setAmount($this->randomTransactionAmount);
+        $builder->setCurrency($this->currency);
+        $builder->setMerchantId($this->randomMerchantId);
+        $builder->setLanguage( $this->language);
+
+        $this->request = $builder->createChargeRequest();
     }
 
     public function testHasContentTypeOnChargeRequest()

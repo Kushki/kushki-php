@@ -35,7 +35,15 @@ class ChargeRequestHandlerIntTest extends \PHPUnit_Framework_TestCase
         $amount = rand(1, 1000);
         $currency = KushkiCurrencies::USD;
         $merchantId = "MERCHANT-PRIVATE-ID";
-        $request = RequestBuilder::createChargeRequest(KushkiConstant::CHARGE_URL, $token, $amount, $currency, $merchantId, KushkiLanguages::ES);
+        $builder = new RequestBuilder();
+        $builder->setUrl(KushkiConstant::CHARGE_URL);
+        $builder->setToken($token);
+        $builder->setAmount($amount);
+        $builder->setCurrency($currency);
+        $builder->setMerchantId($merchantId);
+        $builder->setLanguage(KushkiLanguages::ES);
+
+        $request = $builder->createChargeRequest();
         return $request;
     }
 
