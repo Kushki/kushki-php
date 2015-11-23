@@ -5,7 +5,8 @@
 ```sh
 git clone git@github.com:Kushki/kushki-php.git
 ```
-  - Download dependencies with composer
+  - Download dependencies with composer (we have composer phar inside repo folder, or you can use 
+  https://getcomposer.org/doc/00-intro.md)
 ```sh
 php composer.phar install
 ```
