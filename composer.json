@@ -1,5 +1,5 @@
 {
-  "name": "Kushki/kushki-php",
+  "name": "kushki/kushki-php",
   "require-dev": {
     "phpunit/phpunit": "5.0.*"
   },
