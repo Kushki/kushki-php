@@ -19,7 +19,7 @@ include_once("kushki/autoload.php");
 $kushki = new Kushki();
 ```
 
-###Para corrar las pruebas con phpunit
+###Para correr las pruebas con phpunit
   - Instalar phpunit como se indica aqui: https://phpunit.de/manual/current/en/installation.html
 ```sh
 wget https://phar.phpunit.de/phpunit.phar
