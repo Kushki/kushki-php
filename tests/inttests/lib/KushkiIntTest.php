@@ -19,7 +19,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase
                                 $request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE));
 
         $response = $kushki->charge($successToken, $request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT));
-        $this->assertEquals(200, $response->getResponseCode());
+        $this->assertEquals(true, $response->isSuccessful());
+        $this->assertEquals(true, is_string($response->getTicketNumber()));
     }
 
     public function testMustGet402ResponseCodeWhenChargeBeDeclined()
@@ -31,7 +32,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase
             $request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE));
 
         $response = $kushki->charge($declinedToken, $request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT));
-        $this->assertEquals(402, $response->getResponseCode());
+        $this->assertEquals(false, $response->isSuccessful());
+        $this->assertEquals(true, is_string($response->getResponseText()));
     }
 
     private function createRequest($token)

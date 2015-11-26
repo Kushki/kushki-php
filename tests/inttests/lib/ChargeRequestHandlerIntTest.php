@@ -17,7 +17,7 @@ class ChargeRequestHandlerIntTest extends \PHPUnit_Framework_TestCase
         $request = $this->createRequest($successToken);
         $requestHandler = new ChargeRequestHandler($request);
         $response = $requestHandler->charge();
-        $this->assertEquals(200, $response->getResponseCode());
+        $this->assertEquals(true, $response->isSuccessful());
     }
 
     public function testMustGet402ResponseCodeWhenChargeBeDeclined()
@@ -27,7 +27,7 @@ class ChargeRequestHandlerIntTest extends \PHPUnit_Framework_TestCase
         $requestHandler = new ChargeRequestHandler($request);
 
         $response = $requestHandler->charge();
-        $this->assertEquals(402, $response->getResponseCode());
+        $this->assertEquals(false, $response->isSuccessful());
     }
 
     private function createRequest($token)

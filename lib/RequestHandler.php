@@ -13,10 +13,11 @@ class RequestHandler
     }
 
     protected function call(){
+        $requestBody = $this->request->getBody();
         $responseRaw = \Httpful\Request::post($this->request->getUrl())
             ->contentType($this->request->getContentType())
             ->withStrictSSL()
-            ->body(json_encode($this->request->getParams()))
+            ->body($requestBody)
             ->send();
 
         $response = new KushkiResponse($responseRaw->content_type, $responseRaw->body, $responseRaw->code);
