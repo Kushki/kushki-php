@@ -4,7 +4,7 @@ namespace kushki\lib;
 
 class KushkiConstant
 {
-    const VERSION = '0.0.1';
+    const VERSION = '1.0';
     const CHARGE_URL = "https://kushki-api.herokuapp.com/v1/charge";
     const PARAMETER_MERCHANT_ID = "merchant_identifier";
     const PARAMETER_LANGUAGE = "language_indicator";
@@ -26,6 +26,7 @@ class KushkiConstant
     const PARAMETER_ERRORS_CODE = "code";
 
     const CONTENT_TYPE = "application/json";
+    const KUSHKI_PUBLIC_KEY = "publiKey";
 
 }
 
