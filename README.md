@@ -16,7 +16,19 @@ include_once("kushki/autoload.php");
 ```
   - Cree un objeto Kushki en su codigo y use los metodos deseados
 ```sh
-$kushki = new Kushki();
+$merchantId = < id del comercio >;
+$idioma = KushkiLanguage::ES;
+$moneda = KushkiCurrencies::USD;
+$kushki = new Kushki( $merchantId, $idioma, $moneda);
+$token = < token enviado desde el navegador >;
+$monto = < monto a pagar >;
+$transaccion = $kushki->charge($token, $monto);
+
+if ($transaction->isSuccessful()){
+  echo  “Número de ticket: ” .  $transaction->getTicketNumber();
+} else {
+  echo “Mensaje de error: ” . $transaction->getResponseText();
+}
 ```
 
 ###Para correr las pruebas con phpunit
@@ -55,7 +67,19 @@ include_once("kushki/autoload.php");
 ```
   - Create new Kushki object in your code and use needed methods
 ```sh
-$kushki = new Kushki();
+$merchantId = < id of the merchant >;
+$language = KushkiLanguage::ES;
+$currency = KushkiCurrencies::USD;
+$kushki = new Kushki( $merchantId, $language, $currency);
+$token = < token received >;
+$amount = < amount >;
+$transaccion = $kushki->charge($token, $amount);
+
+if ($transaction->isSuccessful()){
+  echo  “Ticket number: ” .  $transaction->getTicketNumber();
+} else {
+  echo “Error message: ” . $transaction->getResponseText();
+}
 ```
 
 ###For run test with phpunit
