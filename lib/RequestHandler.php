@@ -5,7 +5,6 @@ use Httpful\Httpful;
 
 class RequestHandler
 {
-
     protected $request;
 
     public function __construct($request)

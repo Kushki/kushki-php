@@ -31,6 +31,17 @@ class KushkiResponse
         return $this->responseCode;
     }
 
+    public function isSuccessful(){
+        return $this->responseCode === 200;
+    }
+
+    public function getTicketNumber(){
+        return $this->body->ticket_number;
+    }
+
+    public function getResponseText(){
+        return $this->body->response_text;
+    }
 }
 
 ?>
