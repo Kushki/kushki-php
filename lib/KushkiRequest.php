@@ -42,6 +42,26 @@ class KushkiRequest
         return $this->params;
     }
 
+    public function getBody(){
+        return $this->getEncryptBody();
+    }
+
+    private function getPlainBody(){
+        return json_encode($this->getParams());
+    }
+
+    private function getEncryptBody(){
+        $contentToEncrypt = $this->getPlainBody();
+        $contentEncrypted = "";
+        $encryptResult = openssl_public_encrypt($contentToEncrypt, $contentEncrypted, KushkiConstant::KUSHKI_PUBLIC_KEY);
+        if ($encryptResult === true){
+            $responseEncripted = array();
+            $responseEncripted['request'] = $contentEncrypted;
+            return json_encode($responseEncripted);
+        }
+        throw new KushkiException("Error encrypting with the public key");
+    }
+
 }
 
 ?>
