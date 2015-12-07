@@ -11,9 +11,5 @@ require_once(dirname(__FILE__) . '/lib/RequestBuilder.php');
 require_once(dirname(__FILE__) . '/lib/ChargeRequestHandler.php');
 require_once(dirname(__FILE__) . '/vendor/nategood/httpful/bootstrap.php');
 
-#only for testing
-require_once(dirname(__FILE__) . '/tests/unit/lib/Utils.php');
-require_once(dirname(__FILE__) . '/tests/unit/lib/ResponseBuilder.php');
-
 date_default_timezone_set('America/Los_Angeles');
 ?>

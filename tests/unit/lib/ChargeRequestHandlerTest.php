@@ -1,10 +1,10 @@
 <?php
 namespace kushki\tests\unit\lib;
 
-use kushki\lib\ChargeRequestHandler;
-use kushki\lib\kushkiEnums;
-use kushki\lib\KushkiRequest;
 use PHPUnit_Framework_TestCase;
+
+require_once('Utils.php');
+require_once('ResponseBuilder.php');
 
 class ChargeRequestHandlerTest extends PHPUnit_Framework_TestCase
 {

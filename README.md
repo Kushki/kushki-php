@@ -1,23 +1,31 @@
 # kushki-php
 
-###Para usar la librería se necesita
+###Para usar la librería se necesita:
   - Clonar el repositorio
 ```sh
 git clone git@github.com:Kushki/kushki-php.git
 ```
-  - Descargar dependencias de la libreria con Composer (el ejecutable de composer se encuentra en la raiz del repositorio, 
+  - Entrar a la carpeta donde se clonó la librería
+```sh
+cd kushki-php
+```
+
+  - Descargar dependencias de la libreria con Composer (el ejecutable de composer se encuentra en la raíz del repositorio,
   o si desea puede descargarlo de https://getcomposer.org/doc/00-intro.md)
 ```sh
 php composer.phar install
 ```
-  - Incluir autoload.php en su proyecto, el fichero se encuentra en la carpeta raiz de la librería
+  - Incluir las clases de Kushki y autoload.php en su proyecto, el fichero se encuentra en la carpeta raiz de la librería
 ```sh
-include_once("kushki/autoload.php");
+use kushki\lib\Kushki;
+use kushki\lib\KushkiCurrencies;
+use kushki\lib\KushkiLanguages;
+include_once("autoload.php");
 ```
   - Cree un objeto Kushki en su codigo y use los metodos deseados
 ```sh
 $merchantId = < id del comercio >;
-$idioma = KushkiLanguage::ES;
+$idioma = KushkiLanguages::ES;
 $moneda = KushkiCurrencies::USD;
 $kushki = new Kushki( $merchantId, $idioma, $moneda);
 $token = < token enviado desde el navegador >;
@@ -25,9 +33,9 @@ $monto = < monto a pagar >;
 $transaccion = $kushki->charge($token, $monto);
 
 if ($transaction->isSuccessful()){
-  echo  “Número de ticket: ” .  $transaction->getTicketNumber();
+  echo  "Número de ticket: " .  $transaction->getTicketNumber();
 } else {
-  echo “Mensaje de error: ” . $transaction->getResponseText();
+  echo "Mensaje de error: " . $transaction->getResponseText();
 }
 ```
 
@@ -49,26 +57,34 @@ phpunit --version
   - Crear una carpeta para almacenar los reportes, por ejemplo "reports"
   - Agrega o quita el parametro "--coverage-html reports" a la linea de ejecución de phpunit, según se necesite 
 
-------------------------------------ENGLISH-----------------------------------------------
+##------------------------------------ENGLISH-----------------------------------------------
 
-###For use library need
+###To use this library you need to:
   - Clone repository
 ```sh
 git clone git@github.com:Kushki/kushki-php.git
 ```
-  - Download dependencies with Composer (we have composer phar inside repo folder, or you can use 
+  - Navigate to the folder where the library was cloned
+```sh
+cd kushki-php
+```
+
+  - Download dependencies with Composer (we have composer.phar inside the repo folder, or you can use
   https://getcomposer.org/doc/00-intro.md)
 ```sh
 php composer.phar install
 ```
-  - Include autoload.php in your project, file is inside library root folder
+  - Include Kushki classes and autoload.php in your project, the file is inside library root folder
 ```sh
+use kushki\lib\Kushki;
+use kushki\lib\KushkiCurrencies;
+use kushki\lib\KushkiLanguages;
 include_once("kushki/autoload.php");
 ```
   - Create new Kushki object in your code and use needed methods
 ```sh
 $merchantId = < id of the merchant >;
-$language = KushkiLanguage::ES;
+$language = KushkiLanguages::ES;
 $currency = KushkiCurrencies::USD;
 $kushki = new Kushki( $merchantId, $language, $currency);
 $token = < token received >;
@@ -76,13 +92,13 @@ $amount = < amount >;
 $transaccion = $kushki->charge($token, $amount);
 
 if ($transaction->isSuccessful()){
-  echo  “Ticket number: ” .  $transaction->getTicketNumber();
+  echo  "Ticket number: " .  $transaction->getTicketNumber();
 } else {
-  echo “Error message: ” . $transaction->getResponseText();
+  echo "Error message: " . $transaction->getResponseText();
 }
 ```
 
-###For run test with phpunit
+###To run tests with phpunit
   - Install phpunit like here: https://phpunit.de/manual/current/en/installation.html
 ```sh
 wget https://phar.phpunit.de/phpunit.phar
@@ -96,7 +112,7 @@ phpunit --version
 ```
 
 
-###For generate test coverage report need to:
+###To generate test coverage report you need to:
   - Install xdebug with wizard http://xdebug.org/wizard.php
-  - Create a folder for save reports, example "reports"
+  - Create a folder to save reports, example "reports"
   - Add or Remove parameter "--coverage-html reports" to phpunit execution line 
