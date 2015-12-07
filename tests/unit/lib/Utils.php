@@ -1,7 +1,9 @@
 <?php
 namespace kushki\tests\unit\lib;
 
-class Utils extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+class Utils extends PHPUnit_Framework_TestCase
 {
 
     const ALPHA_NUMBER_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

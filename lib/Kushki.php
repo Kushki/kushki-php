@@ -2,14 +2,10 @@
 
 namespace kushki\lib;
 
-use kushki\lib\ChargeRequestHandler;
-use kushki\lib\KushkiConstant;
-use kushki\lib\RequestBuilder;
 use kushki\lib\HttpHandler;
 
 class Kushki
 {
-
     private $merchantId;
     private $language;
     private $currency;
@@ -18,7 +14,7 @@ class Kushki
     /**
      * @param string $merchantId
      * @param string $language
-     * @param stringt $currency
+     * @param string $currency
      */
     public function __construct($merchantId, $language = KushkiLanguages::ES, $currency = KushkiCurrencies::USD)
     {
@@ -30,6 +26,7 @@ class Kushki
     /**
      * @param string $token
      * @param float $amount
+     * @return KushkiResponse
      */
     public function charge($token, $amount)
     {

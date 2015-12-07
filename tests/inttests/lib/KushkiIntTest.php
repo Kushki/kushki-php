@@ -12,13 +12,14 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase
 
     public function testMustGet200ResponseCodeWhenChargeBeOk()
     {
-        $successToken = "d0099d11-f443-4e54-b7aa-6ede163c94c9";
+        $successToken = "s25s784a87ad497af797a48sdg7rhy4d";
         $request = $this->createRequest($successToken);
         $kushki = new Kushki($request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
                                 $request->getParameter(KushkiConstant::PARAMETER_LANGUAGE),
                                 $request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE));
 
         $response = $kushki->charge($successToken, $request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT));
+
         $this->assertEquals(true, $response->isSuccessful());
         $this->assertEquals(true, is_string($response->getTicketNumber()));
     }
@@ -38,9 +39,11 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase
 
     private function createRequest($token)
     {
-        $amount = rand(1, 1000);
+        $amount = rand(100, 1000);
+        $cents = rand(1, 99) / 100;
+        $amount = $amount + $cents;
         $currency = KushkiCurrencies::USD;
-        $merchantId = "MERCHANT-PRIVATE-ID";
+        $merchantId = "10000000123454545454546546";
         $builder = new RequestBuilder();
         $builder->setUrl(KushkiConstant::CHARGE_URL);
         $builder->setToken($token);

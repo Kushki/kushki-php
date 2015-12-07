@@ -3,8 +3,9 @@ namespace kushki\tests\unit\lib;
 
 use kushki\lib\kushkiConstant;
 use kushki\lib\KushkiResponse;
+use PHPUnit_Framework_TestCase;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends PHPUnit_Framework_TestCase
 {
 
     private $body;

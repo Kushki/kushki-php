@@ -5,8 +5,9 @@ use kushki\lib\KushkiConstant;
 use kushki\lib\KushkiCurrencies;
 use kushki\lib\KushkiLanguages;
 use kushki\lib\RequestBuilder;
+use PHPUnit_Framework_TestCase;
 
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends PHPUnit_Framework_TestCase
 {
 
     private $request;
