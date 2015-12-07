@@ -33,7 +33,9 @@ $monto = < monto a pagar >;
 $transaccion = $kushki->charge($token, $monto);
 
 if ($transaction->isSuccessful()){
-  echo  "Número de ticket: " .  $transaction->getTicketNumber();
+   echo "Número de ticket: " . $transaction->getTicketNumber();
+   echo "<br/>Monto aprobado: " . $transaction->getBody()->approved_amount;
+   echo "<br/>Respuesta: " . $transaction->getResponseText();
 } else {
   echo "Mensaje de error: " . $transaction->getResponseText();
 }
@@ -92,7 +94,9 @@ $amount = < amount >;
 $transaccion = $kushki->charge($token, $amount);
 
 if ($transaction->isSuccessful()){
-  echo  "Ticket number: " .  $transaction->getTicketNumber();
+   echo "Ticket number: " . $transaction->getTicketNumber();
+   echo "<br/>Approved amount: " . $transaction->getBody()->approved_amount;
+   echo "<br/>Response text: " . $transaction->getResponseText();
 } else {
   echo "Error message: " . $transaction->getResponseText();
 }
