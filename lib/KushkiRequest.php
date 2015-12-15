@@ -47,7 +47,6 @@ class KushkiRequest {
 
     private function getEncryptBody() {
         $contentToEncrypt = $this->getPlainBody();
-
         $contentEncrypted = $this->encryptMessageChunk($contentToEncrypt);
 
         $responseEncripted = array();
@@ -57,10 +56,10 @@ class KushkiRequest {
 
     private function encryptMessageChunk($requestMessage) {
         $contentEncripted = "";
-        $chunks = str_split($requestMessage, 214);
+        $chunks = str_split($requestMessage, 117);
         foreach ($chunks as $chunk) {
             $cipherData = "";
-            $encryptResult = openssl_public_encrypt($chunk, $cipherData, KushkiConstant::KUSHKI_PUBLIC_KEY, OPENSSL_PKCS1_OAEP_PADDING);
+            $encryptResult = openssl_public_encrypt($chunk, $cipherData, KushkiConstant::KUSHKI_PUBLIC_KEY, OPENSSL_PKCS1_PADDING);
             if ($encryptResult === true) {
                 $chnkString = base64_encode($cipherData);
                 $chnkString = str_replace("\n", "", $chnkString);
