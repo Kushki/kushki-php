@@ -42,20 +42,20 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $this->createResponse();
         $this->assertEquals($this->body, $this->response->getBody(),
-            "Need have body");
+            "Requires body");
     }
 
     public function testHasResponseCode()
     {
         $this->createResponse();
         $this->assertEquals($this->responseCode, $this->response->getResponseCode(),
-            "Need have response code");
+            "Requires response code");
     }
 
     public function testHasContentType()
     {
         $this->createResponse();
         $this->assertEquals($this->contentType, $this->response->getContentType(),
-            "Need have content type");
+            "Requires content type");
     }
 }

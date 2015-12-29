@@ -8,6 +8,7 @@ require_once(dirname(__FILE__) . '/lib/KushkiRequest.php');
 require_once(dirname(__FILE__) . '/lib/KushkiResponse.php');    
 require_once(dirname(__FILE__) . '/lib/RequestHandler.php');
 require_once(dirname(__FILE__) . '/lib/RequestBuilder.php');
+require_once(dirname(__FILE__) . '/lib/ChargeRequestBuilder.php');
 require_once(dirname(__FILE__) . '/lib/ChargeRequestHandler.php');
 require_once(dirname(__FILE__) . '/vendor/nategood/httpful/bootstrap.php');
 

@@ -1,6 +1,7 @@
 <?php
 namespace kushki\tests\inttests\lib;
 
+use kushki\lib\ChargeRequestBuilder;
 use kushki\lib\Kushki;
 use kushki\lib\KushkiConstant;
 use kushki\lib\KushkiCurrencies;
@@ -42,16 +43,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase
         $amount = rand(100, 1000);
         $cents = rand(1, 99) / 100;
         $amount = $amount + $cents;
-        $currency = KushkiCurrencies::USD;
         $merchantId = "10000000123454545454546546";
-        $builder = new RequestBuilder();
-        $builder->setUrl(KushkiConstant::CHARGE_URL);
-        $builder->setToken($token);
-        $builder->setAmount($amount);
-        $builder->setCurrency($currency);
-        $builder->setMerchantId($merchantId);
-        $builder->setLanguage(KushkiLanguages::ES);
-
+        $builder = new ChargeRequestBuilder($merchantId, $token, $amount);
         $request = $builder->createChargeRequest();
 
         return $request;

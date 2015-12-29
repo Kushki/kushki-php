@@ -25,40 +25,31 @@ class Kushki {
      * @param string $token
      * @param float $amount
      * @return KushkiResponse
+     * @throws KushkiException
      */
     public function charge($token, $amount) {
-        $amount = (string)$amount;
-        $amountLength = strlen($amount);
+        $validAmount = $this->validateAmount($amount);
 
-        if ($amountLength > 12 || $amountLength == 0) {
-            throw new KushkiException("Amount must be 12 characters or less");
-        } else {
-            if ($amountLength < 4) {
-                $pos = strrpos($amount, '.');
-                if ($pos === false) {
-                    $amount = $amount . ".00";
-                } else {
-                    if ($pos == 0) {
-                        $amount = "0" . $amount . "0";
-                    } else {
-                        $amount = $amount . "0";
-                    }
-                }
-            }
-        }
-
-        $builder = new RequestBuilder();
-        $builder->setCurrency($this->currency);
-        $builder->setLanguage($this->language);
-        $builder->setMerchantId($this->merchantId);
-        $builder->setAmount($amount);
-        $builder->setToken($token);
-        $builder->setUrl(KushkiConstant::CHARGE_URL);
-        $request = $builder->createChargeRequest();
+        $chargeBuilder = new ChargeRequestBuilder($this->merchantId, $token, $validAmount);
+        $request = $chargeBuilder->createChargeRequest();
 
         $this->chargeHandler = new ChargeRequestHandler($request);
 
         return $this->chargeHandler->charge();
+    }
+
+    private function validateAmount($amount) {
+        if ($amount == null) {
+            throw new KushkiException("El monto no puede ser nulo");
+        }
+        if ($amount <= 0) {
+            throw new KushkiException("El monto debe ser superior a 0");
+        }
+        $validAmount = number_format($amount, 2, ".", "");
+        if (strlen($validAmount) > 12) {
+            throw new KushkiException("El monto debe tener menos de 12 dígitos");
+        }
+        return $validAmount;
     }
 
     public function getMerchantId() {
