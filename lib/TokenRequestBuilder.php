@@ -13,8 +13,8 @@ class TokenRequestBuilder extends RequestBuilder {
     private $cardCvv;
 
     function __construct($merchantId, $cardParams) {
+        parent::__construct($merchantId);
         $this->url = KushkiConstant::TOKENS_URL;
-        $this->merchantId = $merchantId;
         $this->cardName = $cardParams[KushkiConstant::PARAMETER_CARD_NAME];
         $this->cardNumber = $cardParams[KushkiConstant::PARAMETER_CARD_NUMBER];
         $this->cardExpiryMonth = $cardParams[KushkiConstant::PARAMETER_CARD_EXP_MONTH];
@@ -37,29 +37,5 @@ class TokenRequestBuilder extends RequestBuilder {
         );
         $request = new KushkiRequest($this->url, $params, KushkiConstant::CONTENT_TYPE);
         return $request;
-    }
-
-    public function setUrl($url) {
-        $this->url = $url;
-    }
-
-    public function setToken($token) {
-        $this->token = $token;
-    }
-
-    public function setAmount($amount) {
-        $this->amount = $amount;
-    }
-
-    public function setCurrency($currency) {
-        $this->currency = $currency;
-    }
-
-    public function setMerchantId($merchantId) {
-        $this->merchantId = $merchantId;
-    }
-
-    public function setLanguage($language) {
-        $this->language = $language;
     }
 }

@@ -56,13 +56,50 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
     public function testShouldReturnNonSuccessfulChargeTransactionInvalidToken_TC_008() {
         $amount = CommonUtils::getRandomAmount();
-        $token =  "k7jwynu59sd28wu81i2ygsyvllyfimju";
+        $token = "k7jwynu59sd28wu81i2ygsyvllyfimju";
 
         $chargeTransaction = $this->kushki->charge($token, $amount);
 
         $this->assertEquals(false, $chargeTransaction->isSuccessful());
         $this->assertEquals("El token de la transacción no es válido", $chargeTransaction->getResponseText());
         $this->assertEquals("574", $chargeTransaction->getResponseCode());
+    }
+
+
+    public function testShouldReturnSuccessfulVoidTransaction_TC_014() {
+        $tokenTransaction = $this->getValidTokenTransaction();
+        $amount = CommonUtils::getRandomAmount();
+        $token = $tokenTransaction->getToken();
+        $chargeTransaction = $this->kushki->charge($token, $amount);
+        $ticket = $chargeTransaction->getTicketNumber();
+        $token4voidTransaction = $this->getValidTokenTransaction();
+        $token4void = $token4voidTransaction->getToken();
+
+        $voidTransaction = $this->kushki->voidCharge($token4void, $ticket, $amount);
+
+        $this->assertEquals(true, $tokenTransaction->isSuccessful());
+        $this->assertEquals(true, $chargeTransaction->isSuccessful());
+        $this->assertEquals(true, $token4voidTransaction->isSuccessful());
+        $this->assertEquals(true, $voidTransaction->isSuccessful());
+        $this->assertEquals("Transacción aprobada", $voidTransaction->getResponseText());
+        $this->assertEquals("000", $voidTransaction->getResponseCode());
+    }
+
+    public function testShouldReturnFailedVoidTransactionInvalidToken_TC_016() {
+        $tokenTransaction = $this->getValidTokenTransaction();
+        $amount = CommonUtils::getRandomAmount();
+        $token = $tokenTransaction->getToken();
+        $chargeTransaction = $this->kushki->charge($token, $amount);
+        $ticket = $chargeTransaction->getTicketNumber();
+        $token4void = "k7jwynu59sd28wu81i2ygsyvllyfimju";
+
+        $voidTransaction = $this->kushki->voidCharge($token4void, $ticket, $amount);
+
+        $this->assertEquals(true, $tokenTransaction->isSuccessful());
+        $this->assertEquals(true, $chargeTransaction->isSuccessful());
+        $this->assertEquals(false, $voidTransaction->isSuccessful());
+        $this->assertEquals("El token de la transacción no es válido", $voidTransaction->getResponseText());
+        $this->assertEquals("574", $voidTransaction->getResponseCode());
     }
 
     private function getValidTokenTransaction() {

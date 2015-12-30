@@ -13,6 +13,7 @@ class KushkiConstant {
     const PARAMETER_MERCHANT_ID = "merchant_identifier";
     const PARAMETER_LANGUAGE = "language_indicator";
     const PARAMETER_TRANSACTION_TOKEN = "transaction_token";
+    const PARAMETER_TRANSACTION_TICKET = "ticket_number";
     const PARAMETER_TRANSACTION_ID = "transaction_id";
     const PARAMETER_CURRENCY_CODE = "currency_code";
     const PARAMETER_TRANSACTION_AMOUNT = "transaction_amount";

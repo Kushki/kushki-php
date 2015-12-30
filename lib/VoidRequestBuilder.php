@@ -4,21 +4,24 @@ namespace kushki\lib;
 use kushki\lib\KushkiRequest;
 use kushki\lib\KushkiConstant;
 
-class ChargeRequestBuilder extends RequestBuilder {
+class VoidRequestBuilder extends RequestBuilder {
 
+    private $ticket;
     private $token;
     private $amount;
 
-    function __construct($merchantId, $token, $amount) {
+    function __construct($merchantId, $token, $ticket, $amount) {
         parent::__construct($merchantId);
-        $this->url = KushkiConstant::CHARGE_URL;
+        $this->url = KushkiConstant::VOID_URL;
         $this->token = $token;
         $this->amount = $amount;
+        $this->ticket = $ticket;
     }
 
     public function createRequest() {
         $params = array(
             KushkiConstant::PARAMETER_TRANSACTION_TOKEN => $this->token,
+            KushkiConstant::PARAMETER_TRANSACTION_TICKET => $this->ticket,
             KushkiConstant::PARAMETER_TRANSACTION_AMOUNT => $this->amount,
             KushkiConstant::PARAMETER_CURRENCY_CODE => $this->currency,
             KushkiConstant::PARAMETER_MERCHANT_ID => $this->merchantId,

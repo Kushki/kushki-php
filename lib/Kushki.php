@@ -31,7 +31,7 @@ class Kushki {
 
         $this->requestHandler = new TokenRequestHandler($request);
 
-        return$this->requestHandler->requestToken();
+        return $this->requestHandler->requestToken();
     }
 
     /**
@@ -49,6 +49,17 @@ class Kushki {
         $this->requestHandler = new ChargeRequestHandler($request);
 
         return $this->requestHandler->charge();
+    }
+
+    public function voidCharge($token, $ticket, $amount) {
+        $validAmount = $this->validateAmount($amount);
+
+        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $token, $ticket, $validAmount);
+        $request = $voidRequestBuilder->createRequest();
+
+        $this->requestHandler = new VoidRequestHandler($request);
+
+        return $this->requestHandler->voidCharge();
     }
 
     private function validateAmount($amount) {
