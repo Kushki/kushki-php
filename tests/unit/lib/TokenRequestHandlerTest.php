@@ -5,31 +5,31 @@ use PHPUnit_Framework_TestCase;
 
 require_once('ResponseBuilder.php');
 
-class ChargeRequestHandlerTest extends PHPUnit_Framework_TestCase {
+class TokenRequestHandlerTest extends PHPUnit_Framework_TestCase {
 
     public function testMustGet200ResponseCode() {
         $responseExpected = ResponseBuilder::createChargeOKResponse();
-        $chargeHandlerMock = $this->prepareMock($responseExpected);
+        $tokenHandlerMock = $this->prepareMock($responseExpected);
 
-        $response = $chargeHandlerMock->charge();
+        $response = $tokenHandlerMock->requestToken();
         $this->assertEquals(200, $response->getCode());
     }
 
     public function testMustGet402ResponseCode() {
         $responseExpected = ResponseBuilder::createChargeFailedResponse();
-        $ChargeHandlerMock = $this->prepareMock($responseExpected);
+        $tokenHandlerMock = $this->prepareMock($responseExpected);
 
-        $response = $ChargeHandlerMock->charge();
+        $response = $tokenHandlerMock->requestToken();
         $this->assertEquals(402, $response->getCode());
     }
 
     private function prepareMock($responseExpected) {
-        $mock = $this->getMockBuilder('ChargeRequestHandler')
+        $mock = $this->getMockBuilder('TokenRequestHandler')
                      ->enableProxyingToOriginalMethods()
-                     ->setMethods(array('call', 'charge'))
+                     ->setMethods(array('call', 'requestToken'))
                      ->getMock();
 
-        $mock->method('charge')->willReturn($responseExpected);
+        $mock->method('requestToken')->willReturn($responseExpected);
 
         return $mock;
     }

@@ -8,7 +8,7 @@ class Kushki {
     private $merchantId;
     private $language;
     private $currency;
-    private $chargeHandler;
+    private $requestHandler;
 
     /**
      * @param string $merchantId
@@ -22,6 +22,19 @@ class Kushki {
     }
 
     /**
+     * @param $cardParams
+     * @return KushkiResponse
+     */
+    public function requestToken($cardParams) {
+        $tokenRequestBuilder = new TokenRequestBuilder($this->merchantId, $cardParams);
+        $request = $tokenRequestBuilder->createRequest();
+
+        $this->requestHandler = new TokenRequestHandler($request);
+
+        return$this->requestHandler->requestToken();
+    }
+
+    /**
      * @param string $token
      * @param float $amount
      * @return KushkiResponse
@@ -30,12 +43,12 @@ class Kushki {
     public function charge($token, $amount) {
         $validAmount = $this->validateAmount($amount);
 
-        $chargeBuilder = new ChargeRequestBuilder($this->merchantId, $token, $validAmount);
-        $request = $chargeBuilder->createChargeRequest();
+        $chargeRequestBuilder = new ChargeRequestBuilder($this->merchantId, $token, $validAmount);
+        $request = $chargeRequestBuilder->createRequest();
 
-        $this->chargeHandler = new ChargeRequestHandler($request);
+        $this->requestHandler = new ChargeRequestHandler($request);
 
-        return $this->chargeHandler->charge();
+        return $this->requestHandler->charge();
     }
 
     private function validateAmount($amount) {

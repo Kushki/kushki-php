@@ -2,16 +2,14 @@
 
 namespace kushki\lib;
 
-class KushkiLanguages
-{
+class KushkiLanguages {
     const
         __default = 'es',
         ES = 'es',
         EN = 'en';
 }
 
-class KushkiCurrencies
-{
+class KushkiCurrencies {
     const
         __default = 'USD',
         USD = 'USD';

@@ -21,9 +21,9 @@ class KushkiConstant {
     const PARAMETER_CARD = "card";
     const PARAMETER_CARD_NAME = "name";
     const PARAMETER_CARD_NUMBER = "number";
-    const PARAMETER_CARD_EXP_MONTH = "exp_month";
-    const PARAMETER_CARD_EXP_YEAR = "exp_year";
-    const PARAMETER_CARD_CVC = "cvc";
+    const PARAMETER_CARD_EXP_MONTH = "expiry_month";
+    const PARAMETER_CARD_EXP_YEAR = "expiry_year";
+    const PARAMETER_CARD_CVC = "cvv";
     const PARAMETER_DEFERRED = "deferred";
     const PARAMETER_MONTHS = "months";
     const PARAMETER_ERRORS = "error";

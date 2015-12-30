@@ -12,6 +12,9 @@ class RequestBuilder {
     protected $merchantId;
     protected $language = KushkiLanguages::ES;
 
+    public function createRequest() {
+    }
+
     public function setUrl($url) {
         $this->url = $url;
     }

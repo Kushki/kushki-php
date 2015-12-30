@@ -1,52 +1,78 @@
 <?php
 namespace kushki\tests\inttests\lib;
 
-use kushki\lib\ChargeRequestBuilder;
 use kushki\lib\Kushki;
 use kushki\lib\KushkiConstant;
+
 use kushki\lib\KushkiCurrencies;
 use kushki\lib\KushkiLanguages;
-use kushki\lib\RequestBuilder;
+use kushki\tests\lib\CommonUtils;
 
-class KushkiIntTest extends \PHPUnit_Framework_TestCase
-{
+require_once realpath(dirname(__FILE__)) . '/../../lib/CommonUtils.php';
 
-    public function testMustGet200ResponseCodeWhenChargeBeOk()
-    {
-        $successToken = "s25s784a87ad497af797a48sdg7rhy4d";
-        $request = $this->createRequest($successToken);
-        $kushki = new Kushki($request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
-                                $request->getParameter(KushkiConstant::PARAMETER_LANGUAGE),
-                                $request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE));
+class KushkiIntTest extends \PHPUnit_Framework_TestCase {
+    protected $kushki;
 
-        $response = $kushki->charge($successToken, $request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT));
-
-        $this->assertEquals(true, $response->isSuccessful());
-        $this->assertEquals(true, is_string($response->getTicketNumber()));
+    protected function setUp() {
+        $merchantId = '10000001408518323354818001';
+        $idioma = KushkiLanguages::ES;
+        $moneda = KushkiCurrencies::USD;
+        $this->kushki = new Kushki($merchantId, $idioma, $moneda);;
     }
 
-    public function testMustGet402ResponseCodeWhenChargeBeDeclined()
-    {
-        $declinedToken = "123456789-declined";
-        $request = $this->createRequest($declinedToken);
-        $kushki = new Kushki($request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
-            $request->getParameter(KushkiConstant::PARAMETER_LANGUAGE),
-            $request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE));
-
-        $response = $kushki->charge($declinedToken, $request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT));
-        $this->assertEquals(false, $response->isSuccessful());
-        $this->assertEquals(true, is_string($response->getResponseText()));
+    public function testShouldReturnSuccessfulTokenTransaction_TC_001() {
+        $tokenTransaction = $this->getValidTokenTransaction();
+        $this->assertEquals(true, $tokenTransaction->isSuccessful());
+        $this->assertEquals("Transacción aprobada", $tokenTransaction->getResponseText());
+        $this->assertEquals("000", $tokenTransaction->getResponseCode());
     }
 
-    private function createRequest($token)
-    {
-        $amount = rand(100, 1000);
-        $cents = rand(1, 99) / 100;
-        $amount = $amount + $cents;
-        $merchantId = "10000000123454545454546546";
-        $builder = new ChargeRequestBuilder($merchantId, $token, $amount);
-        $request = $builder->createChargeRequest();
+    public function testShouldReturnNonSuccessfulTokenTransactionInvalidCard_TC_002() {
+        $cardParams = array(
+            KushkiConstant::PARAMETER_CARD_NAME => "John Doe",
+            KushkiConstant::PARAMETER_CARD_NUMBER => "5411111111115854",
+            KushkiConstant::PARAMETER_CARD_EXP_MONTH => "12",
+            KushkiConstant::PARAMETER_CARD_EXP_YEAR => "20",
+            KushkiConstant::PARAMETER_CARD_CVC => "123",
+        );
+        $tokenTransaction = $this->kushki->requestToken($cardParams);
+        $this->assertEquals(false, $tokenTransaction->isSuccessful());
+        $this->assertEquals("Tarjeta no válida", $tokenTransaction->getResponseText());
+        $this->assertEquals("017", $tokenTransaction->getResponseCode());
+    }
 
-        return $request;
+    public function testShouldReturnSuccessfulChargeTransaction_TC_006() {
+        $tokenTransaction = $this->getValidTokenTransaction();
+        $amount = CommonUtils::getRandomAmount();
+        $token = $tokenTransaction->getToken();
+
+        $chargeTransaction = $this->kushki->charge($token, $amount);
+
+        $this->assertEquals(true, $tokenTransaction->isSuccessful());
+        $this->assertEquals(true, $chargeTransaction->isSuccessful());
+        $this->assertEquals("Transacción aprobada", $chargeTransaction->getResponseText());
+        $this->assertEquals("000", $chargeTransaction->getResponseCode());
+    }
+
+    public function testShouldReturnNonSuccessfulChargeTransactionInvalidToken_TC_008() {
+        $amount = CommonUtils::getRandomAmount();
+        $token =  "k7jwynu59sd28wu81i2ygsyvllyfimju";
+
+        $chargeTransaction = $this->kushki->charge($token, $amount);
+
+        $this->assertEquals(false, $chargeTransaction->isSuccessful());
+        $this->assertEquals("El token de la transacción no es válido", $chargeTransaction->getResponseText());
+        $this->assertEquals("574", $chargeTransaction->getResponseCode());
+    }
+
+    private function getValidTokenTransaction() {
+        $cardParams = array(
+            KushkiConstant::PARAMETER_CARD_NAME => "John Doe",
+            KushkiConstant::PARAMETER_CARD_NUMBER => "4111111111111111",
+            KushkiConstant::PARAMETER_CARD_EXP_MONTH => "12",
+            KushkiConstant::PARAMETER_CARD_EXP_YEAR => "20",
+            KushkiConstant::PARAMETER_CARD_CVC => "123",
+        );
+        return $this->kushki->requestToken($cardParams);
     }
 }

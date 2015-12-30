@@ -13,7 +13,7 @@ class ChargeRequestBuilder extends RequestBuilder {
         $this->amount = $amount;
     }
 
-    public function createChargeRequest() {
+    public function createRequest() {
         $params = array(
             KushkiConstant::PARAMETER_TRANSACTION_TOKEN => $this->token,
             KushkiConstant::PARAMETER_TRANSACTION_AMOUNT => $this->amount,

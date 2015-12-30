@@ -4,28 +4,26 @@ namespace kushki\tests\unit\lib;
 use kushki\lib\ChargeRequestBuilder;
 use kushki\lib\KushkiConstant;
 use kushki\lib\KushkiCurrencies;
-use kushki\lib\KushkiLanguages;
-use kushki\lib\RequestBuilder;
+use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
 
-class RequestTest extends PHPUnit_Framework_TestCase {
+class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
 
     private $request;
     private $randomUrl;
     private $randomMerchantId;
-    private $language = KushkiLanguages::ES;
     private $currency = KushkiCurrencies::USD;
     private $randomTransactionAmount;
     private $randomTransactionToken;
 
     private function createChargeRequest() {
-        $this->randomUrl = Utils::randomAlphaNumberString();
-        $this->randomMerchantId = Utils::randomAlphaNumberString();
-        $this->randomTransactionToken = Utils::randomAlphaNumberString();
+        $this->randomUrl = CommonUtils::randomAlphaNumberString();
+        $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
+        $this->randomTransactionToken = CommonUtils::randomAlphaNumberString();
         $this->randomTransactionAmount = rand(1, 9999);
 
         $builder = new ChargeRequestBuilder($this->randomMerchantId, $this->randomTransactionToken, $this->randomTransactionAmount);
-        $this->request = $builder->createChargeRequest();
+        $this->request = $builder->createRequest();
     }
 
     public function testHasContentTypeOnChargeRequest() {
@@ -68,6 +66,6 @@ class RequestTest extends PHPUnit_Framework_TestCase {
         $this->setExpectedException(
             'kushki\lib\KushkiException', 'Parameter does not exist', 0
         );
-        $this->request->getParameter(Utils::randomAlphaString());
+        $this->request->getParameter(CommonUtils::randomAlphaString());
     }
 }
