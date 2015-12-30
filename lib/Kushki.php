@@ -62,6 +62,18 @@ class Kushki {
         return $this->requestHandler->voidCharge();
     }
 
+    public function refundCharge($token, $ticket, $amount) {
+        $validAmount = $this->validateAmount($amount);
+
+        $refundRequestBuilder = new RefundRequestBuilder($this->merchantId, $token, $ticket, $validAmount);
+        $request = $refundRequestBuilder->createRequest();
+
+        $this->requestHandler = new RefundRequestHandler($request);
+
+        return $this->requestHandler->refundCharge();
+
+    }
+
     private function validateAmount($amount) {
         if ($amount == null) {
             throw new KushkiException("El monto no puede ser nulo");

@@ -65,6 +65,37 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("574", $chargeTransaction->getResponseCode());
     }
 
+    public function testShouldReturnSuccessfulRefundTransaction_TC_009() {
+        $tokenTransaction = $this->getValidTokenTransaction();
+        $amount = CommonUtils::getRandomAmount();
+        $token = $tokenTransaction->getToken();
+        $chargeTransaction = $this->kushki->charge($token, $amount);
+        $ticket = $chargeTransaction->getTicketNumber();
+        $token4refundTransaction = $this->getValidTokenTransaction();
+        $token4refund = $token4refundTransaction->getToken();
+
+        $refundTransaction = $this->kushki->refundCharge($token4refund, $ticket, $amount);
+
+        $this->assertEquals(true, $tokenTransaction->isSuccessful());
+        $this->assertEquals(true, $chargeTransaction->isSuccessful());
+        $this->assertEquals(true, $token4refundTransaction->isSuccessful());
+        $this->assertEquals(true, $refundTransaction->isSuccessful());
+        $this->assertEquals("Transacción aprobada", $refundTransaction->getResponseText());
+        $this->assertEquals("000", $refundTransaction->getResponseCode());
+    }
+
+    public function testShouldReturnFailedVoidTransactionNoTicket_TC_012() {
+        $tokenTransaction = $this->getValidTokenTransaction();
+        $amount = CommonUtils::getRandomAmount();
+        $token = $tokenTransaction->getToken();
+
+        $refundTransaction = $this->kushki->refundCharge($token, "", $amount);
+
+        $this->assertEquals(true, $tokenTransaction->isSuccessful());
+        $this->assertEquals(false, $refundTransaction->isSuccessful());
+        $this->assertEquals("El número de ticket de la transacción es requerido", $refundTransaction->getResponseText());
+        $this->assertEquals("705", $refundTransaction->getResponseCode());
+    }
 
     public function testShouldReturnSuccessfulVoidTransaction_TC_014() {
         $tokenTransaction = $this->getValidTokenTransaction();
