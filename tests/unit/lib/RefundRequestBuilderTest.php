@@ -14,20 +14,17 @@ class RefundRequestBuilderTest extends PHPUnit_Framework_TestCase {
     private $randomMerchantId;
     private $currency = KushkiCurrencies::USD;
     private $randomTransactionAmount;
-    private $randomTransactionToken;
     private $randomTransactionTicket;
 
     private function createChargeRequest() {
         $this->randomUrl = CommonUtils::randomAlphaNumberString();
         $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
-        $this->randomTransactionToken = CommonUtils::randomAlphaNumberString();
         $this->randomTransactionTicket = CommonUtils::randomAlphaNumberString();
         $this->randomTransactionAmount = rand(1, 9999);
 
         $builder = new RefundRequestBuilder($this->randomMerchantId,
-                                          $this->randomTransactionToken,
-                                          $this->randomTransactionTicket,
-                                          $this->randomTransactionAmount);
+                                            $this->randomTransactionTicket,
+                                            $this->randomTransactionAmount);
         $this->request = $builder->createRequest();
     }
 
@@ -35,13 +32,6 @@ class RefundRequestBuilderTest extends PHPUnit_Framework_TestCase {
         $this->createChargeRequest();
         $this->assertEquals(KushkiConstant::CONTENT_TYPE, $this->request->getContentType(),
                             "Requires content type");
-    }
-
-    public function testHasTokenOnRefundRequest() {
-        $this->createChargeRequest();
-        $this->assertEquals($this->randomTransactionToken,
-                            $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_TOKEN),
-                            "Requires param token");
     }
 
     public function testHasTicketOnRefundRequest() {

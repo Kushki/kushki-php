@@ -71,27 +71,21 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $token = $tokenTransaction->getToken();
         $chargeTransaction = $this->kushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
-        $token4refundTransaction = $this->getValidTokenTransaction();
-        $token4refund = $token4refundTransaction->getToken();
 
-        $refundTransaction = $this->kushki->refundCharge($token4refund, $ticket, $amount);
+        $refundTransaction = $this->kushki->refundCharge($ticket, $amount);
 
         $this->assertEquals(true, $tokenTransaction->isSuccessful());
         $this->assertEquals(true, $chargeTransaction->isSuccessful());
-        $this->assertEquals(true, $token4refundTransaction->isSuccessful());
         $this->assertEquals(true, $refundTransaction->isSuccessful());
         $this->assertEquals("Transacción aprobada", $refundTransaction->getResponseText());
         $this->assertEquals("000", $refundTransaction->getResponseCode());
     }
 
-    public function testShouldReturnFailedVoidTransactionNoTicket_TC_012() {
-        $tokenTransaction = $this->getValidTokenTransaction();
+    public function testShouldReturnFailedRefundTransactionNoTicket_TC_012() {
         $amount = CommonUtils::getRandomAmount();
-        $token = $tokenTransaction->getToken();
 
-        $refundTransaction = $this->kushki->refundCharge($token, "", $amount);
+        $refundTransaction = $this->kushki->refundCharge("", $amount);
 
-        $this->assertEquals(true, $tokenTransaction->isSuccessful());
         $this->assertEquals(false, $refundTransaction->isSuccessful());
         $this->assertEquals("El número de ticket de la transacción es requerido", $refundTransaction->getResponseText());
         $this->assertEquals("705", $refundTransaction->getResponseCode());
@@ -103,34 +97,25 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $token = $tokenTransaction->getToken();
         $chargeTransaction = $this->kushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
-        $token4voidTransaction = $this->getValidTokenTransaction();
-        $token4void = $token4voidTransaction->getToken();
 
-        $voidTransaction = $this->kushki->voidCharge($token4void, $ticket, $amount);
+        $voidTransaction = $this->kushki->voidCharge($ticket, $amount);
 
         $this->assertEquals(true, $tokenTransaction->isSuccessful());
         $this->assertEquals(true, $chargeTransaction->isSuccessful());
-        $this->assertEquals(true, $token4voidTransaction->isSuccessful());
         $this->assertEquals(true, $voidTransaction->isSuccessful());
         $this->assertEquals("Transacción aprobada", $voidTransaction->getResponseText());
         $this->assertEquals("000", $voidTransaction->getResponseCode());
     }
 
-    public function testShouldReturnFailedVoidTransactionInvalidToken_TC_016() {
-        $tokenTransaction = $this->getValidTokenTransaction();
+    public function testShouldReturnFailedVoidTransactionInvalidTicket_TC_019() {
         $amount = CommonUtils::getRandomAmount();
-        $token = $tokenTransaction->getToken();
-        $chargeTransaction = $this->kushki->charge($token, $amount);
-        $ticket = $chargeTransaction->getTicketNumber();
-        $token4void = "k7jwynu59sd28wu81i2ygsyvllyfimju";
+        $ticket = "153633977318400068";
 
-        $voidTransaction = $this->kushki->voidCharge($token4void, $ticket, $amount);
+        $refundTransaction = $this->kushki->refundCharge($ticket, $amount);
 
-        $this->assertEquals(true, $tokenTransaction->isSuccessful());
-        $this->assertEquals(true, $chargeTransaction->isSuccessful());
-        $this->assertEquals(false, $voidTransaction->isSuccessful());
-        $this->assertEquals("El token de la transacción no es válido", $voidTransaction->getResponseText());
-        $this->assertEquals("574", $voidTransaction->getResponseCode());
+        $this->assertEquals(false, $refundTransaction->isSuccessful());
+        $this->assertEquals("Transacción no encontrada", $refundTransaction->getResponseText());
+        $this->assertEquals("222", $refundTransaction->getResponseCode());
     }
 
     private function getValidTokenTransaction() {

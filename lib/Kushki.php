@@ -51,10 +51,10 @@ class Kushki {
         return $this->requestHandler->charge();
     }
 
-    public function voidCharge($token, $ticket, $amount) {
+    public function voidCharge($ticket, $amount) {
         $validAmount = $this->validateAmount($amount);
 
-        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $token, $ticket, $validAmount);
+        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $ticket, $validAmount);
         $request = $voidRequestBuilder->createRequest();
 
         $this->requestHandler = new VoidRequestHandler($request);
@@ -62,10 +62,10 @@ class Kushki {
         return $this->requestHandler->voidCharge();
     }
 
-    public function refundCharge($token, $ticket, $amount) {
+    public function refundCharge($ticket, $amount) {
         $validAmount = $this->validateAmount($amount);
 
-        $refundRequestBuilder = new RefundRequestBuilder($this->merchantId, $token, $ticket, $validAmount);
+        $refundRequestBuilder = new RefundRequestBuilder($this->merchantId, $ticket, $validAmount);
         $request = $refundRequestBuilder->createRequest();
 
         $this->requestHandler = new RefundRequestHandler($request);
