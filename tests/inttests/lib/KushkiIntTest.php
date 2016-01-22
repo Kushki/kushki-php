@@ -118,6 +118,21 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("222", $refundTransaction->getResponseCode());
     }
 
+    public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
+        $tokenTransaction = $this->getValidTokenTransaction();
+        $amount = CommonUtils::getRandomAmount();
+        $token = $tokenTransaction->getToken();
+        $months = rand(1, 22);
+        $interest = rand(1, 25) / 100;
+
+        $deferredChargeTransaction = $this->kushki->deferredCharge($token, $amount, $months, $interest);
+
+        $this->assertEquals(true, $tokenTransaction->isSuccessful());
+        $this->assertEquals(true, $deferredChargeTransaction->isSuccessful());
+        $this->assertEquals("Transacción aprobada", $deferredChargeTransaction->getResponseText());
+        $this->assertEquals("000", $deferredChargeTransaction->getResponseCode());
+    }
+
     private function getValidTokenTransaction() {
         $cardParams = array(
             KushkiConstant::PARAMETER_CARD_NAME => "John Doe",

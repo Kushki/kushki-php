@@ -15,6 +15,9 @@ require_once(dirname(__FILE__) . '/lib/TokenRequestHandler.php');
 require_once(dirname(__FILE__) . '/lib/ChargeRequestBuilder.php');
 require_once(dirname(__FILE__) . '/lib/ChargeRequestHandler.php');
 
+require_once(dirname(__FILE__) . '/lib/DeferredChargeRequestBuilder.php');
+require_once(dirname(__FILE__) . '/lib/DeferredChargeRequestHandler.php');
+
 require_once(dirname(__FILE__) . '/lib/VoidRequestBuilder.php');
 require_once(dirname(__FILE__) . '/lib/VoidRequestHandler.php');
 

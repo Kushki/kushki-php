@@ -10,6 +10,7 @@ class KushkiConstant {
     const CHARGE_URL = URL . "/charge";
     const VOID_URL = URL . "/void";
     const REFUND_URL = URL . "/refund";
+    const DEFERRED_URL = URL . "/deferred";
     const PARAMETER_MERCHANT_ID = "merchant_identifier";
     const PARAMETER_LANGUAGE = "language_indicator";
     const PARAMETER_TRANSACTION_TOKEN = "transaction_token";
@@ -27,6 +28,7 @@ class KushkiConstant {
     const PARAMETER_CARD_CVC = "cvv";
     const PARAMETER_DEFERRED = "deferred";
     const PARAMETER_MONTHS = "months";
+    const PARAMETER_INTEREST = "rate_of_interest";
     const PARAMETER_ERRORS = "error";
     const PARAMETER_ERRORS_MESSAGE = "message";
     const PARAMETER_ERRORS_CODE = "code";

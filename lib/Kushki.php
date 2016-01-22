@@ -51,6 +51,35 @@ class Kushki {
         return $this->requestHandler->charge();
     }
 
+    /**
+     * @param $token
+     * @param $amount
+     * @param $months
+     * @param $interest
+     * @return KushkiResponse
+     * @throws KushkiException
+     */
+    public function deferredCharge($token, $amount, $months, $interest) {
+        $validAmount = $this->validateAmount($amount);
+
+        $deferredChargeRequestBuilder = new DeferredChargeRequestBuilder($this->merchantId,
+                                                                 $token,
+                                                                 $validAmount,
+                                                                 $months,
+                                                                 $interest);
+        $request = $deferredChargeRequestBuilder->createRequest();
+
+        $this->requestHandler = new DeferredChargeRequestHandler($request);
+
+        return $this->requestHandler->deferredCharge();
+    }
+
+    /**
+     * @param $ticket
+     * @param $amount
+     * @return KushkiResponse
+     * @throws KushkiException
+     */
     public function voidCharge($ticket, $amount) {
         $validAmount = $this->validateAmount($amount);
 
@@ -62,6 +91,12 @@ class Kushki {
         return $this->requestHandler->voidCharge();
     }
 
+    /**
+     * @param $ticket
+     * @param $amount
+     * @return KushkiResponse
+     * @throws KushkiException
+     */
     public function refundCharge($ticket, $amount) {
         $validAmount = $this->validateAmount($amount);
 
@@ -91,7 +126,6 @@ class Kushki {
     public function getMerchantId() {
         return $this->merchantId;
     }
-
 }
 
 ?>
