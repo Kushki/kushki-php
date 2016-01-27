@@ -126,6 +126,14 @@ class Kushki {
     public function getMerchantId() {
         return $this->merchantId;
     }
+
+    public function getLanguage() {
+        return $this->language;
+    }
+
+    public function getCurrency() {
+        return $this->currency;
+    }
 }
 
 ?>

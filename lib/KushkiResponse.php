@@ -38,6 +38,10 @@ class KushkiResponse {
         return $this->body->ticket_number;
     }
 
+    public function getApprovedAmount() {
+        return $this->body->approved_amount;
+    }
+
     public function getResponseCode() {
         return $this->body->response_code;
     }
