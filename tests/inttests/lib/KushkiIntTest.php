@@ -8,7 +8,8 @@ use kushki\lib\KushkiCurrencies;
 use kushki\lib\KushkiLanguages;
 use kushki\tests\lib\CommonUtils;
 
-require_once realpath(dirname(__FILE__)) . '/../../lib/CommonUtils.php';
+//require_once realpath(dirname(__FILE__)) . '/../../lib/CommonUtils.php';
+require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
 
 class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     protected $kushki;
@@ -62,7 +63,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(false, $chargeTransaction->isSuccessful());
         $this->assertEquals("El token de la transacción no es válido", $chargeTransaction->getResponseText());
-        $this->assertEquals("574", $chargeTransaction->getResponseCode());
+        $this->assertEquals("577", $chargeTransaction->getResponseCode());
     }
 
     public function testShouldReturnSuccessfulRefundTransaction_TC_009() {

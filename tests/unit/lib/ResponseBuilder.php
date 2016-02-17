@@ -5,6 +5,8 @@ use kushki\lib\KushkiResponse;
 use kushki\lib\KushkiConstant;
 use kushki\tests\lib\CommonUtils;
 
+require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
+
 class ResponseBuilder {
 
     static public function createChargeOKResponse() {

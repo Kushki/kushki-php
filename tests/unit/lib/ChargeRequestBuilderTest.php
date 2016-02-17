@@ -7,6 +7,8 @@ use kushki\lib\KushkiCurrencies;
 use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
 
+require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
+
 class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
 
     private $request;
