@@ -47,6 +47,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
 
+        sleep(CommonUtils::THREAD_SLEEP);
+
         $chargeTransaction = $this->kushki->charge($token, $amount);
 
         $this->assertEquals(true, $tokenTransaction->isSuccessful());
@@ -70,9 +72,11 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $tokenTransaction = $this->getValidTokenTransaction();
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
+        sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->kushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
 
+        sleep(CommonUtils::THREAD_SLEEP);
         $refundTransaction = $this->kushki->refundCharge($ticket, $amount);
 
         $this->assertEquals(true, $tokenTransaction->isSuccessful());
@@ -96,9 +100,11 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $tokenTransaction = $this->getValidTokenTransaction();
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
+        sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->kushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
 
+        sleep(CommonUtils::THREAD_SLEEP);
         $voidTransaction = $this->kushki->voidCharge($ticket, $amount);
 
         $this->assertEquals(true, $tokenTransaction->isSuccessful());
@@ -125,7 +131,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $token = $tokenTransaction->getToken();
         $months = rand(1, 22);
         $interest = rand(1, 25) / 100;
-
+        
+        sleep(CommonUtils::THREAD_SLEEP);
         $deferredChargeTransaction = $this->kushki->deferredCharge($token, $amount, $months, $interest);
 
         $this->assertEquals(true, $tokenTransaction->isSuccessful());

@@ -7,6 +7,8 @@ class CommonUtils {
     const ALPHA_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const NUMBER_CHARACTERS = '0123456789';
 
+    const THREAD_SLEEP = 1;
+
     static function randomAlphaNumberString($minSize = 1, $maxSize = 10) {
         return self::randomString(self::ALPHA_NUMBER_CHARACTERS, $minSize, $maxSize);
     }
