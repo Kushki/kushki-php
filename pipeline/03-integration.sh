@@ -5,13 +5,13 @@ ls
 mkdir kushkiTest
 cp -f out/artifacts/Kushki/kushki-$SNAP_PIPELINE_COUNTER.zip kushkiTest
 echo "ls kushkiTest antes de unzip"
-ls kushkiTest
-unzip -o kushkiTest/kushki-$SNAP_PIPELINE_COUNTER.zip
+cd kushkiTest
+ls
+unzip -o kushki-$SNAP_PIPELINE_COUNTER.zip
 echo "ls kushkiTest despues de unzip"
-ls kushkiTest
+ls
 cp -rf tests kushkiTest
 cp -f phpunit.xml kushkiTest
-cd kushkiTest
 echo "ls antes de tests"
 ls
 phpunit --configuration phpunit.xml --testsuite integration
