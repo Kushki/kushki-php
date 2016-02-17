@@ -10,8 +10,8 @@ ls
 unzip -o kushki-$SNAP_PIPELINE_COUNTER.zip
 echo "ls kushkiTest despues de unzip"
 ls
-cp -rf tests kushkiTest
-cp -f phpunit.xml kushkiTest
+cp -rf ../tests .
+cp -f ../phpunit.xml .
 echo "ls antes de tests"
 ls
 phpunit --configuration phpunit.xml --testsuite integration
