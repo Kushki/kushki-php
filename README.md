@@ -3,7 +3,7 @@
 ###Para usar la librería se necesita:
   - Clonar el repositorio
 ```sh
-git clone git@github.com:Kushki/kushki-php.git
+git clone https://github.com/Kushki/kushki-php.git
 ```
   - Entrar a la carpeta donde se clonó la librería
 ```sh
@@ -57,7 +57,7 @@ phpunit --version
 ###Para generar reportes de cobertura de pruebas debe:
   - Instalar xdebug con el asistente http://xdebug.org/wizard.php
   - Crear una carpeta para almacenar los reportes, por ejemplo "reports"
-  - Agrega o quita el parametro "--coverage-html reports" a la linea de ejecución de phpunit, según se necesite 
+  - Agrega o quita el parametro "--coverage-html reports" a la linea de ejecución de phpunit, según se necesite
 
 ##------------------------------------ENGLISH-----------------------------------------------
 
@@ -119,4 +119,4 @@ phpunit --version
 ###To generate test coverage report you need to:
   - Install xdebug with wizard http://xdebug.org/wizard.php
   - Create a folder to save reports, example "reports"
-  - Add or Remove parameter "--coverage-html reports" to phpunit execution line 
+  - Add or Remove parameter "--coverage-html reports" to phpunit execution line
