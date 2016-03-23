@@ -16,5 +16,7 @@ it. Here an artifact is defined in SnapCI in the folder `out/artifacts/Kushki`
 In this step the artifact is unzipped and the integration tests are run against it.
 
 #### `04-distribute.sh`
+**This is a manual step, triggered only after the new features have been approved.**
+
 The `zip` from the previous step is copied to the `out/artifacts/Kushki/` folder. The latest version, `kushki.zip`,
 is overwritten with the newly created one. Then these files are added to Git and pushed.
