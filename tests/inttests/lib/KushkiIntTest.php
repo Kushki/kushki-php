@@ -14,8 +14,10 @@ require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
 class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     protected $kushki;
 
+    const MERCHANT_ID = "10000001604958481814111215";
+
     protected function setUp() {
-        $merchantId = '10000001408518323354818001';
+        $merchantId = self::MERCHANT_ID;
         $idioma = KushkiLanguages::ES;
         $moneda = KushkiCurrencies::USD;
         $this->kushki = new Kushki($merchantId, $idioma, $moneda);;
@@ -131,7 +133,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $token = $tokenTransaction->getToken();
         $months = rand(1, 22);
         $interest = rand(1, 25) / 100;
-        
+
         sleep(CommonUtils::THREAD_SLEEP);
         $deferredChargeTransaction = $this->kushki->deferredCharge($token, $amount, $months, $interest);
 
@@ -144,9 +146,9 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     private function getValidTokenTransaction() {
         $cardParams = array(
             KushkiConstant::PARAMETER_CARD_NAME => "John Doe",
-            KushkiConstant::PARAMETER_CARD_NUMBER => "4111111111111111",
+            KushkiConstant::PARAMETER_CARD_NUMBER => "4017779991118888",
             KushkiConstant::PARAMETER_CARD_EXP_MONTH => "12",
-            KushkiConstant::PARAMETER_CARD_EXP_YEAR => "20",
+            KushkiConstant::PARAMETER_CARD_EXP_YEAR => "21",
             KushkiConstant::PARAMETER_CARD_CVC => "123",
         );
         return $this->kushki->requestToken($cardParams);
