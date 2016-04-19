@@ -36,14 +36,12 @@ class Kushki {
 
     /**
      * @param string $token
-     * @param float $amount
+     * @param Amount $amount
      * @return KushkiResponse
      * @throws KushkiException
      */
     public function charge($token, $amount) {
-        $validAmount = $this->validateAmount($amount);
-
-        $chargeRequestBuilder = new ChargeRequestBuilder($this->merchantId, $token, $validAmount);
+        $chargeRequestBuilder = new ChargeRequestBuilder($this->merchantId, $token, $amount);
         $request = $chargeRequestBuilder->createRequest();
 
         $this->requestHandler = new ChargeRequestHandler($request);

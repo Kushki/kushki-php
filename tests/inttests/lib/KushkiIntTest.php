@@ -8,26 +8,27 @@ use kushki\lib\KushkiCurrencies;
 use kushki\lib\KushkiLanguages;
 use kushki\tests\lib\CommonUtils;
 
-//require_once realpath(dirname(__FILE__)) . '/../../lib/CommonUtils.php';
 require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
 
 class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     protected $kushki;
+    protected $secretKushki;
 
-    const MERCHANT_ID = "10000001604958481814111215";
+    const MERCHANT_ID = "10000001641080185390111217";
+    const SECRET_MERCHANT_ID = "10000001641088709280111217";
 
     protected function setUp() {
         $merchantId = self::MERCHANT_ID;
+        $secretMerchantId = self::SECRET_MERCHANT_ID;
         $idioma = KushkiLanguages::ES;
         $moneda = KushkiCurrencies::USD;
         $this->kushki = new Kushki($merchantId, $idioma, $moneda);;
+        $this->secretKushki = new Kushki($secretMerchantId, $idioma, $moneda);;
     }
 
     public function testShouldReturnSuccessfulTokenTransaction_TC_001() {
         $tokenTransaction = $this->getValidTokenTransaction();
-        $this->assertEquals(true, $tokenTransaction->isSuccessful());
-        $this->assertEquals("Transacción aprobada", $tokenTransaction->getResponseText());
-        $this->assertEquals("000", $tokenTransaction->getResponseCode());
+        $this->assertsValidTransaction($tokenTransaction);
     }
 
     public function testShouldReturnNonSuccessfulTokenTransactionInvalidCard_TC_002() {
@@ -39,9 +40,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
             KushkiConstant::PARAMETER_CARD_CVC => "123",
         );
         $tokenTransaction = $this->kushki->requestToken($cardParams);
-        $this->assertEquals(false, $tokenTransaction->isSuccessful());
-        $this->assertEquals("Tarjeta no válida", $tokenTransaction->getResponseText());
-        $this->assertEquals("017", $tokenTransaction->getResponseCode());
+        $this->assertsTransaction($tokenTransaction, false, "Tarjeta no válida", "017");
     }
 
     public function testShouldReturnSuccessfulChargeTransaction_TC_006() {
@@ -51,96 +50,95 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
         sleep(CommonUtils::THREAD_SLEEP);
 
-        $chargeTransaction = $this->kushki->charge($token, $amount);
+        $chargeTransaction = $this->secretKushki->charge($token, $amount);
 
-        $this->assertEquals(true, $tokenTransaction->isSuccessful());
-        $this->assertEquals(true, $chargeTransaction->isSuccessful());
-        $this->assertEquals("Transacción aprobada", $chargeTransaction->getResponseText());
-        $this->assertEquals("000", $chargeTransaction->getResponseCode());
+        $this->assertsValidTransaction($tokenTransaction);
+        $this->assertsValidTransaction($chargeTransaction);
     }
 
     public function testShouldReturnNonSuccessfulChargeTransactionInvalidToken_TC_008() {
+        // $amount = CommonUtils::getRandomDoubleAmount();
         $amount = CommonUtils::getRandomAmount();
         $token = "k7jwynu59sd28wu81i2ygsyvllyfimju";
 
-        $chargeTransaction = $this->kushki->charge($token, $amount);
+        $chargeTransaction = $this->secretKushki->charge($token, $amount);
 
-        $this->assertEquals(false, $chargeTransaction->isSuccessful());
-        $this->assertEquals("El token de la transacción no es válido", $chargeTransaction->getResponseText());
-        $this->assertEquals("577", $chargeTransaction->getResponseCode());
+        $this->assertsTransaction($chargeTransaction, false, "El token de la transacción no es válido", "577");
     }
 
     public function testShouldReturnSuccessfulRefundTransaction_TC_009() {
+        $this->markTestSkipped('working on charge');
+
         $tokenTransaction = $this->getValidTokenTransaction();
         $amount = CommonUtils::getRandomAmount();
+        $refundAmount = CommonUtils::getRandomDoubleAmount();
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
-        $chargeTransaction = $this->kushki->charge($token, $amount);
+        $chargeTransaction = $this->secretKushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
 
         sleep(CommonUtils::THREAD_SLEEP);
-        $refundTransaction = $this->kushki->refundCharge($ticket, $amount);
+        $refundTransaction = $this->secretKushki->refundCharge($ticket, $refundAmount);
 
-        $this->assertEquals(true, $tokenTransaction->isSuccessful());
-        $this->assertEquals(true, $chargeTransaction->isSuccessful());
-        $this->assertEquals(true, $refundTransaction->isSuccessful());
-        $this->assertEquals("Transacción aprobada", $refundTransaction->getResponseText());
-        $this->assertEquals("000", $refundTransaction->getResponseCode());
+        $this->assertsValidTransaction($tokenTransaction);
+        $this->assertsValidTransaction($chargeTransaction);
+        $this->assertsValidTransaction($refundTransaction);
     }
 
     public function testShouldReturnFailedRefundTransactionNoTicket_TC_012() {
-        $amount = CommonUtils::getRandomAmount();
+        $this->markTestSkipped('working on charge');
 
-        $refundTransaction = $this->kushki->refundCharge("", $amount);
+        $amount = CommonUtils::getRandomDoubleAmount();
 
-        $this->assertEquals(false, $refundTransaction->isSuccessful());
-        $this->assertEquals("El número de ticket de la transacción es requerido", $refundTransaction->getResponseText());
-        $this->assertEquals("705", $refundTransaction->getResponseCode());
+        $refundTransaction = $this->secretKushki->refundCharge("", $amount);
+
+        $this->assertsTransaction($refundTransaction, false, "El número de ticket de la transacción es requerido", "705");
     }
 
     public function testShouldReturnSuccessfulVoidTransaction_TC_014() {
+        $this->markTestSkipped('working on charge');
+
         $tokenTransaction = $this->getValidTokenTransaction();
         $amount = CommonUtils::getRandomAmount();
+        $voidAmount = CommonUtils::getRandomDoubleAmount();
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
-        $chargeTransaction = $this->kushki->charge($token, $amount);
+        $chargeTransaction = $this->secretKushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
 
         sleep(CommonUtils::THREAD_SLEEP);
-        $voidTransaction = $this->kushki->voidCharge($ticket, $amount);
+        $voidTransaction = $this->secretKushki->voidCharge($ticket, $voidAmount);
 
-        $this->assertEquals(true, $tokenTransaction->isSuccessful());
-        $this->assertEquals(true, $chargeTransaction->isSuccessful());
-        $this->assertEquals(true, $voidTransaction->isSuccessful());
-        $this->assertEquals("Transacción aprobada", $voidTransaction->getResponseText());
-        $this->assertEquals("000", $voidTransaction->getResponseCode());
+        $this->assertsValidTransaction($tokenTransaction);
+        $this->assertsValidTransaction($chargeTransaction);
+        $this->assertsValidTransaction($voidTransaction);
     }
 
     public function testShouldReturnFailedVoidTransactionInvalidTicket_TC_019() {
-        $amount = CommonUtils::getRandomAmount();
+        $this->markTestSkipped('working on charge');
+
+        $amount = CommonUtils::getRandomDoubleAmount();
         $ticket = "153633977318400068";
 
-        $refundTransaction = $this->kushki->refundCharge($ticket, $amount);
+        $refundTransaction = $this->secretKushki->refundCharge($ticket, $amount);
 
-        $this->assertEquals(false, $refundTransaction->isSuccessful());
-        $this->assertEquals("Transacción no encontrada", $refundTransaction->getResponseText());
-        $this->assertEquals("222", $refundTransaction->getResponseCode());
+        $this->assertsTransaction($refundTransaction, false, "Transacción no encontrada", "222");
     }
 
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
+        $this->markTestSkipped('working on charge');
+
         $tokenTransaction = $this->getValidTokenTransaction();
-        $amount = CommonUtils::getRandomAmount();
+        $amount = CommonUtils::getRandomDoubleAmount();
         $token = $tokenTransaction->getToken();
         $months = rand(1, 22);
         $interest = rand(1, 25) / 100;
 
         sleep(CommonUtils::THREAD_SLEEP);
-        $deferredChargeTransaction = $this->kushki->deferredCharge($token, $amount, $months, $interest);
+        $deferredChargeTransaction = $this->secretKushki->deferredCharge($token, $amount, $months, $interest);
 
-        $this->assertEquals(true, $tokenTransaction->isSuccessful());
-        $this->assertEquals(true, $deferredChargeTransaction->isSuccessful());
-        $this->assertEquals("Transacción aprobada", $deferredChargeTransaction->getResponseText());
-        $this->assertEquals("000", $deferredChargeTransaction->getResponseCode());
+        $this->assertsValidTransaction($tokenTransaction);
+        $this->assertsValidTransaction($deferredChargeTransaction);
     }
 
     private function getValidTokenTransaction() {
@@ -153,4 +151,23 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         );
         return $this->kushki->requestToken($cardParams);
     }
+
+    private function assertsTransaction($transaction, $isSuccessful, $expectedMessage, $expectedCode) {
+
+        if ($isSuccessful != $transaction->isSuccessful()) {
+            print "\nIs successful? " . $transaction->isSuccessful() . " | Expected: " . $isSuccessful;
+            print "\nResponse text: " . $transaction->getResponseText() . " | Expected: " . $expectedMessage;
+            print "\nResponse code: " . $transaction->getResponseCode() . " | Expected: " . $expectedCode;
+            print "\n";
+        }
+
+        $this->assertEquals($isSuccessful, $transaction->isSuccessful());
+        $this->assertEquals($expectedMessage, $transaction->getResponseText());
+        $this->assertEquals($expectedCode, $transaction->getResponseCode());
+    }
+
+    private function assertsValidTransaction($transaction) {
+        $this->assertsTransaction($transaction, true, "Transacción aprobada", "000");
+    }
+
 }

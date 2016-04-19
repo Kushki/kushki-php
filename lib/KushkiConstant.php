@@ -2,7 +2,7 @@
 
 namespace kushki\lib;
 
-define('URL', 'https://ping.auruspay.com/kushki/api/v1');
+define('URL', 'https://ping.aurusinc.com/kushki/api/v1');
 
 class KushkiConstant {
     const VERSION = '1.0';

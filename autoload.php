@@ -2,10 +2,11 @@
 
 require_once(dirname(__FILE__) . '/lib/KushkiException.php');
 require_once(dirname(__FILE__) . '/lib/Kushki.php');
+require_once(dirname(__FILE__) . '/lib/Amount.php');
 require_once(dirname(__FILE__) . '/lib/KushkiConstant.php');
 require_once(dirname(__FILE__) . '/lib/KushkiEnum.php');
 require_once(dirname(__FILE__) . '/lib/KushkiRequest.php');
-require_once(dirname(__FILE__) . '/lib/KushkiResponse.php');    
+require_once(dirname(__FILE__) . '/lib/KushkiResponse.php');
 require_once(dirname(__FILE__) . '/lib/RequestHandler.php');
 require_once(dirname(__FILE__) . '/lib/RequestBuilder.php');
 

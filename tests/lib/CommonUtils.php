@@ -1,5 +1,6 @@
 <?php
 namespace kushki\tests\lib;
+use kushki\lib\Amount;
 
 class CommonUtils {
 
@@ -29,7 +30,17 @@ class CommonUtils {
         return $randstring;
     }
 
-    static function getRandomAmount($valid = true) {
+    static function getRandomDouble($min, $max) {
+      $randomInt = rand($min*100, $max*100);
+      $randomDouble = $randomInt / 100;
+      return $randomDouble;
+    }
+
+    static function getRandomAmount() {
+        return new Amount(1, 1, 1, 1, 1);
+    }
+
+    static function getRandomDoubleAmount($valid = true) {
         $validCents = [0.0, 0.08, 0.11, 0.59, 0.6];
         $invalidCents = [0.05, 0.1, 0.21, 0.61, 0.62, 0.63];
 
