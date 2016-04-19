@@ -11,9 +11,6 @@ require_once(dirname(__FILE__) . '/lib/Transaction.php');
 require_once(dirname(__FILE__) . '/lib/RequestHandler.php');
 require_once(dirname(__FILE__) . '/lib/RequestBuilder.php');
 
-require_once(dirname(__FILE__) . '/lib/TokenRequestBuilder.php');
-require_once(dirname(__FILE__) . '/lib/TokenRequestHandler.php');
-
 require_once(dirname(__FILE__) . '/lib/ChargeRequestBuilder.php');
 require_once(dirname(__FILE__) . '/lib/ChargeRequestHandler.php');
 

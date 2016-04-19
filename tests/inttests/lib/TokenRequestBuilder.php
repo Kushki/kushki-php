@@ -1,8 +1,9 @@
 <?php
-namespace kushki\lib;
+namespace kushki\tests\inttests\lib;
 
 use kushki\lib\KushkiRequest;
 use kushki\lib\KushkiConstant;
+use kushki\lib\RequestBuilder;
 
 class TokenRequestBuilder extends RequestBuilder {
 

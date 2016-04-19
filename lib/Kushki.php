@@ -22,19 +22,6 @@ class Kushki {
     }
 
     /**
-     * @param $cardParams
-     * @return Transaction
-     */
-    public function requestToken($cardParams) {
-        $tokenRequestBuilder = new TokenRequestBuilder($this->merchantId, $cardParams);
-        $request = $tokenRequestBuilder->createRequest();
-
-        $this->requestHandler = new TokenRequestHandler($request);
-
-        return $this->requestHandler->requestToken();
-    }
-
-    /**
      * @param string $token
      * @param Amount $amount
      * @return Transaction

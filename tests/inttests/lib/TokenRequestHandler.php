@@ -1,6 +1,8 @@
 <?php
 
-namespace kushki\lib;
+namespace kushki\tests\inttests\lib;
+
+use kushki\lib\RequestHandler;
 
 class TokenRequestHandler extends RequestHandler
 {

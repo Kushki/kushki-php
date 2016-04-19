@@ -9,25 +9,28 @@ use kushki\lib\KushkiLanguages;
 use kushki\tests\lib\CommonUtils;
 
 require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
+require_once dirname(__FILE__) . '/TokenHelper.php';
 
 class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     protected $kushki;
     protected $secretKushki;
 
+    protected $merchantId;
+
     const MERCHANT_ID = "10000001641080185390111217";
     const SECRET_MERCHANT_ID = "10000001641088709280111217";
 
     protected function setUp() {
-        $merchantId = self::MERCHANT_ID;
+        $this->merchantId = self::MERCHANT_ID;
         $secretMerchantId = self::SECRET_MERCHANT_ID;
         $idioma = KushkiLanguages::ES;
         $moneda = KushkiCurrencies::USD;
-        $this->kushki = new Kushki($merchantId, $idioma, $moneda);;
+        $this->kushki = new Kushki($this->merchantId, $idioma, $moneda);;
         $this->secretKushki = new Kushki($secretMerchantId, $idioma, $moneda);;
     }
 
     public function testShouldReturnSuccessfulTokenTransaction_TC_001() {
-        $tokenTransaction = $this->getValidTokenTransaction();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $this->assertsValidTransaction($tokenTransaction);
     }
 
@@ -39,12 +42,12 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
             KushkiConstant::PARAMETER_CARD_EXP_YEAR => "20",
             KushkiConstant::PARAMETER_CARD_CVC => "123",
         );
-        $tokenTransaction = $this->kushki->requestToken($cardParams);
+        $tokenTransaction = TokenHelper::requestToken($this->merchantId, $cardParams);
         $this->assertsTransaction($tokenTransaction, false, "Tarjeta no válida", "017");
     }
 
     public function testShouldReturnSuccessfulChargeTransaction_TC_006() {
-        $tokenTransaction = $this->getValidTokenTransaction();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
 
@@ -66,7 +69,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testShouldReturnSuccessfulRefundTransaction_TC_009() {
-        $tokenTransaction = $this->getValidTokenTransaction();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
@@ -94,7 +97,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
      * Tests the api edit form
      */
     public function testShouldReturnSuccessfulVoidTransaction_TC_014() {
-        $tokenTransaction = $this->getValidTokenTransaction();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
@@ -123,7 +126,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
-        $tokenTransaction = $this->getValidTokenTransaction();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
         $months = rand(1, 22);
@@ -133,17 +136,6 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertsValidTransaction($tokenTransaction);
         $this->assertsValidTransaction($deferredChargeTransaction);
-    }
-
-    private function getValidTokenTransaction() {
-        $cardParams = array(
-            KushkiConstant::PARAMETER_CARD_NAME => "John Doe",
-            KushkiConstant::PARAMETER_CARD_NUMBER => "4017779991118888",
-            KushkiConstant::PARAMETER_CARD_EXP_MONTH => "12",
-            KushkiConstant::PARAMETER_CARD_EXP_YEAR => "21",
-            KushkiConstant::PARAMETER_CARD_CVC => "123",
-        );
-        return $this->kushki->requestToken($cardParams);
     }
 
     private function assertsTransaction($transaction, $isSuccessful, $expectedMessage, $expectedCode) {
