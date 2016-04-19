@@ -100,20 +100,6 @@ class Kushki {
 
     }
 
-    private function validateAmount($amount) {
-        if ($amount == null) {
-            throw new KushkiException("El monto no puede ser nulo");
-        }
-        if ($amount <= 0) {
-            throw new KushkiException("El monto debe ser superior a 0");
-        }
-        $validAmount = number_format($amount, 2, ".", "");
-        if (strlen($validAmount) > 12) {
-            throw new KushkiException("El monto debe tener menos de 12 dígitos");
-        }
-        return $validAmount;
-    }
-
     public function getMerchantId() {
         return $this->merchantId;
     }
