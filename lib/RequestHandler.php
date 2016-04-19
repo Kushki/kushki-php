@@ -15,7 +15,7 @@ class RequestHandler {
                                        ->withStrictSSL()
                                        ->body($requestBody)
                                        ->send();
-        return new KushkiResponse($responseRaw->content_type, $responseRaw->body, $responseRaw->code);
+        return new Transaction($responseRaw->content_type, $responseRaw->body, $responseRaw->code);
     }
 }
 

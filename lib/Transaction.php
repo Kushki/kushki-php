@@ -2,7 +2,7 @@
 
 namespace kushki\lib;
 
-class KushkiResponse {
+class Transaction {
 
     protected $contentType = "";
     protected $body;

@@ -23,7 +23,7 @@ class Kushki {
 
     /**
      * @param $cardParams
-     * @return KushkiResponse
+     * @return Transaction
      */
     public function requestToken($cardParams) {
         $tokenRequestBuilder = new TokenRequestBuilder($this->merchantId, $cardParams);
@@ -37,7 +37,7 @@ class Kushki {
     /**
      * @param string $token
      * @param Amount $amount
-     * @return KushkiResponse
+     * @return Transaction
      * @throws KushkiException
      */
     public function charge($token, $amount) {
@@ -53,7 +53,7 @@ class Kushki {
      * @param $token
      * @param $amount
      * @param $months
-     * @return KushkiResponse
+     * @return Transaction
      * @throws KushkiException
      */
     public function deferredCharge($token, $amount, $months) {
@@ -72,7 +72,7 @@ class Kushki {
     /**
      * @param $ticket
      * @param $amount
-     * @return KushkiResponse
+     * @return Transaction
      * @throws KushkiException
      */
     public function voidCharge($ticket, $amount) {
@@ -87,7 +87,7 @@ class Kushki {
     /**
      * @param $ticket
      * @param $amount
-     * @return KushkiResponse
+     * @return Transaction
      * @throws KushkiException
      */
     public function refundCharge($ticket, $amount) {

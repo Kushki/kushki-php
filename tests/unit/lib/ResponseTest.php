@@ -2,7 +2,7 @@
 namespace kushki\tests\unit\lib;
 
 use kushki\lib\kushkiConstant;
-use kushki\lib\KushkiResponse;
+use kushki\lib\Transaction;
 use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
 
@@ -19,7 +19,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
         $this->body = CommonUtils::randomAlphaNumberString(20, 60);
         $this->contentType = KushkiConstant::CONTENT_TYPE;
         $this->responseCode = rand(200, 500);
-        $this->response = new KushkiResponse($this->contentType, $this->body, $this->responseCode);
+        $this->response = new Transaction($this->contentType, $this->body, $this->responseCode);
     }
 
     public function testMustHaveTransactionId() {
