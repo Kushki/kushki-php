@@ -53,18 +53,15 @@ class Kushki {
      * @param $token
      * @param $amount
      * @param $months
-     * @param $interest
      * @return KushkiResponse
      * @throws KushkiException
      */
-    public function deferredCharge($token, $amount, $months, $interest) {
-        $validAmount = $this->validateAmount($amount);
+    public function deferredCharge($token, $amount, $months) {
 
         $deferredChargeRequestBuilder = new DeferredChargeRequestBuilder($this->merchantId,
                                                                  $token,
-                                                                 $validAmount,
-                                                                 $months,
-                                                                 $interest);
+                                                                 $amount,
+                                                                 $months);
         $request = $deferredChargeRequestBuilder->createRequest();
 
         $this->requestHandler = new DeferredChargeRequestHandler($request);

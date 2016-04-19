@@ -124,18 +124,15 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertsTransaction($refundTransaction, false, "Transacción no encontrada", "222");
     }
-
+    
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
-        $this->markTestSkipped('working on charge');
-
         $tokenTransaction = $this->getValidTokenTransaction();
-        $amount = CommonUtils::getRandomDoubleAmount();
+        $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
         $months = rand(1, 22);
-        $interest = rand(1, 25) / 100;
 
         sleep(CommonUtils::THREAD_SLEEP);
-        $deferredChargeTransaction = $this->secretKushki->deferredCharge($token, $amount, $months, $interest);
+        $deferredChargeTransaction = $this->secretKushki->deferredCharge($token, $amount, $months);
 
         $this->assertsValidTransaction($tokenTransaction);
         $this->assertsValidTransaction($deferredChargeTransaction);

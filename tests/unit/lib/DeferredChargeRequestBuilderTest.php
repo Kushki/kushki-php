@@ -18,21 +18,18 @@ class DeferredChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
     private $randomTransactionAmount;
     private $randomTransactionToken;
     private $randomMonths;
-    private $randomInterest;
 
     private function createDeferredChargeRequest() {
         $this->randomUrl = CommonUtils::randomAlphaNumberString();
         $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
         $this->randomTransactionToken = CommonUtils::randomAlphaNumberString();
-        $this->randomTransactionAmount = rand(1, 9999);
+        $this->randomTransactionAmount = CommonUtils::getRandomAmount();
         $this->randomMonths = rand(1, 24);
-        $this->randomInterest = rand(1, 10) / 100;
 
         $builder = new DeferredChargeRequestBuilder($this->randomMerchantId,
                                                     $this->randomTransactionToken,
                                                     $this->randomTransactionAmount,
-                                                    $this->randomMonths,
-                                                    $this->randomInterest);
+                                                    $this->randomMonths);
         $this->request = $builder->createRequest();
     }
 
@@ -51,7 +48,7 @@ class DeferredChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testHasAmountOnDeferredChargeRequest() {
         $this->createDeferredChargeRequest();
-        $this->assertEquals($this->randomTransactionAmount,
+        $this->assertEquals($this->randomTransactionAmount->toHash(),
                             $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT),
                             "Requires param amount");
     }
@@ -61,13 +58,6 @@ class DeferredChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->randomMonths,
                             $this->request->getParameter(KushkiConstant::PARAMETER_MONTHS),
                             "Requires param months");
-    }
-
-    public function testHasRateOfInterestOnDeferredChargeRequest() {
-        $this->createDeferredChargeRequest();
-        $this->assertEquals($this->randomInterest,
-                            $this->request->getParameter(KushkiConstant::PARAMETER_INTEREST),
-                            "Requires param interest");
     }
 
     public function testHasCurrencyOnDeferredChargeRequest() {
