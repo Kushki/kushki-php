@@ -19,7 +19,7 @@ class VoidRequestBuilder extends RequestBuilder {
     public function createRequest() {
         $params = array(
             KushkiConstant::PARAMETER_TRANSACTION_TICKET => $this->ticket,
-            KushkiConstant::PARAMETER_TRANSACTION_AMOUNT => $this->amount,
+            KushkiConstant::PARAMETER_TRANSACTION_AMOUNT => $this->amount->toHash(),
             KushkiConstant::PARAMETER_CURRENCY_CODE => $this->currency,
             KushkiConstant::PARAMETER_MERCHANT_ID => $this->merchantId,
             KushkiConstant::PARAMETER_LANGUAGE => $this->language

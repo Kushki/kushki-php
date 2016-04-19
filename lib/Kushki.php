@@ -76,9 +76,7 @@ class Kushki {
      * @throws KushkiException
      */
     public function voidCharge($ticket, $amount) {
-        $validAmount = $this->validateAmount($amount);
-
-        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $ticket, $validAmount);
+        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $ticket, $amount);
         $request = $voidRequestBuilder->createRequest();
 
         $this->requestHandler = new VoidRequestHandler($request);

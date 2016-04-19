@@ -80,7 +80,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsValidTransaction($chargeTransaction);
         $this->assertsValidTransaction($refundTransaction);
     }
-    
+
     public function testShouldReturnFailedRefundTransactionNoTicket_TC_012() {
         $amount = CommonUtils::getRandomAmount();
 
@@ -89,29 +89,32 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsTransaction($refundTransaction, false, "El número de ticket de la transacción es requerido", "705");
     }
 
+    /**
+     * @group failing
+     * Tests the api edit form
+     */
     public function testShouldReturnSuccessfulVoidTransaction_TC_014() {
-        $this->markTestSkipped('working on charge');
-
         $tokenTransaction = $this->getValidTokenTransaction();
         $amount = CommonUtils::getRandomAmount();
-        $voidAmount = CommonUtils::getRandomDoubleAmount();
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->secretKushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
 
         sleep(CommonUtils::THREAD_SLEEP);
-        $voidTransaction = $this->secretKushki->voidCharge($ticket, $voidAmount);
+        $voidTransaction = $this->secretKushki->voidCharge($ticket, $amount);
 
         $this->assertsValidTransaction($tokenTransaction);
         $this->assertsValidTransaction($chargeTransaction);
         $this->assertsValidTransaction($voidTransaction);
     }
 
+    /**
+     * @group failing
+     * Tests the api edit form
+     */
     public function testShouldReturnFailedVoidTransactionInvalidTicket_TC_019() {
-        $this->markTestSkipped('working on charge');
-
-        $amount = CommonUtils::getRandomDoubleAmount();
+        $amount = CommonUtils::getRandomAmount();
         $ticket = "153633977318400068";
 
         $refundTransaction = $this->secretKushki->refundCharge($ticket, $amount);
