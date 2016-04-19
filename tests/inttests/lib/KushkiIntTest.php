@@ -57,7 +57,6 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testShouldReturnNonSuccessfulChargeTransactionInvalidToken_TC_008() {
-        // $amount = CommonUtils::getRandomDoubleAmount();
         $amount = CommonUtils::getRandomAmount();
         $token = "k7jwynu59sd28wu81i2ygsyvllyfimju";
 
@@ -67,28 +66,23 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testShouldReturnSuccessfulRefundTransaction_TC_009() {
-        $this->markTestSkipped('working on charge');
-
         $tokenTransaction = $this->getValidTokenTransaction();
         $amount = CommonUtils::getRandomAmount();
-        $refundAmount = CommonUtils::getRandomDoubleAmount();
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->secretKushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
 
         sleep(CommonUtils::THREAD_SLEEP);
-        $refundTransaction = $this->secretKushki->refundCharge($ticket, $refundAmount);
+        $refundTransaction = $this->secretKushki->refundCharge($ticket, $amount);
 
         $this->assertsValidTransaction($tokenTransaction);
         $this->assertsValidTransaction($chargeTransaction);
         $this->assertsValidTransaction($refundTransaction);
     }
-
+    
     public function testShouldReturnFailedRefundTransactionNoTicket_TC_012() {
-        $this->markTestSkipped('working on charge');
-
-        $amount = CommonUtils::getRandomDoubleAmount();
+        $amount = CommonUtils::getRandomAmount();
 
         $refundTransaction = $this->secretKushki->refundCharge("", $amount);
 
@@ -124,7 +118,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertsTransaction($refundTransaction, false, "Transacción no encontrada", "222");
     }
-    
+
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
         $tokenTransaction = $this->getValidTokenTransaction();
         $amount = CommonUtils::getRandomAmount();

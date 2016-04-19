@@ -22,7 +22,7 @@ class RefundRequestBuilderTest extends PHPUnit_Framework_TestCase {
         $this->randomUrl = CommonUtils::randomAlphaNumberString();
         $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
         $this->randomTransactionTicket = CommonUtils::randomAlphaNumberString();
-        $this->randomTransactionAmount = rand(1, 9999);
+        $this->randomTransactionAmount = CommonUtils::getRandomAmount();
 
         $builder = new RefundRequestBuilder($this->randomMerchantId,
                                             $this->randomTransactionTicket,
@@ -45,7 +45,7 @@ class RefundRequestBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function testHasAmountOnRefundRequest() {
         $this->createChargeRequest();
-        $this->assertEquals($this->randomTransactionAmount,
+        $this->assertEquals($this->randomTransactionAmount->toHash(),
                             $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT),
                             "Requires param amount");
     }

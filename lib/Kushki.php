@@ -93,9 +93,7 @@ class Kushki {
      * @throws KushkiException
      */
     public function refundCharge($ticket, $amount) {
-        $validAmount = $this->validateAmount($amount);
-
-        $refundRequestBuilder = new RefundRequestBuilder($this->merchantId, $ticket, $validAmount);
+        $refundRequestBuilder = new RefundRequestBuilder($this->merchantId, $ticket, $amount);
         $request = $refundRequestBuilder->createRequest();
 
         $this->requestHandler = new RefundRequestHandler($request);
