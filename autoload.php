@@ -20,9 +20,6 @@ require_once(dirname(__FILE__) . '/lib/DeferredChargeRequestHandler.php');
 require_once(dirname(__FILE__) . '/lib/VoidRequestBuilder.php');
 require_once(dirname(__FILE__) . '/lib/VoidRequestHandler.php');
 
-require_once(dirname(__FILE__) . '/lib/RefundRequestBuilder.php');
-require_once(dirname(__FILE__) . '/lib/RefundRequestHandler.php');
-
 require_once(dirname(__FILE__) . '/vendor/nategood/httpful/bootstrap.php');
 
 date_default_timezone_set('America/Los_Angeles');

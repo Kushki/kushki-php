@@ -9,7 +9,6 @@ class KushkiConstant {
     const TOKENS_URL = URL . "/tokens";
     const CHARGE_URL = URL . "/charge";
     const VOID_URL = URL . "/void";
-    const REFUND_URL = URL . "/refund";
     const DEFERRED_URL = URL . "/deferred";
     const PARAMETER_MERCHANT_ID = "merchant_identifier";
     const PARAMETER_LANGUAGE = "language_indicator";

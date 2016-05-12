@@ -71,22 +71,6 @@ class Kushki {
         return $this->requestHandler->voidCharge();
     }
 
-    /**
-     * @param $ticket
-     * @param $amount
-     * @return Transaction
-     * @throws KushkiException
-     */
-    public function refundCharge($ticket, $amount) {
-        $refundRequestBuilder = new RefundRequestBuilder($this->merchantId, $ticket, $amount);
-        $request = $refundRequestBuilder->createRequest();
-
-        $this->requestHandler = new RefundRequestHandler($request);
-
-        return $this->requestHandler->refundCharge();
-
-    }
-
     public function getMerchantId() {
         return $this->merchantId;
     }

@@ -68,30 +68,6 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsTransaction($chargeTransaction, false, "El token de la transacción no es válido", "577");
     }
 
-    public function testShouldReturnSuccessfulRefundTransaction_TC_009() {
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
-        $amount = CommonUtils::getRandomAmount();
-        $token = $tokenTransaction->getToken();
-        sleep(CommonUtils::THREAD_SLEEP);
-        $chargeTransaction = $this->secretKushki->charge($token, $amount);
-        $ticket = $chargeTransaction->getTicketNumber();
-
-        sleep(CommonUtils::THREAD_SLEEP);
-        $refundTransaction = $this->secretKushki->refundCharge($ticket, $amount);
-
-        $this->assertsValidTransaction($tokenTransaction);
-        $this->assertsValidTransaction($chargeTransaction);
-        $this->assertsValidTransaction($refundTransaction);
-    }
-
-    public function testShouldReturnFailedRefundTransactionNoTicket_TC_012() {
-        $amount = CommonUtils::getRandomAmount();
-
-        $refundTransaction = $this->secretKushki->refundCharge("", $amount);
-
-        $this->assertsTransaction($refundTransaction, false, "El número de ticket de la transacción es requerido", "705");
-    }
-
     /**
      * @group failing
      * Tests the api edit form
@@ -110,19 +86,6 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsValidTransaction($tokenTransaction);
         $this->assertsValidTransaction($chargeTransaction);
         $this->assertsValidTransaction($voidTransaction);
-    }
-
-    /**
-     * @group failing
-     * Tests the api edit form
-     */
-    public function testShouldReturnFailedVoidTransactionInvalidTicket_TC_019() {
-        $amount = CommonUtils::getRandomAmount();
-        $ticket = "153633977318400068";
-
-        $refundTransaction = $this->secretKushki->refundCharge($ticket, $amount);
-
-        $this->assertsTransaction($refundTransaction, false, "Transacción no encontrada", "222");
     }
 
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
