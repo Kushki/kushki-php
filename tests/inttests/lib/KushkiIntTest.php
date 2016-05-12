@@ -87,12 +87,13 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsValidTransaction($chargeTransaction);
         $this->assertsValidTransaction($voidTransaction);
     }
-
+    
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
         $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
         $token = $tokenTransaction->getToken();
-        $months = rand(1, 22);
+        $monthsDeferred = array(3, 6, 9, 12);
+        $months = $monthsDeferred[array_rand($monthsDeferred)];
 
         sleep(CommonUtils::THREAD_SLEEP);
         $deferredChargeTransaction = $this->secretKushki->deferredCharge($token, $amount, $months);
