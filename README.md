@@ -1,5 +1,11 @@
 # kushki-php
 
+## Build status
+
+|   | Status |
+|---|---|
+| CI         | [![Build Status](https://snap-ci.com/Kushki/kushki-php/branch/master/build_image)](https://snap-ci.com/Kushki/kushki-php/branch/master) |
+
 ###Para usar la librería se necesita:
   - Clonar el repositorio
 ```sh
