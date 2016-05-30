@@ -37,7 +37,7 @@ class CommonUtils {
     }
 
     static function getRandomAmount() {
-        return new Amount(1, 1, 1, 1, 1);
+        return new Amount(1, 1, 1, 1);
     }
 
     static function getRandomDoubleAmount($valid = true) {
