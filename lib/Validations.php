@@ -4,11 +4,11 @@ namespace kushki\lib;
 
 class Validations {
     static function validateAmount($amount) {
-      return self::validateNumber($amount, 0, 12, "El monto");
+        return self::validateNumber($amount, 0, 12, "El monto");
     }
 
     static function validateNumber($number, $minValue, $maxLength, $amountName) {
-        if ($number == null) {
+        if (is_null($number)) {
             throw new KushkiException($amountName . " no puede ser un valor nulo");
         }
         if ($number < $minValue) {
