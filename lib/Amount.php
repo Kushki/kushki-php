@@ -33,9 +33,4 @@ class Amount {
             "Total_amount" => $validatedTotal
         );
     }
-
-    public function toString() {
-        return "sI: " . $this->subtotalIVA . " sI0: " . $this->subtotalIVA0 .
-               " I: " . $this->iva . " C: " . $this->ice;
-    }
 }
