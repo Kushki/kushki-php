@@ -17,8 +17,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
     protected $merchantId;
 
-    const MERCHANT_ID = "10000001641080185390111217";
-    const SECRET_MERCHANT_ID = "10000001641088709280111217";
+    const MERCHANT_ID = "10000001641310597258111220";
+    const SECRET_MERCHANT_ID = "10000001641344874123111220";
 
     protected function setUp() {
         $this->merchantId = self::MERCHANT_ID;
