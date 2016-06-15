@@ -2,14 +2,12 @@
 
 namespace kushki\lib;
 
-define('URL', 'https://uat.aurusinc.com/kushki/api/v1');
-
 class KushkiConstant {
     const VERSION = '1.0';
-    const TOKENS_URL = URL . "/tokens";
-    const CHARGE_URL = URL . "/charge";
-    const VOID_URL = URL . "/void";
-    const DEFERRED_URL = URL . "/deferred";
+    const TOKENS_URL = "/tokens";
+    const CHARGE_URL = "/charge";
+    const VOID_URL = "/void";
+    const DEFERRED_URL = "/deferred";
     const PARAMETER_MERCHANT_ID = "merchant_identifier";
     const PARAMETER_LANGUAGE = "language_indicator";
     const PARAMETER_TRANSACTION_TOKEN = "transaction_token";

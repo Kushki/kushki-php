@@ -1,9 +1,11 @@
 <?php
 namespace kushki\tests\inttests\lib;
 
+
 use kushki\lib\KushkiRequest;
 use kushki\lib\KushkiConstant;
 use kushki\lib\RequestBuilder;
+use kushki\lib\KushkiEnvironment;
 
 class TokenRequestBuilder extends RequestBuilder {
 
@@ -13,9 +15,9 @@ class TokenRequestBuilder extends RequestBuilder {
     private $cardExpiryYear;
     private $cardCvv;
 
-    function __construct($merchantId, $cardParams) {
+    function __construct($merchantId, $cardParams, $baseUrl = KushkiEnvironment::PRODUCTION) {
         parent::__construct($merchantId);
-        $this->url = KushkiConstant::TOKENS_URL;
+        $this->url = $baseUrl . KushkiConstant::TOKENS_URL;
         $this->cardName = $cardParams[KushkiConstant::PARAMETER_CARD_NAME];
         $this->cardNumber = $cardParams[KushkiConstant::PARAMETER_CARD_NUMBER];
         $this->cardExpiryMonth = $cardParams[KushkiConstant::PARAMETER_CARD_EXP_MONTH];

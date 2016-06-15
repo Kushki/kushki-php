@@ -1,6 +1,8 @@
 <?php
 namespace kushki\tests\inttests\lib;
 use kushki\lib\KushkiConstant;
+use kushki\lib\KushkiEnvironment;
+use kushki\lib\RequestHandler;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,7 +11,6 @@ use kushki\lib\KushkiConstant;
  * Time: 17:13
  */
 require_once dirname(__FILE__) . '/TokenRequestBuilder.php';
-require_once dirname(__FILE__) . '/TokenRequestHandler.php';
 class TokenHelper {
 
     public static function getValidTokenTransaction($merchantId) {
@@ -24,11 +25,9 @@ class TokenHelper {
     }
 
     public static function requestToken($merchantId, $cardParams) {
-        $tokenRequestBuilder = new TokenRequestBuilder($merchantId, $cardParams);
+        $tokenRequestBuilder = new TokenRequestBuilder($merchantId, $cardParams, KushkiEnvironment::TESTING);
         $request = $tokenRequestBuilder->createRequest();
-
-        $requestHandler = new TokenRequestHandler($request);
-
-        return $requestHandler->requestToken();
+        $requestHandler = new RequestHandler();
+        return $requestHandler->call($request);
     }
 }

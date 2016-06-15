@@ -2,16 +2,10 @@
 namespace kushki\lib;
 
 class RequestHandler {
-    protected $request;
-
-    public function __construct($request) {
-        $this->request = $request;
-    }
-
-    protected function call() {
-        $requestBody = $this->request->getBody();
-        $responseRaw = \Httpful\Request::post($this->request->getUrl())
-                                       ->contentType($this->request->getContentType())
+    public function call($request) {
+        $requestBody = $request->getBody();
+        $responseRaw = \Httpful\Request::post($request->getUrl())
+                                       ->contentType($request->getContentType())
                                        ->withStrictSSL()
                                        ->body($requestBody)
                                        ->send();

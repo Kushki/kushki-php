@@ -1,9 +1,6 @@
 <?php
 namespace kushki\lib;
 
-use kushki\lib\KushkiRequest;
-use kushki\lib\KushkiConstant;
-
 class DeferredChargeRequestBuilder extends RequestBuilder {
 
     private $token;
@@ -11,9 +8,9 @@ class DeferredChargeRequestBuilder extends RequestBuilder {
     private $months;
     private $interest;
 
-    function __construct($merchantId, $token, $amount, $months) {
+    function __construct($merchantId, $token, $amount, $months, $baseUrl = KushkiEnvironment::PRODUCTION) {
         parent::__construct($merchantId);
-        $this->url = KushkiConstant::DEFERRED_URL;
+        $this->url = $baseUrl . KushkiConstant::DEFERRED_URL;
         $this->token = $token;
         $this->amount = $amount;
         $this->months = $months;

@@ -1,17 +1,14 @@
 <?php
 namespace kushki\lib;
 
-use kushki\lib\KushkiRequest;
-use kushki\lib\KushkiConstant;
-
 class VoidRequestBuilder extends RequestBuilder {
 
     private $ticket;
     private $amount;
 
-    function __construct($merchantId, $ticket, $amount) {
+    function __construct($merchantId, $ticket, $amount, $baseUrl = KushkiEnvironment::PRODUCTION) {
         parent::__construct($merchantId);
-        $this->url = KushkiConstant::VOID_URL;
+        $this->url = $baseUrl . KushkiConstant::VOID_URL;
         $this->amount = $amount;
         $this->ticket = $ticket;
     }

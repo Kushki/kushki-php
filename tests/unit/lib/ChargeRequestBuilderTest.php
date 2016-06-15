@@ -12,22 +12,27 @@ require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
 class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
 
     private $request;
-    private $randomUrl;
+    private $environment;
     private $randomMerchantId;
     private $currency = KushkiCurrencies::USD;
     private $randomTransactionAmount;
     private $randomTransactionToken;
 
     private function createChargeRequest() {
-        $this->randomUrl = CommonUtils::randomAlphaNumberString();
+        $this->environment = CommonUtils::randomAlphaNumberString();
         $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
         $this->randomTransactionToken = CommonUtils::randomAlphaNumberString();
         $this->randomTransactionAmount = CommonUtils::getRandomAmount();
 
-        $builder = new ChargeRequestBuilder($this->randomMerchantId,
-                                            $this->randomTransactionToken,
-                                            $this->randomTransactionAmount);
+        $builder = new ChargeRequestBuilder($this->randomMerchantId, $this->randomTransactionToken,
+                                            $this->randomTransactionAmount, $this->environment);
         $this->request = $builder->createRequest();
+    }
+
+    public function testHasAppropiateUrlAccordingToTheEnvironment() {
+        $this->createChargeRequest();
+        $this->assertEquals($this->environment . KushkiConstant::CHARGE_URL, $this->request->getUrl(),
+                            "Environment URL is not set correctly");
     }
 
     public function testHasContentTypeOnChargeRequest() {

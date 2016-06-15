@@ -3,7 +3,7 @@ namespace kushki\tests\inttests\lib;
 
 use kushki\lib\Kushki;
 use kushki\lib\KushkiConstant;
-
+use kushki\lib\KushkiEnvironment;
 use kushki\lib\KushkiCurrencies;
 use kushki\lib\KushkiLanguages;
 use kushki\tests\lib\CommonUtils;
@@ -25,8 +25,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $secretMerchantId = self::SECRET_MERCHANT_ID;
         $idioma = KushkiLanguages::ES;
         $moneda = KushkiCurrencies::USD;
-        $this->kushki = new Kushki($this->merchantId, $idioma, $moneda);;
-        $this->secretKushki = new Kushki($secretMerchantId, $idioma, $moneda);;
+        $this->kushki = new Kushki($this->merchantId, $idioma, $moneda, KushkiEnvironment::TESTING);
+        $this->secretKushki = new Kushki($secretMerchantId, $idioma, $moneda, KushkiEnvironment::TESTING);
     }
 
     public function testShouldReturnSuccessfulTokenTransaction_TC_001() {
@@ -65,7 +65,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
         $chargeTransaction = $this->secretKushki->charge($token, $amount);
 
-        $this->assertsTransaction($chargeTransaction, false, "El token de la transacción no es válido", "577");
+        $this->assertsTransaction($chargeTransaction, false, "ID de comercio no válido", "201");
     }
 
     /**
@@ -87,7 +87,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsValidTransaction($chargeTransaction);
         $this->assertsValidTransaction($voidTransaction);
     }
-    
+
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
         $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();

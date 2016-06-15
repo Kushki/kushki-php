@@ -1,17 +1,14 @@
 <?php
 namespace kushki\lib;
 
-use kushki\lib\KushkiRequest;
-use kushki\lib\KushkiConstant;
-
 class ChargeRequestBuilder extends RequestBuilder {
 
     private $token;
     private $amount;
 
-    function __construct($merchantId, $token, $amount) {
+    function __construct($merchantId, $token, $amount, $baseUrl = KushkiEnvironment::PRODUCTION) {
         parent::__construct($merchantId);
-        $this->url = KushkiConstant::CHARGE_URL;
+        $this->url = $baseUrl . KushkiConstant::CHARGE_URL;
         $this->token = $token;
         $this->amount = $amount;
     }
