@@ -5,7 +5,7 @@ use kushki\lib\Kushki;
 use kushki\lib\KushkiConstant;
 use kushki\lib\KushkiEnvironment;
 use kushki\lib\KushkiCurrency;
-use kushki\lib\KushkiLanguages;
+use kushki\lib\KushkiLanguage;
 use kushki\tests\lib\CommonUtils;
 
 require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
@@ -23,7 +23,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->merchantId = self::MERCHANT_ID;
         $secretMerchantId = self::SECRET_MERCHANT_ID;
-        $idioma = KushkiLanguages::ES;
+        $idioma = KushkiLanguage::ES;
         $moneda = KushkiCurrency::USD;
         $this->kushki = new Kushki($this->merchantId, $idioma, $moneda, KushkiEnvironment::TESTING);
         $this->secretKushki = new Kushki($secretMerchantId, $idioma, $moneda, KushkiEnvironment::TESTING);

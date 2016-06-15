@@ -2,7 +2,7 @@
 
 namespace kushki\lib;
 
-class KushkiLanguages {
+class KushkiLanguage {
     const
         __default = 'es',
         ES = 'es',

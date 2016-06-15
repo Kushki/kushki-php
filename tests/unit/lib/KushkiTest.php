@@ -3,7 +3,7 @@ namespace kushki\tests\unit\lib;
 
 use kushki\lib\Amount;
 use kushki\lib\KushkiCurrency;
-use kushki\lib\KushkiLanguages;
+use kushki\lib\KushkiLanguage;
 use kushki\lib\Kushki;
 use kushki\lib\RequestHandler;
 use kushki\tests\lib\CommonUtils;
@@ -20,7 +20,7 @@ class KushkiTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->environment = CommonUtils::randomAlphaString(5, 10);
         $this->merchantId = rand(1000, 10000);
-        $this->kushki = new Kushki($this->merchantId, KushkiLanguages::ES, KushkiCurrency::USD, $this->environment);
+        $this->kushki = new Kushki($this->merchantId, KushkiLanguage::ES, KushkiCurrency::USD, $this->environment);
         $this->requestHandler = $this->getMockBuilder(RequestHandler::class)
                                      ->setMethods(array('call'))
                                      ->getMock();

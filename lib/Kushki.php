@@ -16,7 +16,7 @@ class Kushki {
      * @param string $environment
      */
     public function __construct($merchantId,
-                                $language = KushkiLanguages::ES,
+                                $language = KushkiLanguage::ES,
                                 $currency = KushkiCurrency::USD,
                                 $environment = KushkiEnvironment::PRODUCTION) {
         $this->merchantId = $merchantId;
