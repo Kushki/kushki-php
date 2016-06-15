@@ -1,12 +1,13 @@
 <?php
 namespace kushki\tests\unit\lib;
 
-use kushki\lib\kushkiConstant;
+use kushki\lib\KushkiConstant;
 use kushki\lib\Transaction;
 use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
 
 require_once dirname(__FILE__) . '/../../lib/CommonUtils.php';
+require_once('ResponseBuilder.php');
 
 class ResponseTest extends PHPUnit_Framework_TestCase {
 
