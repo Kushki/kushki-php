@@ -6,7 +6,7 @@ use kushki\lib\KushkiConstant;
 
 abstract class RequestBuilder {
     protected $url;
-    protected $currency = KushkiCurrencies::USD;
+    protected $currency = KushkiCurrency::USD;
     protected $merchantId;
     protected $language = KushkiLanguages::ES;
 

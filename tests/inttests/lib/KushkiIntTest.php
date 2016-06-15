@@ -4,7 +4,7 @@ namespace kushki\tests\inttests\lib;
 use kushki\lib\Kushki;
 use kushki\lib\KushkiConstant;
 use kushki\lib\KushkiEnvironment;
-use kushki\lib\KushkiCurrencies;
+use kushki\lib\KushkiCurrency;
 use kushki\lib\KushkiLanguages;
 use kushki\tests\lib\CommonUtils;
 
@@ -24,7 +24,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->merchantId = self::MERCHANT_ID;
         $secretMerchantId = self::SECRET_MERCHANT_ID;
         $idioma = KushkiLanguages::ES;
-        $moneda = KushkiCurrencies::USD;
+        $moneda = KushkiCurrency::USD;
         $this->kushki = new Kushki($this->merchantId, $idioma, $moneda, KushkiEnvironment::TESTING);
         $this->secretKushki = new Kushki($secretMerchantId, $idioma, $moneda, KushkiEnvironment::TESTING);
     }

@@ -3,7 +3,7 @@ namespace kushki\tests\unit\lib;
 
 use kushki\lib\ChargeRequestBuilder;
 use kushki\lib\KushkiConstant;
-use kushki\lib\KushkiCurrencies;
+use kushki\lib\KushkiCurrency;
 use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
 
@@ -14,7 +14,7 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
     private $request;
     private $environment;
     private $randomMerchantId;
-    private $currency = KushkiCurrencies::USD;
+    private $currency = KushkiCurrency::USD;
     private $randomTransactionAmount;
     private $randomTransactionToken;
 

@@ -9,7 +9,7 @@ class KushkiLanguages {
         EN = 'en';
 }
 
-class KushkiCurrencies {
+class KushkiCurrency {
     const
         __default = 'USD',
         USD = 'USD';
