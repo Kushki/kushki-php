@@ -30,25 +30,28 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testShouldReturnSuccessfulTokenTransaction_TC_001() {
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
+        $amount = CommonUtils::getRandomAmount();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
         $this->assertsValidTransaction($tokenTransaction);
     }
 
     public function testShouldReturnNonSuccessfulTokenTransactionInvalidCard_TC_002() {
         $cardParams = array(
-            KushkiConstant::PARAMETER_CARD_NAME => "John Doe",
-            KushkiConstant::PARAMETER_CARD_NUMBER => "5411111111115854",
-            KushkiConstant::PARAMETER_CARD_EXP_MONTH => "12",
-            KushkiConstant::PARAMETER_CARD_EXP_YEAR => "20",
-            KushkiConstant::PARAMETER_CARD_CVC => "123",
+            "name" => "John Doe",
+            "number" => "5411111111115854",
+            "expiry_month" => "12",
+            "expiry_year" => "20",
+            "cvv" => "123",
+            "amount" => CommonUtils::getRandomAmount()
+
         );
         $tokenTransaction = TokenHelper::requestToken($this->merchantId, $cardParams);
         $this->assertsTransaction($tokenTransaction, false, "Tarjeta no válida", "017");
     }
 
     public function testShouldReturnSuccessfulChargeTransaction_TC_006() {
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
         $token = $tokenTransaction->getToken();
 
         sleep(CommonUtils::THREAD_SLEEP);
@@ -73,8 +76,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
      * Tests the api edit form
      */
     public function testShouldReturnSuccessfulVoidTransaction_TC_014() {
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->secretKushki->charge($token, $amount);
@@ -89,8 +92,8 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId);
         $amount = CommonUtils::getRandomAmount();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
         $token = $tokenTransaction->getToken();
         $monthsDeferred = array(3, 6, 9, 12);
         $months = $monthsDeferred[array_rand($monthsDeferred)];

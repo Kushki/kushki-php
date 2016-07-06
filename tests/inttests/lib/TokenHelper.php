@@ -13,13 +13,14 @@ use kushki\lib\RequestHandler;
 require_once dirname(__FILE__) . '/TokenRequestBuilder.php';
 class TokenHelper {
 
-    public static function getValidTokenTransaction($merchantId) {
+    public static function getValidTokenTransaction($merchantId, $amount) {
         $cardParams = array(
-            KushkiConstant::PARAMETER_CARD_NAME => "John Doe",
-            KushkiConstant::PARAMETER_CARD_NUMBER => "4017779991118888",
-            KushkiConstant::PARAMETER_CARD_EXP_MONTH => "12",
-            KushkiConstant::PARAMETER_CARD_EXP_YEAR => "21",
-            KushkiConstant::PARAMETER_CARD_CVC => "123",
+            "name" => "John Doe",
+            "number" => "4017779991118888",
+            "expiry_month" => "12",
+            "expiry_year" => "21",
+            "cvv" => "123",
+            "amount" => $amount
         );
         return self::requestToken($merchantId, $cardParams);
     }
