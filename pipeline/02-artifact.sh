@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-zip -r out/artifacts/Kushki/kushki-dev.zip * --exclude='*.git*' --exclude='*test*' --exclude='README.md' --exclude='runTest.sh' --exclude='*.iml*' --exclude='phpunit.xml' --exclude='*reports*' --exclude='*pipeline*'
+composer archive --format zip --dir out/artifacts/Kushki --file kushki-dev
 
 # ARTIFACTS:
 # ARTIFACT out/artifacts/Kushki/
