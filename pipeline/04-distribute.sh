@@ -2,6 +2,7 @@
 
 artifact_version=$(cat composer.json | grep \"version\": | cut -d'"' -f 4)
 
+cp out/artifacts/Kushki/kushki-dev.zip out/artifacts/Kushki/kushki.zip
 mv out/artifacts/Kushki/kushki-dev.zip out/artifacts/Kushki/kushki-$artifact_version.zip
 git add out/artifacts/Kushki/
 git commit -m "[snap-ci] adding latest version of zip, version: $artifact_version"
