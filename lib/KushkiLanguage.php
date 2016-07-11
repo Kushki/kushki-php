@@ -8,11 +8,3 @@ class KushkiLanguage {
         ES = 'es',
         EN = 'en';
 }
-
-class KushkiCurrency {
-    const
-        __default = 'USD',
-        USD = 'USD';
-}
-
-?>

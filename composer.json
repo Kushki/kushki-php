@@ -4,7 +4,7 @@
   "homepage": "https://github.com/Kushki/kushki-php",
   "type": "library",
   "license": "MIT",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "archive": {
     "exclude": [
       "/tests",
@@ -19,6 +19,9 @@
       "/phpunit.xml",
       "!/vendor"
     ]
+  },
+  "autoload": {
+    "psr-4": {"kushki\\lib\\": "lib/"}
   },
   "require-dev": {
     "phpunit/phpunit": "5.3.*",
