@@ -15,6 +15,7 @@
       "/.gitignore",
       "/composer.lock",
       "/*.sh",
+      "/*.log",
       "/phpunit.xml",
       "!/vendor"
     ]
