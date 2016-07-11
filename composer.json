@@ -15,7 +15,8 @@
       "/.gitignore",
       "/composer.lock",
       "/*.sh",
-      "/phpunit.xml"
+      "/phpunit.xml",
+      "!/vendor"
     ]
   },
   "require-dev": {
