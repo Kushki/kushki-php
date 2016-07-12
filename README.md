@@ -2,7 +2,7 @@
 
 Estatus: [![Estatus en Snap CI](https://img.shields.io/snap-ci/Kushki/kushki-php/master.svg?maxAge=2592000)](https://snap-ci.com/Kushki/kushki-php)  
 Última versión estable: [![Packagist](https://img.shields.io/packagist/v/kushki/kushki-php.svg?maxAge=2592000)](https://packagist.org/packages/kushki/kushki-php)  
-Licencia: [![Packagist](https://img.shields.io/packagist/l/kushki/kushki-php.svg?maxAge=2592000)](https://packagist.org/packages/kushki/kushki-php)
+Licencia: [![Packagist](https://img.shields.io/packagist/l/kushki/kushki-php.svg?maxAge=2592000)](https://github.com/Kushki/kushki-php/blob/master/LICENSE.txt)
 
 ## Documentación
 
