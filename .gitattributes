@@ -1,0 +1,11 @@
+/tests export-ignore
+/out export-ignore
+/.git export-ignore
+/pipeline export-ignore
+/docs export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/composer.lock export-ignore
+/*.sh export-ignore
+/*.log export-ignore
+/phpunit.xml export-ignore

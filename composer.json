@@ -13,6 +13,7 @@
       "/pipeline",
       "/docs",
       "/.gitignore",
+      "/.gitattributes",
       "/composer.lock",
       "/*.sh",
       "/*.log",
