@@ -37,7 +37,8 @@ class TokenRequestBuilder extends RequestBuilder {
                 "number" => $this->cardNumber,
                 "expiry_month" => $this->cardExpiryMonth,
                 "expiry_year" => $this->cardExpiryYear,
-                "cvv" => $this->cardCvv
+                "cvv" => $this->cardCvv,
+	            "card_present" => "1"
             ),
             "amount" => $this->amount->toHash()["Total_amount"],
             "remember_me" => '0'

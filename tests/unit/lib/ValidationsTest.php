@@ -17,7 +17,7 @@ class ValidationsTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThrowsKushkiExceptionIfNumberIsInvalidDataProvider() {
-        $tooLong = CommonUtils::getRandomDouble(1000000000000, 9999999999999999999);
+        $tooLong = 4837593859736;
         $negative = -CommonUtils::getRandomDouble(1, 150);
         $invalidNumbersAndExceptionMessages = array(
             array($tooLong, "El valor debe tener 12 o menos dígitos"),
