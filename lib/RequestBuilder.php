@@ -10,8 +10,9 @@ abstract class RequestBuilder {
     protected $merchantId;
     protected $language = KushkiLanguage::ES;
 
-    function __construct($merchantId) {
+    function __construct($merchantId, $currency = KushkiCurrency::USD) {
         $this->merchantId = $merchantId;
+        $this->currency = $currency;
     }
 
     abstract protected function createRequest();

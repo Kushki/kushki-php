@@ -8,12 +8,14 @@ class DeferredChargeRequestBuilder extends RequestBuilder {
     private $months;
     private $interest;
 
-    function __construct($merchantId, $token, $amount, $months, $baseUrl = KushkiEnvironment::PRODUCTION) {
+    function __construct($merchantId, $token, $amount, $months, $baseUrl = KushkiEnvironment::PRODUCTION,
+                         $currency = KushkiCurrency::USD) {
         parent::__construct($merchantId);
         $this->url = $baseUrl . KushkiConstant::DEFERRED_URL;
         $this->token = $token;
         $this->amount = $amount;
         $this->months = $months;
+        $this->currency = $currency;
     }
 
     public function createRequest() {

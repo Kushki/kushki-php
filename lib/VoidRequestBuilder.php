@@ -6,8 +6,9 @@ class VoidRequestBuilder extends RequestBuilder {
     private $ticket;
     private $amount;
 
-    function __construct($merchantId, $ticket, $amount, $baseUrl = KushkiEnvironment::PRODUCTION) {
-        parent::__construct($merchantId);
+    function __construct($merchantId, $ticket, $amount, $baseUrl = KushkiEnvironment::PRODUCTION,
+                         $currency = KushkiCurrency::USD) {
+        parent::__construct($merchantId, $currency);
         $this->url = $baseUrl . KushkiConstant::VOID_URL;
         $this->amount = $amount;
         $this->ticket = $ticket;
