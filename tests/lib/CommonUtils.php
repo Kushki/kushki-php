@@ -1,7 +1,7 @@
 <?php
 namespace kushki\tests\lib;
 use kushki\lib\Amount;
-use kushki\lib\Tax;
+use kushki\lib\ExtraTaxes;
 
 class CommonUtils {
 
@@ -37,20 +37,17 @@ class CommonUtils {
       return $randomDouble;
     }
 
+    static function getRandomInteger($min, $max) {
+        return rand($min, $max);
+    }
+
     static function getRandomAmount() {
         return new Amount(1, 1, 1, 1);
     }
 
     static function getRandomAmountColombia() {
-        $min = 1;
-        $max = 50;
-
-        $propina = $randomInt = rand($min*100, $max*100);
-        $tasaAeroportuara = $randomInt = rand($min*100, $max*100);
-        $agenciaViajes = $randomInt = rand($min*100, $max*100);
-        $iac = $randomInt = rand($min*100, $max*100);
-        $tax = new Tax($propina, $tasaAeroportuara, $agenciaViajes, $iac);
-        return new Amount(3200, 608, 0, $tax);
+        $extraTaxes = new ExtraTaxes(0, 10, 20, 30);
+        return new Amount(700, 40, 0, $extraTaxes);
     }
 
     static function getRandomDoubleAmount($valid = true) {

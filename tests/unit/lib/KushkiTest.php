@@ -2,6 +2,7 @@
 namespace kushki\tests\unit\lib;
 
 use kushki\lib\Amount;
+use kushki\lib\ExtraTaxes;
 use kushki\lib\KushkiCurrency;
 use kushki\lib\KushkiLanguage;
 use kushki\lib\Kushki;
@@ -41,7 +42,7 @@ class KushkiTest extends PHPUnit_Framework_TestCase {
     public function testChargeHasCorrectUrlColombia() {
         $this->actionUrl = '/charge';
         $this->assertUrl();
-        $tax = new Tax(1, 1, 1, 1);
+        $tax = new ExtraTaxes(1, 1, 1, 1);
         $this->kushki->charge("a", new Amount(1, 1, 1, $tax));
     }
 
@@ -54,7 +55,7 @@ class KushkiTest extends PHPUnit_Framework_TestCase {
     public function testDeferredChargeHasCorrectUrlColombia() {
         $this->actionUrl = '/deferred';
         $this->assertUrl();
-        $tax = new Tax(1, 1, 1, 1);
+        $tax = new ExtraTaxes(1, 1, 1, 1);
         $this->kushki->deferredCharge("a", new Amount(1, 1, 1, $tax), 3);
     }
 
@@ -67,7 +68,7 @@ class KushkiTest extends PHPUnit_Framework_TestCase {
     public function testVoidHasCorrectUrlColombia() {
         $this->actionUrl = '/void';
         $this->assertUrl();
-        $tax = new Tax(1, 1, 1, 1);
+        $tax = new ExtraTaxes(1, 1, 1, 1);
         $this->kushki->voidCharge("a", new Amount(1, 1, 1, $tax));
     }
 

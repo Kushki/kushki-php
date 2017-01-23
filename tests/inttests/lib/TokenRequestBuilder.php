@@ -2,6 +2,7 @@
 namespace kushki\tests\inttests\lib;
 
 
+use kushki\lib\KushkiCurrency;
 use kushki\lib\KushkiRequest;
 use kushki\lib\KushkiConstant;
 use kushki\lib\RequestBuilder;
@@ -16,8 +17,9 @@ class TokenRequestBuilder extends RequestBuilder {
     private $cardCvv;
     private $amount;
 
-    function __construct($merchantId, $cardParams, $baseUrl = KushkiEnvironment::PRODUCTION) {
-        parent::__construct($merchantId);
+    function __construct($merchantId, $cardParams, $baseUrl = KushkiEnvironment::PRODUCTION,
+                         $currency = KushkiCurrency::USD) {
+        parent::__construct($merchantId, $currency);
         $this->url = $baseUrl . KushkiConstant::TOKENS_URL;
         $this->cardName = $cardParams["name"];
         $this->cardNumber = $cardParams["number"];

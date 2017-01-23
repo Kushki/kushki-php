@@ -33,7 +33,8 @@ class Kushki {
      * @throws KushkiException
      */
     public function charge($token, $amount) {
-        $chargeRequestBuilder = new ChargeRequestBuilder($this->merchantId, $token, $amount, $this->environment);
+        $chargeRequestBuilder = new ChargeRequestBuilder($this->merchantId, $token, $amount, $this->environment,
+                                                         $this->currency);
         $request = $chargeRequestBuilder->createRequest();
         return $this->requestHandler->call($request);
     }
@@ -47,7 +48,7 @@ class Kushki {
      */
     public function deferredCharge($token, $amount, $months) {
         $deferredChargeRequestBuilder = new DeferredChargeRequestBuilder($this->merchantId, $token, $amount, $months,
-                                                                         $this->environment);
+                                                                         $this->environment, $this->currency);
         $request = $deferredChargeRequestBuilder->createRequest();
         return $this->requestHandler->call($request);
     }
@@ -59,7 +60,8 @@ class Kushki {
      * @throws KushkiException
      */
     public function voidCharge($ticket, $amount) {
-        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $ticket, $amount, $this->environment);
+        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $ticket, $amount, $this->environment,
+                                                     $this->currency);
         $request = $voidRequestBuilder->createRequest();
         return $this->requestHandler->call($request);
     }

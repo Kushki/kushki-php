@@ -6,8 +6,9 @@ class ChargeRequestBuilder extends RequestBuilder {
     private $token;
     private $amount;
 
-    function __construct($merchantId, $token, $amount, $baseUrl = KushkiEnvironment::PRODUCTION) {
-        parent::__construct($merchantId);
+    function __construct($merchantId, $token, $amount, $baseUrl = KushkiEnvironment::PRODUCTION,
+                         $currency = KushkiCurrency::USD) {
+        parent::__construct($merchantId, $currency);
         $this->url = $baseUrl . KushkiConstant::CHARGE_URL;
         $this->token = $token;
         $this->amount = $amount;

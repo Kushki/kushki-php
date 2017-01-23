@@ -8,18 +8,21 @@ class Amount {
     private $subtotalIVA0;
     private $iva;
     private $ice;
-    private $tax;
+
+    private $extraTaxes;
 
     public function __construct($subtotalIVA, $iva, $subtotalIVA0, $aux_tax) {
         $this->subtotalIVA = $subtotalIVA;
         $this->subtotalIVA0 = $subtotalIVA0;
         $this->iva = $iva;
         $this->ice = 0;
-        $this->tax = new Tax(0, 0, 0, 0);
+        $this->extraTaxes = new ExtraTaxes(0, 0, 0, 0);
         if(is_numeric($aux_tax)) {
             $this->ice = $aux_tax;
-        } else if($aux_tax instanceof Tax) {
-            $this->tax = $aux_tax;
+        } else if($aux_tax instanceof ExtraTaxes) {
+            $this->extraTaxes = $aux_tax;
+        } else {
+            $this->extraTaxes = null;
         }
     }
 
@@ -28,18 +31,22 @@ class Amount {
         $validatedSubtotalIVA0 = Validations::validateNumber($this->subtotalIVA0, 0, 12, "El subtotal IVA 0");
         $validatedIva = Validations::validateNumber($this->iva, 0, 12, "El IVA");
         $validatedIce = Validations::validateNumber($this->ice, 0, 12, "El ICE");
-        $total_tax = Validations::validateNumber($this->tax->getTotalTax(), 0, 12, "El total tax");
 
-        $total = $this->subtotalIVA + $this->subtotalIVA0 + $this->iva + $this->ice + $total_tax;
+        $total = $this->subtotalIVA + $this->subtotalIVA0 + $this->iva + $this->ice + $this->extraTaxes->getTotalTax();
         $validatedTotal = Validations::validateNumber($total, 0, 12, "El total");
 
-        return array(
-            "Subtotal_IVA" => $validatedSubtotalIVA,
-            "Subtotal_IVA0" => $validatedSubtotalIVA0,
-            "IVA" => $validatedIva,
-            "ICE" => $validatedIce,
-            "Tax" => $total_tax,
-            "Total_amount" => $validatedTotal
-        );
+        $arrayHash = array("Subtotal_IVA" => $validatedSubtotalIVA,
+                           "Subtotal_IVA0" => $validatedSubtotalIVA0,
+                           "IVA" => $validatedIva);
+        if($validatedIce > 0) {
+            $arrayHash["ICE"] = $validatedIce;
+        }
+        $arrayHash["Total_amount"] = $validatedTotal;
+        if(count($this->extraTaxes->toHashArray()) > 0) {
+            $arrayHash["tax"] = $this->extraTaxes->toHashArray();
+        }
+        return $arrayHash;
     }
+
+
 }
