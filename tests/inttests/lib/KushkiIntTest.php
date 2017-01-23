@@ -149,6 +149,22 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsValidTransaction($voidTransaction);
     }
 
+//    public function testShouldReturnSuccessfulVoidTransaction_TC_014Colombia() {
+//        $amount = CommonUtils::getRandomAmountColombia();
+//        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia($this->merchantIdColombia, $amount);
+//        $token = $tokenTransaction->getToken();
+//        sleep(CommonUtils::THREAD_SLEEP);
+//        $chargeTransaction = $this->secretKushkiColombia->charge($token, $amount);
+//        $ticket = $chargeTransaction->getTicketNumber();
+//
+//        sleep(CommonUtils::THREAD_SLEEP);
+//        $voidTransaction = $this->secretKushkiColombia->voidCharge($ticket, $amount);
+//
+//        $this->assertsValidTransaction($tokenTransaction);
+//        $this->assertsValidTransaction($chargeTransaction);
+//        $this->assertsValidTransaction($voidTransaction);
+//    }
+
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
         $amount = CommonUtils::getRandomAmount();
         $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
