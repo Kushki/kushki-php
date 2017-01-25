@@ -1,4 +1,5 @@
 <?php
+
 namespace kushki\lib;
 
 class DeferredChargeRequestBuilder extends RequestBuilder {

@@ -1,4 +1,5 @@
 <?php
+
 namespace kushki\lib;
 
 use kushki\lib\KushkiRequest;

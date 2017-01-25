@@ -39,37 +39,16 @@ class KushkiTest extends PHPUnit_Framework_TestCase {
         $this->kushki->charge("a", new Amount(1, 1, 1, 1));
     }
 
-    public function testChargeHasCorrectUrlColombia() {
-        $this->actionUrl = '/charge';
-        $this->assertUrl();
-        $tax = new ExtraTaxes(1, 1, 1, 1);
-        $this->kushki->charge("a", new Amount(1, 1, 1, $tax));
-    }
-
     public function testDeferredChargeHasCorrectUrl() {
         $this->actionUrl = '/deferred';
         $this->assertUrl();
         $this->kushki->deferredCharge("a", new Amount(1, 1, 1, 1), 3);
     }
 
-    public function testDeferredChargeHasCorrectUrlColombia() {
-        $this->actionUrl = '/deferred';
-        $this->assertUrl();
-        $tax = new ExtraTaxes(1, 1, 1, 1);
-        $this->kushki->deferredCharge("a", new Amount(1, 1, 1, $tax), 3);
-    }
-
     public function testVoidHasCorrectUrl() {
         $this->actionUrl = '/void';
         $this->assertUrl();
         $this->kushki->voidCharge("a", new Amount(1, 1, 1, 1));
-    }
-
-    public function testVoidHasCorrectUrlColombia() {
-        $this->actionUrl = '/void';
-        $this->assertUrl();
-        $tax = new ExtraTaxes(1, 1, 1, 1);
-        $this->kushki->voidCharge("a", new Amount(1, 1, 1, $tax));
     }
 
     private function overrideRequestHandler($kushki, $requestHandler) {

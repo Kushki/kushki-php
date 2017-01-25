@@ -1,7 +1,6 @@
 <?php
 namespace kushki\tests\inttests\lib;
 
-
 use kushki\lib\KushkiCurrency;
 use kushki\lib\KushkiRequest;
 use kushki\lib\KushkiConstant;

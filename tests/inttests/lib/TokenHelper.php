@@ -1,16 +1,11 @@
 <?php
 namespace kushki\tests\inttests\lib;
+
 use kushki\lib\KushkiConstant;
 use kushki\lib\KushkiCurrency;
 use kushki\lib\KushkiEnvironment;
 use kushki\lib\RequestHandler;
 
-/**
- * Created by IntelliJ IDEA.
- * User: lmunda
- * Date: 19/04/16
- * Time: 17:13
- */
 require_once dirname(__FILE__) . '/TokenRequestBuilder.php';
 class TokenHelper {
 

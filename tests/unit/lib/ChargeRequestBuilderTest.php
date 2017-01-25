@@ -18,31 +18,10 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
     private $randomTransactionAmount;
     private $randomTransactionToken;
 
-    private function createChargeRequest($withTax = false) {
-        $this->environment = CommonUtils::randomAlphaNumberString();
-        $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
-        $this->randomTransactionToken = CommonUtils::randomAlphaNumberString();
-        if(!$withTax) {
-            $this->randomTransactionAmount = CommonUtils::getRandomAmount();
-        } else {
-            $this->randomTransactionAmount = CommonUtils::getRandomAmountColombia();
-        }
-
-        $builder = new ChargeRequestBuilder($this->randomMerchantId, $this->randomTransactionToken,
-                                            $this->randomTransactionAmount, $this->environment);
-        $this->request = $builder->createRequest();
-    }
-
     public function testHasAppropiateUrlAccordingToTheEnvironment() {
         $this->createChargeRequest();
         $this->assertEquals($this->environment . KushkiConstant::CHARGE_URL, $this->request->getUrl(),
                             "Environment URL is not set correctly");
-    }
-
-    public function testHasAppropiateUrlAccordingToTheEnvironmentColombia() {
-        $this->createChargeRequest(true);
-        $this->assertEquals($this->environment . KushkiConstant::CHARGE_URL, $this->request->getUrl(),
-            "Environment URL is not set correctly");
     }
 
     public function testHasContentTypeOnChargeRequest() {
@@ -51,24 +30,11 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
             "Requires content type");
     }
 
-    public function testHasContentTypeOnChargeRequestColombia() {
-        $this->createChargeRequest(true);
-        $this->assertEquals(KushkiConstant::CONTENT_TYPE, $this->request->getContentType(),
-                            "Requires content type");
-    }
-
     public function testHasTokenOnChargeRequest() {
         $this->createChargeRequest();
         $this->assertEquals($this->randomTransactionToken,
                             $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_TOKEN),
                             "Requires param token");
-    }
-
-    public function testHasTokenOnChargeRequestColombia() {
-        $this->createChargeRequest(true);
-        $this->assertEquals($this->randomTransactionToken,
-            $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_TOKEN),
-            "Requires param token");
     }
 
     public function testHasAmountOnChargeRequest() {
@@ -92,25 +58,11 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
                             "Requires param currency");
     }
 
-    public function testHasCurrencyOnChargeRequestColombia() {
-        $this->createChargeRequest(true);
-        $this->assertEquals($this->currency,
-            $this->request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE),
-            "Requires param currency");
-    }
-
     public function testHasMerchantIdOnChargeRequest() {
         $this->createChargeRequest();
         $this->assertEquals($this->randomMerchantId,
                             $this->request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
                             "Requires param merchant_id on charge request");
-    }
-
-    public function testHasMerchantIdOnChargeRequestColombia() {
-        $this->createChargeRequest(true);
-        $this->assertEquals($this->randomMerchantId,
-            $this->request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
-            "Requires param merchant_id on charge request");
     }
 
     public function testThrowExceptionOnIncorrectParameter() {
@@ -122,12 +74,18 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
         $this->request->getParameter(CommonUtils::randomAlphaString());
     }
 
-    public function testThrowExceptionOnIncorrectParameterColombia() {
-        $this->createChargeRequest(true);
+    private function createChargeRequest($isColombianTransaction = false) {
+        $this->environment = CommonUtils::randomAlphaNumberString();
+        $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
+        $this->randomTransactionToken = CommonUtils::randomAlphaNumberString();
+        if($isColombianTransaction) {
+            $this->randomTransactionAmount = CommonUtils::getRandomAmountColombia();
+        } else {
+            $this->randomTransactionAmount = CommonUtils::getRandomAmount();
+        }
 
-        $this->setExpectedException(
-            'kushki\lib\KushkiException', 'Parameter does not exist', 0
-        );
-        $this->request->getParameter(CommonUtils::randomAlphaString());
+        $builder = new ChargeRequestBuilder($this->randomMerchantId, $this->randomTransactionToken,
+                                            $this->randomTransactionAmount, $this->environment);
+        $this->request = $builder->createRequest();
     }
 }

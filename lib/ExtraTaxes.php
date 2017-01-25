@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: acabrera
- * Date: 19/01/17
- * Time: 16:50
- */
 
 namespace kushki\lib;
-
 
 use phpDocumentor\Reflection\Types\Array_;
 
@@ -45,7 +38,7 @@ class ExtraTaxes
         $this->iac = new Tax(ExtraTaxes::ID_TAX_IAC, ExtraTaxes::NAME_TAX_IAC, $iac);
     }
 
-    public function getTotalTax()
+    public function getTotalExtraTaxes()
     {
         $total = $this->propina->getAmount() + $this->tasaAeroportuaria->getAmount() +
                  $this->agenciaDeViajes->getAmount() + $this->iac->getAmount();
@@ -53,19 +46,19 @@ class ExtraTaxes
     }
 
     public function toHashArray() {
-        $auxTaxes = array();
+        $extraTaxes = array();
         if($this->propina->getAmount() > 0) {
-            $auxTaxes[0] = $this->propina->toHash();
+            $extraTaxes[0] = $this->propina->toHash();
         }
         if($this->tasaAeroportuaria->getAmount() > 0) {
-            $auxTaxes[1] = $this->tasaAeroportuaria->toHash();
+            $extraTaxes[1] = $this->tasaAeroportuaria->toHash();
         }
         if($this->agenciaDeViajes->getAmount() > 0) {
-            $auxTaxes[2] = $this->agenciaDeViajes->toHash();
+            $extraTaxes[2] = $this->agenciaDeViajes->toHash();
         }
         if($this->iac->getAmount() > 0) {
-            $auxTaxes[3] = $this->iac->toHash();
+            $extraTaxes[3] = $this->iac->toHash();
         }
-        return array_values($auxTaxes);
+        return array_values($extraTaxes);
     }
 }

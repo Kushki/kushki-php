@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: acabrera
- * Date: 18/01/17
- * Time: 14:58
- */
 
 namespace kushki\lib;
-
 
 class Tax
 {

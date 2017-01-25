@@ -8,19 +8,18 @@ class Amount {
     private $subtotalIVA0;
     private $iva;
     private $ice;
-
     private $extraTaxes;
 
-    public function __construct($subtotalIVA, $iva, $subtotalIVA0, $aux_tax) {
+    public function __construct($subtotalIVA, $iva, $subtotalIVA0, $auxTax) {
         $this->subtotalIVA = $subtotalIVA;
         $this->subtotalIVA0 = $subtotalIVA0;
         $this->iva = $iva;
         $this->ice = 0;
         $this->extraTaxes = new ExtraTaxes(0, 0, 0, 0);
-        if(is_numeric($aux_tax)) {
-            $this->ice = $aux_tax;
-        } else if($aux_tax instanceof ExtraTaxes) {
-            $this->extraTaxes = $aux_tax;
+        if(is_numeric($auxTax)) {
+            $this->ice = $auxTax;
+        } else if($auxTax instanceof ExtraTaxes) {
+            $this->extraTaxes = $auxTax;
         } else {
             $this->extraTaxes = null;
         }
@@ -31,10 +30,8 @@ class Amount {
         $validatedSubtotalIVA0 = Validations::validateNumber($this->subtotalIVA0, 0, 12, "El subtotal IVA 0");
         $validatedIva = Validations::validateNumber($this->iva, 0, 12, "El IVA");
         $validatedIce = Validations::validateNumber($this->ice, 0, 12, "El ICE");
-
-        $total = $this->subtotalIVA + $this->subtotalIVA0 + $this->iva + $this->ice + $this->extraTaxes->getTotalTax();
+        $total = $this->subtotalIVA + $this->subtotalIVA0 + $this->iva + $this->ice + $this->extraTaxes->getTotalExtraTaxes();
         $validatedTotal = Validations::validateNumber($total, 0, 12, "El total");
-
         $arrayHash = array("Subtotal_IVA" => $validatedSubtotalIVA,
                            "Subtotal_IVA0" => $validatedSubtotalIVA0,
                            "IVA" => $validatedIva);

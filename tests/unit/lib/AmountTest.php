@@ -73,7 +73,7 @@ class AmountTest extends PHPUnit_Framework_TestCase {
         $iac = CommonUtils::getRandomDouble(1,50);
         $extraTaxes = new ExtraTaxes($propina, $tasaAeroportuaria, $agenciaDeViajes, $iac);
 
-        $total = $subtotalIVA + $subtotalIVA0 + $iva + $extraTaxes->getTotalTax();
+        $total = $subtotalIVA + $subtotalIVA0 + $iva + $extraTaxes->getTotalExtraTaxes();
 
         $amount = new Amount($subtotalIVA, $iva, $subtotalIVA0, $extraTaxes);
         $result = $amount->toHash();
@@ -128,8 +128,6 @@ class AmountTest extends PHPUnit_Framework_TestCase {
         );
         return $invalidAmountsAndExceptionMessages;
     }
-
-
 
     /**
      * @dataProvider testThrowsKushkiExceptionIfAmountIsInvalidDataProvider

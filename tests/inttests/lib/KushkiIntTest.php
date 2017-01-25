@@ -14,46 +14,35 @@ require_once dirname(__FILE__) . '/TokenHelper.php';
 class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     protected $kushki;
     protected $kushkiColombia;
-
     protected $secretKushki;
     protected $secretKushkiColombia;
 
-    protected $merchantId;
-    protected $merchantIdColombia;
-
     const MERCHANT_ID = "10000001641310597258111220";
     const SECRET_MERCHANT_ID = "10000001641344874123111220";
-
     const MERCHANT_ID_COLOMBIA = "10000001958318993042555001";
     const SECRET_MERCHANT_ID_COLOMBIA = "10000001958363505343555001";
 
     protected function setUp() {
-        $this->merchantId = self::MERCHANT_ID;
-        $this->merchantIdColombia = self::MERCHANT_ID_COLOMBIA;
-
-        $secretMerchantId = self::SECRET_MERCHANT_ID;
-        $secretMerchantIdColombia = self::SECRET_MERCHANT_ID_COLOMBIA;
-
         $idioma = KushkiLanguage::ES;
 
-        $this->kushki = new Kushki($this->merchantId, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING);
-        $this->secretKushki = new Kushki($secretMerchantId, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING);
+        $this->kushki = new Kushki(self::MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING);
+        $this->secretKushki = new Kushki(self::SECRET_MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING);
 
-        $this->kushkiColombia = new Kushki($this->merchantIdColombia, $idioma, KushkiCurrency::COP,
+        $this->kushkiColombia = new Kushki(self::MERCHANT_ID_COLOMBIA, $idioma, KushkiCurrency::COP,
             KushkiEnvironment::TESTING);
-        $this->secretKushkiColombia = new Kushki($secretMerchantIdColombia, $idioma, KushkiCurrency::COP,
+        $this->secretKushkiColombia = new Kushki(self::SECRET_MERCHANT_ID_COLOMBIA, $idioma, KushkiCurrency::COP,
             KushkiEnvironment::TESTING);
     }
 
     public function testShouldReturnSuccessfulTokenTransaction_TC_001() {
         $amount = CommonUtils::getRandomAmount();
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
+        $tokenTransaction = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount);
         $this->assertsValidTransaction($tokenTransaction);
     }
 
     public function testShouldReturnSuccessfulTokenTransaction_TC_001Colombia() {
         $amount = CommonUtils::getRandomAmountColombia();
-        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia($this->merchantIdColombia, $amount);
+        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount);
         $this->assertsValidTransaction($tokenTransaction);
     }
 
@@ -67,7 +56,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
             "amount" => CommonUtils::getRandomAmount()
 
         );
-        $tokenTransaction = TokenHelper::requestToken($this->merchantId, $cardParams, KushkiCurrency::USD);
+        $tokenTransaction = TokenHelper::requestToken(self::MERCHANT_ID, $cardParams, KushkiCurrency::USD);
         $this->assertsTransaction($tokenTransaction, false, "Tarjeta no válida", "017");
     }
 
@@ -81,13 +70,13 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
             "amount" => CommonUtils::getRandomAmountColombia()
 
         );
-        $tokenTransaction = TokenHelper::requestToken($this->merchantIdColombia, $cardParams, KushkiCurrency::COP);
+        $tokenTransaction = TokenHelper::requestToken(self::MERCHANT_ID_COLOMBIA, $cardParams, KushkiCurrency::COP);
         $this->assertsTransaction($tokenTransaction, false, "Tarjeta no válida", "017");
     }
 
     public function testShouldReturnSuccessfulChargeTransaction_TC_006() {
         $amount = CommonUtils::getRandomAmount();
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
+        $tokenTransaction = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount);
         $token = $tokenTransaction->getToken();
 
         sleep(CommonUtils::THREAD_SLEEP);
@@ -135,7 +124,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
      */
     public function testShouldReturnSuccessfulVoidTransaction_TC_014() {
         $amount = CommonUtils::getRandomAmount();
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
+        $tokenTransaction = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount);
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->secretKushki->charge($token, $amount);
@@ -149,9 +138,10 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsValidTransaction($voidTransaction);
     }
 
+// TODO: Uncomment this test when Colombian void succeeds
 //    public function testShouldReturnSuccessfulVoidTransaction_TC_014Colombia() {
 //        $amount = CommonUtils::getRandomAmountColombia();
-//        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia($this->merchantIdColombia, $amount);
+//        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount);
 //        $token = $tokenTransaction->getToken();
 //        sleep(CommonUtils::THREAD_SLEEP);
 //        $chargeTransaction = $this->secretKushkiColombia->charge($token, $amount);
@@ -167,7 +157,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
         $amount = CommonUtils::getRandomAmount();
-        $tokenTransaction = TokenHelper::getValidTokenTransaction($this->merchantId, $amount);
+        $tokenTransaction = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount);
         $token = $tokenTransaction->getToken();
         $monthsDeferred = array(3, 6, 9, 12);
         $months = $monthsDeferred[array_rand($monthsDeferred)];
@@ -199,7 +189,6 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
             print "\nResponse code: " . $transaction->getResponseCode() . " | Expected: " . $expectedCode;
             print "\n";
         }
-
         $this->assertEquals($isSuccessful, $transaction->isSuccessful());
         $this->assertEquals($expectedMessage, $transaction->getResponseText());
         $this->assertEquals($expectedCode, $transaction->getResponseCode());
@@ -208,5 +197,4 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     private function assertsValidTransaction($transaction) {
         $this->assertsTransaction($transaction, true, "Transacción aprobada", "000");
     }
-
 }

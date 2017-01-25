@@ -18,31 +18,10 @@ class VoidRequestBuilderTest extends PHPUnit_Framework_TestCase {
     private $randomTransactionAmount;
     private $randomTransactionTicket;
 
-    private function createVoidRequest($withTax = false) {
-        $this->environment = CommonUtils::randomAlphaNumberString();
-        $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
-        $this->randomTransactionTicket = CommonUtils::randomAlphaNumberString();
-        if(!$withTax) {
-            $this->randomTransactionAmount = CommonUtils::getRandomAmount();
-        } else {
-            $this->currency = KushkiCurrency::COP;
-            $this->randomTransactionAmount = CommonUtils::getRandomAmountColombia();
-        }
-        $builder = new VoidRequestBuilder($this->randomMerchantId, $this->randomTransactionTicket,
-                                          $this->randomTransactionAmount, $this->environment, $this->currency);
-        $this->request = $builder->createRequest();
-    }
-
     public function testHasAppropiateUrlAccordingToTheEnvironment() {
         $this->createVoidRequest();
         $this->assertEquals($this->environment . KushkiConstant::VOID_URL, $this->request->getUrl(),
                             "Environment URL is not set correctly");
-    }
-
-    public function testHasAppropiateUrlAccordingToTheEnvironmentColombia() {
-        $this->createVoidRequest(true);
-        $this->assertEquals($this->environment . KushkiConstant::VOID_URL, $this->request->getUrl(),
-            "Environment URL is not set correctly");
     }
 
     public function testHasContentTypeOnVoidRequest() {
@@ -51,24 +30,11 @@ class VoidRequestBuilderTest extends PHPUnit_Framework_TestCase {
                             "Requires content type");
     }
 
-    public function testHasContentTypeOnVoidRequestColombia() {
-        $this->createVoidRequest(true);
-        $this->assertEquals(KushkiConstant::CONTENT_TYPE, $this->request->getContentType(),
-            "Requires content type");
-    }
-
     public function testHasTicketOnVoidRequest() {
         $this->createVoidRequest();
         $this->assertEquals($this->randomTransactionTicket,
                             $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_TICKET),
                             "Requires param token");
-    }
-
-    public function testHasTicketOnVoidRequestColombia() {
-        $this->createVoidRequest(true);
-        $this->assertEquals($this->randomTransactionTicket,
-            $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_TICKET),
-            "Requires param token");
     }
 
     public function testHasAmountOnVoidRequest() {
@@ -92,25 +58,11 @@ class VoidRequestBuilderTest extends PHPUnit_Framework_TestCase {
                             "Requires param currency");
     }
 
-    public function testHasCurrencyOnVoidRequestColombia() {
-        $this->createVoidRequest(true);
-        $this->assertEquals($this->currency,
-            $this->request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE),
-            "Requires param currency");
-    }
-
     public function testHasMerchantIdOnVoidRequest() {
         $this->createVoidRequest();
         $this->assertEquals($this->randomMerchantId,
                             $this->request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
                             "Requires param merchant_id on void request");
-    }
-
-    public function testHasMerchantIdOnVoidRequestColombia() {
-        $this->createVoidRequest(true);
-        $this->assertEquals($this->randomMerchantId,
-            $this->request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
-            "Requires param merchant_id on void request");
     }
 
     public function testThrowExceptionOnIncorrectParameter() {
@@ -122,12 +74,18 @@ class VoidRequestBuilderTest extends PHPUnit_Framework_TestCase {
         $this->request->getParameter(CommonUtils::randomAlphaString());
     }
 
-    public function testThrowExceptionOnIncorrectParameterColombia() {
-        $this->createVoidRequest(true);
-
-        $this->setExpectedException(
-            'kushki\lib\KushkiException', 'Parameter does not exist', 0
-        );
-        $this->request->getParameter(CommonUtils::randomAlphaString());
+    private function createVoidRequest($isColombianTransaction = false) {
+        $this->environment = CommonUtils::randomAlphaNumberString();
+        $this->randomMerchantId = CommonUtils::randomAlphaNumberString();
+        $this->randomTransactionTicket = CommonUtils::randomAlphaNumberString();
+        if($isColombianTransaction) {
+            $this->currency = KushkiCurrency::COP;
+            $this->randomTransactionAmount = CommonUtils::getRandomAmountColombia();
+        } else {
+            $this->randomTransactionAmount = CommonUtils::getRandomAmount();
+        }
+        $builder = new VoidRequestBuilder($this->randomMerchantId, $this->randomTransactionTicket,
+                                          $this->randomTransactionAmount, $this->environment, $this->currency);
+        $this->request = $builder->createRequest();
     }
 }
