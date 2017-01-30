@@ -89,7 +89,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
     public function testShouldReturnSuccessfulChargeTransaction_TC_006Colombia() {
         $amount = CommonUtils::getRandomAmountColombia();
-        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia($this->merchantIdColombia, $amount);
+        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount);
         $token = $tokenTransaction->getToken();
 
         sleep(CommonUtils::THREAD_SLEEP);
@@ -138,22 +138,21 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsValidTransaction($voidTransaction);
     }
 
-// TODO: Uncomment this test when Colombian void succeeds
-//    public function testShouldReturnSuccessfulVoidTransaction_TC_014Colombia() {
-//        $amount = CommonUtils::getRandomAmountColombia();
-//        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount);
-//        $token = $tokenTransaction->getToken();
-//        sleep(CommonUtils::THREAD_SLEEP);
-//        $chargeTransaction = $this->secretKushkiColombia->charge($token, $amount);
-//        $ticket = $chargeTransaction->getTicketNumber();
-//
-//        sleep(CommonUtils::THREAD_SLEEP);
-//        $voidTransaction = $this->secretKushkiColombia->voidCharge($ticket, $amount);
-//
-//        $this->assertsValidTransaction($tokenTransaction);
-//        $this->assertsValidTransaction($chargeTransaction);
-//        $this->assertsValidTransaction($voidTransaction);
-//    }
+    public function testShouldReturnSuccessfulVoidTransaction_TC_014Colombia() {
+        $amount = CommonUtils::getRandomAmountColombia();
+        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount);
+        $token = $tokenTransaction->getToken();
+        sleep(CommonUtils::THREAD_SLEEP);
+        $chargeTransaction = $this->secretKushkiColombia->charge($token, $amount);
+        $ticket = $chargeTransaction->getTicketNumber();
+
+        sleep(CommonUtils::THREAD_SLEEP);
+        $voidTransaction = $this->secretKushkiColombia->voidCharge($ticket, $amount);
+
+        $this->assertsValidTransaction($tokenTransaction);
+        $this->assertsValidTransaction($chargeTransaction);
+        $this->assertsValidTransaction($voidTransaction);
+    }
 
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026() {
         $amount = CommonUtils::getRandomAmount();
@@ -171,7 +170,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
     public function testShouldReturnSuccessfulDeferredChargeTransaction_TC_026Colombia() {
         $amount = CommonUtils::getRandomAmountColombia();
-        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia($this->merchantIdColombia, $amount);
+        $tokenTransaction = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount);
         $token = $tokenTransaction->getToken();
         $months = CommonUtils::getRandomInteger(2, 36);
 
