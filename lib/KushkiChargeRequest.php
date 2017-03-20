@@ -9,7 +9,7 @@
 namespace kushki\lib;
 
 
-class KushkiClientRequest{
+class KushkiChargeRequest{
     private $url;
     private $token;
     private $amount;

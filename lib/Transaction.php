@@ -58,6 +58,10 @@ class Transaction {
         else
             return $this->body->message;
     }
+
+    public function getSubscriptionId(){
+        return $this->body->subscriptionId;
+    }
 }
 
 ?>

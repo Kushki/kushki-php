@@ -1,9 +1,7 @@
 <?php
 namespace kushki\tests\unit\lib;
 
-use kushki\lib\ChargeRequestBuilder;
-use kushki\lib\KushkiClientRequest;
-use kushki\lib\KushkiConstant;
+use kushki\lib\KushkiChargeRequest;
 use kushki\lib\KushkiCurrency;
 use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
@@ -55,7 +53,7 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
         } else {
             $this->randomTransactionAmount = CommonUtils::getRandomAmount();
         }
-        $this->request = new KushkiClientRequest($this->randomMerchantId, $this->randomTransactionToken,
+        $this->request = new KushkiChargeRequest($this->randomMerchantId, $this->randomTransactionToken,
             $this->randomTransactionAmount,0,$metadata = false, $this->environment,
             $this->currency);
     }

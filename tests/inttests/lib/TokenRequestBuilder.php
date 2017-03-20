@@ -15,6 +15,7 @@ class TokenRequestBuilder extends RequestBuilder {
     private $cardExpiryYear;
     private $cardCvv;
     private $amount;
+    private $tokenType;
 
     function __construct($merchantId, $cardParams, $baseUrl = KushkiEnvironment::PRODUCTION,
                          $currency = KushkiCurrency::USD) {
@@ -26,6 +27,7 @@ class TokenRequestBuilder extends RequestBuilder {
         $this->cardExpiryYear = $cardParams["expiry_year"];
         $this->cardCvv = $cardParams["cvv"];
         $this->amount = $cardParams["amount"];
+        $this->tokenType = $cardParams["token_type"];
     }
 
     public function createRequest() {
@@ -42,7 +44,8 @@ class TokenRequestBuilder extends RequestBuilder {
 	            "card_present" => "1"
             ),
             "amount" => $this->amount->toHash()["Total_amount"],
-            "remember_me" => '0'
+            "remember_me" => '0',
+            "token_type" => $this->tokenType
         );
         $request = new KushkiRequest($this->url, $params, KushkiConstant::CONTENT_TYPE);
         return $request;

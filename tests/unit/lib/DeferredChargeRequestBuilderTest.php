@@ -1,9 +1,7 @@
 <?php
 namespace kushki\tests\unit\lib;
 
-use kushki\lib\DeferredChargeRequestBuilder;
-use kushki\lib\KushkiClientRequest;
-use kushki\lib\KushkiConstant;
+use kushki\lib\KushkiChargeRequest;
 use kushki\lib\KushkiCurrency;
 use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
@@ -40,7 +38,7 @@ class DeferredChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
             $this->randomTransactionAmount = CommonUtils::getRandomAmount();
             $this->randomMonths = rand(1, 12);
         }
-        $this->request = new KushkiClientRequest($this->randomMerchantId, $this->randomTransactionToken,
+        $this->request = new KushkiChargeRequest($this->randomMerchantId, $this->randomTransactionToken,
             $this->randomTransactionAmount,$this->randomMonths,$metadata = false, $this->environment,
             $this->currency);
     }

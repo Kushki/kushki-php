@@ -34,7 +34,7 @@ class Kushki {
      */
 
     public function charge($token, $amount, $metadata = false) {
-        $chargeRequestBuilder = new KushkiClientRequest($this->merchantId, $token, $amount,$months = 0, $metadata,
+        $chargeRequestBuilder = new KushkiChargeRequest($this->merchantId, $token, $amount,$months = 0, $metadata,
             $this->environment, $this->currency);
         $request = $chargeRequestBuilder->charge();
         return $request;
@@ -49,7 +49,7 @@ class Kushki {
      */
 
     public function deferredCharge($token, $amount, $months, $metadata = false) {
-        $chargeRequestBuilder = new KushkiClientRequest($this->merchantId, $token, $amount, $months, $metadata,
+        $chargeRequestBuilder = new KushkiChargeRequest($this->merchantId, $token, $amount, $months, $metadata,
             $this->environment, $this->currency);
         $request = $chargeRequestBuilder->charge();
         return $request;
@@ -66,6 +66,24 @@ class Kushki {
                                                      $this->currency);
         $request = $voidRequestBuilder->createRequest();
         return $this->requestHandler->call($request);
+    }
+
+    /**
+     * @param $token
+     * @param $planName
+     * @param $periodicity
+     * @param $contactDetails
+     * @param $amount
+     * @param $startDate
+     * @return Transaction
+     * @throws KushkiException
+     */
+    public function createSubscription($token, $planName, $periodicity, $contactDetails, $amount, $startDate,
+                                       $metadata = false){
+        $subscriptionRequest = new KushkiSubscriptionRequest($this->merchantId, $token, $planName, $periodicity,
+            $contactDetails, $amount, $startDate, $metadata , $this->environment, $this->currency);
+        $subscription = $subscriptionRequest->createSubscription();
+        return $subscription;
     }
 
     public function getMerchantId() {
