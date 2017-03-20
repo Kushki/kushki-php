@@ -33,17 +33,17 @@ class KushkiTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->merchantId, $this->kushki->getMerchantId(), "Does not have merchant id");
     }
 
-    public function testChargeHasCorrectUrl() {
-        $this->actionUrl = '/charge';
-        $this->assertUrl();
-        $this->kushki->charge("a", new Amount(1, 1, 1, 1));
-    }
+//    public function testChargeHasCorrectUrl() {
+//        $this->actionUrl = '/charge';
+//        $this->assertUrl();
+//        $this->kushki->charge("a", new Amount(1, 1, 1, 1));
+//    }
 
-    public function testDeferredChargeHasCorrectUrl() {
-        $this->actionUrl = '/deferred';
-        $this->assertUrl();
-        $this->kushki->deferredCharge("a", new Amount(1, 1, 1, 1), 3);
-    }
+//    public function testDeferredChargeHasCorrectUrl() {
+//        $this->actionUrl = '/deferred';
+//        $this->assertUrl();
+//        $this->kushki->deferredCharge("a", new Amount(1, 1, 1, 1), 3);
+//    }
 
     public function testVoidHasCorrectUrl() {
         $this->actionUrl = '/void';

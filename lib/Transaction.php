@@ -27,7 +27,7 @@ class Transaction {
     }
 
     public function isSuccessful() {
-        return $this->code === 200;
+        return $this->code === 200 || $this->code === 201;
     }
 
     public function getToken() {
@@ -35,7 +35,10 @@ class Transaction {
     }
 
     public function getTicketNumber() {
-        return $this->body->ticket_number;
+        if(isset($this->body->ticket_number))
+            return $this->body->ticket_number;
+        else
+            return $this->body->ticketNumber;
     }
 
     public function getApprovedAmount() {
@@ -43,11 +46,17 @@ class Transaction {
     }
 
     public function getResponseCode() {
-        return $this->body->response_code;
+        if(isset($this->body->response_code))
+            return $this->body->response_code;
+        else
+            return $this->body->code;
     }
 
     public function getResponseText() {
-        return $this->body->response_text;
+        if(isset($this->body->response_text))
+            return $this->body->response_text;
+        else
+            return $this->body->message;
     }
 }
 

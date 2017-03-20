@@ -6,6 +6,7 @@ class KushkiConstant {
     const VERSION = '1.0';
     const TOKENS_URL = "/tokens";
     const CHARGE_URL = "/charge";
+    const CHARGE_API_URL="/charges";
     const VOID_URL = "/void";
     const DEFERRED_URL = "/deferred";
     const PARAMETER_MERCHANT_ID = "merchant_identifier";

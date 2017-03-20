@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7262b41f0dcf5bde4e4b28cd70f25666",
+    "content-hash": "ef244202ccaf6ce0fabdfe1f7b6ff470",
     "packages": [
         {
             "name": "nategood/httpful",

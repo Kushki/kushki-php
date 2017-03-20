@@ -26,21 +26,21 @@ class Amount {
     }
 
     public function toHash() {
-        $validatedSubtotalIVA = Validations::validateNumber($this->subtotalIVA, 0, 12, "El subtotal IVA");
-        $validatedSubtotalIVA0 = Validations::validateNumber($this->subtotalIVA0, 0, 12, "El subtotal IVA 0");
-        $validatedIva = Validations::validateNumber($this->iva, 0, 12, "El IVA");
-        $validatedIce = Validations::validateNumber($this->ice, 0, 12, "El ICE");
+        $validatedSubtotalIVA = (float) Validations::validateNumber($this->subtotalIVA, 0, 12, "El subtotal IVA");
+        $validatedSubtotalIVA0 = (float) Validations::validateNumber($this->subtotalIVA0, 0, 12, "El subtotal IVA 0");
+        $validatedIva = (float) Validations::validateNumber($this->iva, 0, 12, "El IVA");
+        $validatedIce = (float) Validations::validateNumber($this->ice, 0, 12, "El ICE");
         $total = $this->subtotalIVA + $this->subtotalIVA0 + $this->iva + $this->ice + $this->extraTaxes->getTotalExtraTaxes();
         $validatedTotal = Validations::validateNumber($total, 0, 12, "El total");
-        $arrayHash = array("Subtotal_IVA" => $validatedSubtotalIVA,
-                           "Subtotal_IVA0" => $validatedSubtotalIVA0,
-                           "IVA" => $validatedIva);
+        $arrayHash = array("subtotalIva" => $validatedSubtotalIVA,
+                           "subtotalIva0" => $validatedSubtotalIVA0,
+                           "iva" => $validatedIva);
         if($validatedIce > 0) {
-            $arrayHash["ICE"] = $validatedIce;
+            $arrayHash["ice"] = $validatedIce;
         }
         $arrayHash["Total_amount"] = $validatedTotal;
         if(count($this->extraTaxes->toHashArray()) > 0) {
-            $arrayHash["tax"] = $this->extraTaxes->toHashArray();
+            $arrayHash["extraTaxes"] = $this->extraTaxes->toHashArray();
         }
         return $arrayHash;
     }

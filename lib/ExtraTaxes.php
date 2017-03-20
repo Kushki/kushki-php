@@ -48,17 +48,17 @@ class ExtraTaxes
     public function toHashArray() {
         $extraTaxes = array();
         if($this->propina->getAmount() > 0) {
-            $extraTaxes[0] = $this->propina->toHash();
+            $extraTaxes["propina"] = $this->propina->toHashNew()["PROPINA"];
         }
         if($this->tasaAeroportuaria->getAmount() > 0) {
-            $extraTaxes[1] = $this->tasaAeroportuaria->toHash();
+            $extraTaxes["tasaAeroportuaria"] = $this->tasaAeroportuaria->toHashNew()["TASA_AERO"];
         }
         if($this->agenciaDeViajes->getAmount() > 0) {
-            $extraTaxes[2] = $this->agenciaDeViajes->toHash();
+            $extraTaxes["agenciaDeViaje"] = $this->agenciaDeViajes->toHashNew()["TASA_ADMIN_AGEN_COD"];
         }
         if($this->iac->getAmount() > 0) {
-            $extraTaxes[3] = $this->iac->toHash();
+            $extraTaxes["iac"] = $this->iac->toHashNew()["IAC"];
         }
-        return array_values($extraTaxes);
+        return $extraTaxes;
     }
 }

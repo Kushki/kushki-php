@@ -15,10 +15,10 @@ class AmountTest extends PHPUnit_Framework_TestCase {
         $amount = new Amount(0.1, 0.1, 0.1, 0.1);
         $result = $amount->toHash();
         $expectedResult = array(
-            "Subtotal_IVA" => '0.10',
-            "Subtotal_IVA0" => '0.10',
-            "IVA" => '0.10',
-            "ICE" => '0.10',
+            "subtotalIva" => '0.10',
+            "subtotalIva0" => '0.10',
+            "iva" => '0.10',
+            "ice" => '0.10',
             "Total_amount" => '0.40'
         );
         $this->assertEquals($result, $expectedResult, "Amount not correctly transformed to hash");
@@ -28,17 +28,13 @@ class AmountTest extends PHPUnit_Framework_TestCase {
         $extraTaxes = new ExtraTaxes(100, 0, 0, 0);
         $amount = new Amount(3200.0, 608.0, 0.0, $extraTaxes);
         $result = $amount->toHash();
-        $expectedResultTaxes = array(
-                            "0" => array(
-                                        "taxId" => '3',
-                                        "taxAmount" => '100',
-                                        "taxName" => 'PROPINA'));
+        $expectedResultTaxes = array("propina" => 100);
         $expectedResult = array(
-            "Subtotal_IVA" => '3200.00',
-            "Subtotal_IVA0" => '0.00',
-            "IVA" => '608.00',
+            "subtotalIva" => 3200.00,
+            "subtotalIva0" => 0.00,
+            "iva" => 608.00,
             "Total_amount" => '3908.00',
-            "tax" => $expectedResultTaxes
+            "extraTaxes" => $expectedResultTaxes
         );
 
         $this->assertEquals($result, $expectedResult, "Amount not correctly transformed to hash");
@@ -54,10 +50,10 @@ class AmountTest extends PHPUnit_Framework_TestCase {
         $amount = new Amount($subtotalIVA, $iva, $subtotalIVA0, $ice);
         $result = $amount->toHash();
         $expectedResult = array(
-            "Subtotal_IVA" => $subtotalIVA,
-            "Subtotal_IVA0" => $subtotalIVA0,
-            "IVA" => $iva,
-            "ICE" => $ice,
+            "subtotalIva" => $subtotalIVA,
+            "subtotalIva0" => $subtotalIVA0,
+            "iva" => $iva,
+            "ice" => $ice,
             "Total_amount" => $total
         );
         $this->assertEquals($result, $expectedResult, "Amount not correctly transformed to hash");
@@ -79,29 +75,18 @@ class AmountTest extends PHPUnit_Framework_TestCase {
         $result = $amount->toHash();
 
         $expectedResultTaxes = array(
-            "0" => array(
-                "taxId" => '3',
-                "taxAmount" => Validations::validateNumber($propina, 0, 12, ""),
-                "taxName" => 'PROPINA'),
-            "1" => array(
-                "taxId" => '4',
-                "taxAmount" => Validations::validateNumber($tasaAeroportuaria, 0, 12, ""),
-                "taxName" => 'TASA_AERO'),
-            "2" => array(
-                "taxId" => '5',
-                "taxAmount" => Validations::validateNumber($agenciaDeViajes, 0, 12, ""),
-                "taxName" => 'TASA_ADMIN_AGEN_COD'),
-            "3" => array(
-                "taxId" => '6',
-                "taxAmount" => Validations::validateNumber($iac, 0, 12, ""),
-                "taxName" => 'IAC'));
+            "propina" => Validations::validateNumber($propina, 0, 12, ""),
+            "tasaAeroportuaria" => Validations::validateNumber($tasaAeroportuaria, 0, 12, ""),
+            "agenciaDeViaje" => Validations::validateNumber($agenciaDeViajes, 0, 12, ""),
+            "iac" => Validations::validateNumber($iac, 0, 12, ""));
+
 
         $expectedResult = array(
-            "Subtotal_IVA" => Validations::validateNumber($subtotalIVA, 0, 12, ""),
-            "Subtotal_IVA0" => Validations::validateNumber($subtotalIVA0, 0, 12, ""),
-            "IVA" => Validations::validateNumber($iva, 0, 12, ""),
+            "subtotalIva" => (float) Validations::validateNumber($subtotalIVA, 0, 12, ""),
+            "subtotalIva0" => (float) Validations::validateNumber($subtotalIVA0, 0, 12, ""),
+            "iva" => (float) Validations::validateNumber($iva, 0, 12, ""),
             "Total_amount" => Validations::validateNumber($total, 0, 12, ""),
-            "tax" => $expectedResultTaxes
+            "extraTaxes" => $expectedResultTaxes
         );
 
         $this->assertEquals($result, $expectedResult, "Amount not correctly transformed to hash");

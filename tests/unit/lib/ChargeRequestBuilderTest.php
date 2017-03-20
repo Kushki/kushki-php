@@ -2,6 +2,7 @@
 namespace kushki\tests\unit\lib;
 
 use kushki\lib\ChargeRequestBuilder;
+use kushki\lib\KushkiClientRequest;
 use kushki\lib\KushkiConstant;
 use kushki\lib\KushkiCurrency;
 use kushki\tests\lib\CommonUtils;
@@ -18,60 +19,29 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
     private $randomTransactionAmount;
     private $randomTransactionToken;
 
-    public function testHasAppropiateUrlAccordingToTheEnvironment() {
-        $this->createChargeRequest();
-        $this->assertEquals($this->environment . KushkiConstant::CHARGE_URL, $this->request->getUrl(),
-                            "Environment URL is not set correctly");
-    }
-
-    public function testHasContentTypeOnChargeRequest() {
-        $this->createChargeRequest();
-        $this->assertEquals(KushkiConstant::CONTENT_TYPE, $this->request->getContentType(),
-            "Requires content type");
-    }
-
     public function testHasTokenOnChargeRequest() {
         $this->createChargeRequest();
         $this->assertEquals($this->randomTransactionToken,
-                            $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_TOKEN),
+                            $this->request->getParameter("token"),
                             "Requires param token");
     }
 
     public function testHasAmountOnChargeRequest() {
         $this->createChargeRequest();
-        $this->assertEquals($this->randomTransactionAmount->toHash(),
-            $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT),
+        $amount = $this->randomTransactionAmount->toHash();
+        $amount["currency"] = "USD";
+        $this->assertEquals($amount,
+            $this->request->getParameter("amount"),
             "Requires param amount");
     }
 
     public function testHasAmountOnChargeRequestColombia() {
         $this->createChargeRequest(true);
-        $this->assertEquals($this->randomTransactionAmount->toHash(),
-                            $this->request->getParameter(KushkiConstant::PARAMETER_TRANSACTION_AMOUNT),
+        $amount = $this->randomTransactionAmount->toHash();
+        $amount["currency"] = "COP";
+        $this->assertEquals($amount,
+                            $this->request->getParameter("amount"),
                             "Requires param amount");
-    }
-
-    public function testHasCurrencyOnChargeRequest() {
-        $this->createChargeRequest();
-        $this->assertEquals($this->currency,
-                            $this->request->getParameter(KushkiConstant::PARAMETER_CURRENCY_CODE),
-                            "Requires param currency");
-    }
-
-    public function testHasMerchantIdOnChargeRequest() {
-        $this->createChargeRequest();
-        $this->assertEquals($this->randomMerchantId,
-                            $this->request->getParameter(KushkiConstant::PARAMETER_MERCHANT_ID),
-                            "Requires param merchant_id on charge request");
-    }
-
-    public function testThrowExceptionOnIncorrectParameter() {
-        $this->createChargeRequest();
-
-        $this->setExpectedException(
-            'kushki\lib\KushkiException', 'Parameter does not exist', 0
-        );
-        $this->request->getParameter(CommonUtils::randomAlphaString());
     }
 
     private function createChargeRequest($isColombianTransaction = false) {
@@ -80,12 +50,13 @@ class ChargeRequestBuilderTest extends PHPUnit_Framework_TestCase {
         $this->randomTransactionToken = CommonUtils::randomAlphaNumberString();
         if($isColombianTransaction) {
             $this->randomTransactionAmount = CommonUtils::getRandomAmountColombia();
+            $this->currency = KushkiCurrency::COP;
+
         } else {
             $this->randomTransactionAmount = CommonUtils::getRandomAmount();
         }
-
-        $builder = new ChargeRequestBuilder($this->randomMerchantId, $this->randomTransactionToken,
-                                            $this->randomTransactionAmount, $this->environment);
-        $this->request = $builder->createRequest();
+        $this->request = new KushkiClientRequest($this->randomMerchantId, $this->randomTransactionToken,
+            $this->randomTransactionAmount,0,$metadata = false, $this->environment,
+            $this->currency);
     }
 }

@@ -32,11 +32,12 @@ class Kushki {
      * @return Transaction
      * @throws KushkiException
      */
-    public function charge($token, $amount) {
-        $chargeRequestBuilder = new ChargeRequestBuilder($this->merchantId, $token, $amount, $this->environment,
-                                                         $this->currency);
-        $request = $chargeRequestBuilder->createRequest();
-        return $this->requestHandler->call($request);
+
+    public function charge($token, $amount, $metadata = false) {
+        $chargeRequestBuilder = new KushkiClientRequest($this->merchantId, $token, $amount,$months = 0, $metadata,
+            $this->environment, $this->currency);
+        $request = $chargeRequestBuilder->charge();
+        return $request;
     }
 
     /**
@@ -46,11 +47,12 @@ class Kushki {
      * @return Transaction
      * @throws KushkiException
      */
-    public function deferredCharge($token, $amount, $months) {
-        $deferredChargeRequestBuilder = new DeferredChargeRequestBuilder($this->merchantId, $token, $amount, $months,
-                                                                         $this->environment, $this->currency);
-        $request = $deferredChargeRequestBuilder->createRequest();
-        return $this->requestHandler->call($request);
+
+    public function deferredCharge($token, $amount, $months, $metadata = false) {
+        $chargeRequestBuilder = new KushkiClientRequest($this->merchantId, $token, $amount, $months, $metadata,
+            $this->environment, $this->currency);
+        $request = $chargeRequestBuilder->charge();
+        return $request;
     }
 
     /**
@@ -76,6 +78,9 @@ class Kushki {
 
     public function getCurrency() {
         return $this->currency;
+    }
+    public function getEnvironment() {
+        return $this->environment;
     }
 }
 
