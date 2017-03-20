@@ -144,7 +144,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->newSecretKushki->charge($token, $amount);
-        $ticket = $chargeTransaction->getTicketNumberApi();
+        $ticket = $chargeTransaction->getTicketNumber();
         sleep(CommonUtils::THREAD_SLEEP);
         $voidTransaction = $this->secretKushki->voidCharge($ticket, $amount);
 
