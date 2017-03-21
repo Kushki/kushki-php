@@ -63,6 +63,15 @@ class KushkiClient
         $requestUpdateSubscription = $this->callAPI($method,$url,$data);
         return $requestUpdateSubscription;
     }
+
+    function callChargeSubscription($url, $data)
+    {
+        $url = $url . KushkiConstant::SUBSCRIPTION_API_URL . "/" . $data["subscriptionId"] .
+            KushkiConstant::CHARGE_API_URL;
+        $method = 'POST';
+        $requestChargeSubscription = $this->callAPI($method,$url,$data);
+        return $requestChargeSubscription;
+    }
 }
 
 ?>

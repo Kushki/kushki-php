@@ -224,29 +224,13 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
     public function testShouldReturnSuccessfulUpdateSubscription_TC_013() {
         $amount = CommonUtils::getRandomAmount();
-        $type = "subscription-token";
-        $tokenSubscription = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount, $type);
-        $token = $tokenSubscription->getToken();
-        $planName = "Premium";
-        $periodicity = "monthly";
-        $contactDetails = array(
-            "firstName" => "Lisbeth",
-            "lastName" => "Salander",
-            "email" => "lisbeth@salander.com");
-        $startDate = "2017-01-18";
-        sleep(CommonUtils::THREAD_SLEEP);
-        $createSubscription = $this->newSecretKushki->createSubscription($token, $planName, $periodicity,
-            $contactDetails, $amount, $startDate);
-        $subscriptionId = $createSubscription->getSubscriptionId();
+        $subscriptionId = $this->getSubscriptionId();
         $periodicity = "yearly";
         $currency = "USD";
         $body = array("periodicity" => $periodicity,
             "amount"=> $amount,
             "currency" => $currency);
         $updateSubscription = $this->newSecretKushki->updateSubscription($subscriptionId, $body);
-
-        $this->assertsValidApiTransaction($tokenSubscription);
-        $this->assertsValidApiTransaction($createSubscription);
         $this->assertsValidApiTransaction($updateSubscription);
     }
 
@@ -254,58 +238,27 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->markTestSkipped('must be revisited.');
 
         $amount = CommonUtils::getRandomAmountColombia();
-        $type = "subscription-token";
-        $tokenSubscription = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount, $type);
-        $token = $tokenSubscription->getToken();
-        $planName = "Premium";
-        $periodicity = "monthly";
-        $contactDetails = array(
-            "firstName" => "Lisbeth",
-            "lastName" => "Salander",
-            "email" => "lisbeth@salander.com");
-        $startDate = "2017-01-18";
-        sleep(CommonUtils::THREAD_SLEEP);
-        $createSubscription = $this->newSecretKushkiColombia->createSubscription($token, $planName, $periodicity,
-            $contactDetails, $amount, $startDate);
-        $subscriptionId = $createSubscription->getSubscriptionId();
+        $subscriptionId = $this->getSubscriptionIdColombia();
         $periodicity = "yearly";
         $currency = "COL";
         $body = array("periodicity" => $periodicity,
             "amount"=> $amount,
             "currency" => $currency);
         $updateSubscription = $this->newSecretKushki->updateSubscription($subscriptionId, $body);
-
-        $this->assertsValidApiTransaction($tokenSubscription);
-        $this->assertsValidApiTransaction($createSubscription);
         $this->assertsValidApiTransaction($updateSubscription);
     }
 
     public function testShouldReturnSuccessfulUpdateSubscriptionWithMetadata_TC_013() {
         $amount = CommonUtils::getRandomAmount();
-        $type = "subscription-token";
-        $tokenSubscription = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount, $type);
-        $token = $tokenSubscription->getToken();
-        $planName = "Premium";
-        $periodicity = "monthly";
-        $contactDetails = array(
-            "firstName" => "Lisbeth",
-            "lastName" => "Salander",
-            "email" => "lisbeth@salander.com");
-        $startDate = "2017-01-18";
-        $metadata = array("Key1"=>"value1", "Key2"=>"value2");
-        sleep(CommonUtils::THREAD_SLEEP);
-        $createSubscription = $this->newSecretKushki->createSubscription($token, $planName, $periodicity,
-            $contactDetails, $amount, $startDate, $metadata);
-        $subscriptionId = $createSubscription->getSubscriptionId();
+        $subscriptionId = $this->getSubscriptionId();
         $periodicity = "yearly";
         $currency = "USD";
+        $metadata = array("Key1"=>"value1", "Key2"=>"value2");
         $body = array("periodicity" => $periodicity,
             "amount"=> $amount,
             "currency" => $currency,
             "metadata" => $metadata);
         $updateSubscription = $this->newSecretKushki->updateSubscription($subscriptionId, $body);
-        $this->assertsValidApiTransaction($tokenSubscription);
-        $this->assertsValidApiTransaction($createSubscription);
         $this->assertsValidApiTransaction($updateSubscription);
     }
 
@@ -320,6 +273,24 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $updateSubscription = $this->newSecretKushki->updateSubscription($subscriptionId, $body);
         $this->assertsApiTransaction($updateSubscription, false, "El ID de la suscripción no es válido", "1022");
     }
+
+    public function testShouldReturnSuccessfulChargeSubscription_TC_015() {
+        $subscriptionId = $this->getSubscriptionId();
+        $chargeSubscription = $this->newSecretKushki->chargeSubscription($subscriptionId);
+        $this->assertsValidApiTransaction($chargeSubscription);
+    }
+
+    public function testShouldReturnSuccessfulChargeSubscriptionWithMetadata_TC_015() {
+        $subscriptionId = $this->getSubscriptionId();
+        $metadata = array("Key1"=>"value1", "Key2"=>"value2");
+        $chargeSubscription = $this->newSecretKushki->chargeSubscription($subscriptionId, $metadata);
+        $this->assertsValidApiTransaction($chargeSubscription);
+    }
+
+    public function testShouldReturnNonSuccessfulChargeSubscriptionInvalidSubscriptionId_TC_015() {
+        $subscriptionId = "000000000000124";
+        $chargeSubscription = $this->newSecretKushki->chargeSubscription($subscriptionId);
+        $this->assertsApiTransaction($chargeSubscription, false, "El ID de la suscripción no es válido", "1022");    }
 
     /**
      * @group failing
@@ -433,5 +404,41 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
 
     private function assertsValidApiTransaction($transaction) {
         $this->assertsApiTransaction($transaction, true, "Transacción aprobada", "000");
+    }
+
+    public function getSubscriptionId(){
+        $amount = CommonUtils::getRandomAmount();
+        $type = "subscription-token";
+        $tokenSubscription = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount, $type);
+        $token = $tokenSubscription->getToken();
+        $planName = "Premium";
+        $periodicity = "monthly";
+        $contactDetails = array(
+            "firstName" => "Lisbeth",
+            "lastName" => "Salander",
+            "email" => "lisbeth@salander.com");
+        $startDate = "2017-01-18";
+        sleep(CommonUtils::THREAD_SLEEP);
+        $createSubscription = $this->newSecretKushki->createSubscription($token, $planName, $periodicity,
+            $contactDetails, $amount, $startDate);
+        return $createSubscription->getSubscriptionId();
+    }
+
+    public function getSubscriptionIdColombia(){
+        $amount = CommonUtils::getRandomAmountColombia();
+        $type = "subscription-token";
+        $tokenSubscription = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount, $type);
+        $token = $tokenSubscription->getToken();
+        $planName = "Premium";
+        $periodicity = "monthly";
+        $contactDetails = array(
+            "firstName" => "Lisbeth",
+            "lastName" => "Salander",
+            "email" => "lisbeth@salander.com");
+        $startDate = "2017-01-18";
+        sleep(CommonUtils::THREAD_SLEEP);
+        $createSubscription = $this->newSecretKushki->createSubscription($token, $planName, $periodicity,
+            $contactDetails, $amount, $startDate);
+        return $createSubscription->getSubscriptionId();
     }
 }

@@ -89,15 +89,27 @@ class Kushki {
 
     /**
      * @param $subscriptionId
+     * @param $body
      * @return Transaction
      * @throws KushkiException
      */
     public function updateSubscription($subscriptionId, $body){
-
         $subscriptionRequest = new KushkiSubscriptionUpdateRequest($this->merchantId, $subscriptionId, $body,
                                                                    $this->environment);
         $updateSubscription = $subscriptionRequest->updateSubscription();
         return $updateSubscription;
+    }
+
+    /**
+     * @param $subscriptionId
+     * @return Transaction
+     * @throws KushkiException
+     */
+    public function chargeSubscription($subscriptionId, $metadata = false){
+        $subscriptionRequest = new KushkiSubscriptionChargeRequest($this->merchantId, $subscriptionId, $metadata,
+            $this->environment);
+        $chargeSubscription = $subscriptionRequest->chargeSubscription();
+        return $chargeSubscription;
     }
 
     public function getMerchantId() {
