@@ -81,9 +81,23 @@ class Kushki {
     public function createSubscription($token, $planName, $periodicity, $contactDetails, $amount, $startDate,
                                        $metadata = false){
         $subscriptionRequest = new KushkiSubscriptionRequest($this->merchantId, $token, $planName, $periodicity,
-            $contactDetails, $amount, $startDate, $metadata , $this->environment, $this->currency);
+            $contactDetails, $amount, $startDate, $metadata , $this->environment,
+            $this->currency);
         $subscription = $subscriptionRequest->createSubscription();
         return $subscription;
+    }
+
+    /**
+     * @param $subscriptionId
+     * @return Transaction
+     * @throws KushkiException
+     */
+    public function updateSubscription($subscriptionId, $body){
+
+        $subscriptionRequest = new KushkiSubscriptionUpdateRequest($this->merchantId, $subscriptionId, $body,
+                                                                   $this->environment);
+        $updateSubscription = $subscriptionRequest->updateSubscription();
+        return $updateSubscription;
     }
 
     public function getMerchantId() {

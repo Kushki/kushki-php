@@ -27,7 +27,7 @@ class Transaction {
     }
 
     public function isSuccessful() {
-        return $this->code === 200 || $this->code === 201;
+        return $this->code === 200 || $this->code === 201 || $this->code === 204;
     }
 
     public function getToken() {
