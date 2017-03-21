@@ -21,15 +21,7 @@ class Tax
         $this->taxName = $taxName;
     }
 
-    public function toHash() {
-        $validatedAmount = (float) Validations::validateNumber($this->taxAmount, 0, 12, "Amount");
-        return array(
-            "taxId" => $this->taxId,
-            "taxAmount" => $validatedAmount,
-            "taxName" => $this->taxName
-        );
-    }
-    public function toHashNew() {
+    public function toHashApi() {
         $validatedAmount = (float) Validations::validateNumber($this->taxAmount, 0, 12, "Amount");
         return array(
             $this->taxName => $validatedAmount

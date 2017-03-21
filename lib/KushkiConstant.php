@@ -5,7 +5,6 @@ namespace kushki\lib;
 class KushkiConstant {
     const VERSION = '1.0';
     const TOKENS_URL = "/tokens";
-    const CHARGE_URL = "/charge";
     const CHARGE_API_URL = "/charges";
     const SUBSCRIPTION_API_URL = "/subscriptions";
     const VOID_URL = "/void";
