@@ -56,16 +56,14 @@ class Kushki {
     }
 
     /**
-     * @param $ticket
-     * @param $amount
+     * @param $ticketNumber
      * @return Transaction
      * @throws KushkiException
      */
-    public function voidCharge($ticket, $amount) {
-        $voidRequestBuilder = new VoidRequestBuilder($this->merchantId, $ticket, $amount, $this->environment,
-                                                     $this->currency);
-        $request = $voidRequestBuilder->createRequest();
-        return $this->requestHandler->call($request);
+    public function voidCharge($ticketNumber, $amount = false){
+        $voidRequestBuilder = new KushkiVoidRequest($this->merchantId, $ticketNumber, $amount, $this->environment);
+        $request = $voidRequestBuilder->voidCharge();
+        return $request;
     }
 
     /**

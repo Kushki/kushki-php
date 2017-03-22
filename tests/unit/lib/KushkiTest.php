@@ -39,11 +39,11 @@ class KushkiTest extends PHPUnit_Framework_TestCase {
 //        $this->kushki->charge("a", new Amount(1, 1, 1, 1));
 //    }
 
-    public function testVoidHasCorrectUrl() {
-        $this->actionUrl = '/void';
-        $this->assertUrl();
-        $this->kushki->voidCharge("a", new Amount(1, 1, 1, 1));
-    }
+//    public function testVoidHasCorrectUrl() {
+//        $this->actionUrl = '/void';
+//        $this->assertUrl();
+//        $this->kushki->voidCharge("a", new Amount(1, 1, 1, 1));
+//    }
 
     private function overrideRequestHandler($kushki, $requestHandler) {
         $requestHandlerProperty = new ReflectionProperty(Kushki::class, 'requestHandler');

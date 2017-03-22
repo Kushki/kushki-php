@@ -238,7 +238,7 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->markTestSkipped('must be revisited.');
 
         $amount = CommonUtils::getRandomAmountColombia();
-        $subscriptionId = $this->getSubscriptionIdColombia();
+        $subscriptionId = $this->getSubscriptionId(true);
         $periodicity = "yearly";
         $currency = "COL";
         $body = array("periodicity" => $periodicity,
@@ -304,11 +304,26 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $chargeTransaction = $this->newSecretKushki->charge($token, $amount);
         $ticket = $chargeTransaction->getTicketNumber();
         sleep(CommonUtils::THREAD_SLEEP);
-        $voidTransaction = $this->secretKushki->voidCharge($ticket, $amount);
+        $voidTransaction = $this->newSecretKushki->voidCharge($ticket);
 
         $this->assertsValidTransaction($tokenTransaction);
         $this->assertsValidApiTransaction($chargeTransaction);
-        $this->assertsValidTransaction($voidTransaction);
+        $this->assertsValidApiTransaction($voidTransaction);
+    }
+
+    public function testShouldReturnSuccessfulVoidTransactionWithAmount_TC_014() {
+        $amount = CommonUtils::getRandomAmount();
+        $tokenTransaction = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount);
+        $token = $tokenTransaction->getToken();
+        sleep(CommonUtils::THREAD_SLEEP);
+        $chargeTransaction = $this->newSecretKushki->charge($token, $amount);
+        $ticket = $chargeTransaction->getTicketNumber();
+        sleep(CommonUtils::THREAD_SLEEP);
+        $voidTransaction = $this->newSecretKushki->voidCharge($ticket, $amount);
+
+        $this->assertsValidTransaction($tokenTransaction);
+        $this->assertsValidApiTransaction($chargeTransaction);
+        $this->assertsValidApiTransaction($voidTransaction);
     }
 
     public function testShouldReturnSuccessfulVoidTransaction_TC_014Colombia() {
@@ -319,10 +334,10 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $token = $tokenTransaction->getToken();
         sleep(CommonUtils::THREAD_SLEEP);
         $chargeTransaction = $this->newSecretKushkiColombia->charge($token, $amount);
-        $ticket = $chargeTransaction->getTicketNumber();
+        $ticket = $chargeTransaction->getTicketNumber(true);
 
         sleep(CommonUtils::THREAD_SLEEP);
-        $voidTransaction = $this->secretKushkiColombia->voidCharge($ticket, $amount);
+        $voidTransaction = $this->newSecretKushkiColombia->voidCharge($ticket, $amount);
 
         $this->assertsValidTransaction($tokenTransaction);
         $this->assertsValidApiTransaction($chargeTransaction);
@@ -406,28 +421,16 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
         $this->assertsApiTransaction($transaction, true, "Transacción aprobada", "000");
     }
 
-    public function getSubscriptionId(){
-        $amount = CommonUtils::getRandomAmount();
+    public function getSubscriptionId($colombiaMerchant = false){
         $type = "subscription-token";
-        $tokenSubscription = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount, $type);
-        $token = $tokenSubscription->getToken();
-        $planName = "Premium";
-        $periodicity = "monthly";
-        $contactDetails = array(
-            "firstName" => "Lisbeth",
-            "lastName" => "Salander",
-            "email" => "lisbeth@salander.com");
-        $startDate = "2017-01-18";
-        sleep(CommonUtils::THREAD_SLEEP);
-        $createSubscription = $this->newSecretKushki->createSubscription($token, $planName, $periodicity,
-            $contactDetails, $amount, $startDate);
-        return $createSubscription->getSubscriptionId();
-    }
-
-    public function getSubscriptionIdColombia(){
-        $amount = CommonUtils::getRandomAmountColombia();
-        $type = "subscription-token";
-        $tokenSubscription = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount, $type);
+        if($colombiaMerchant){
+            $amount = CommonUtils::getRandomAmountColombia();
+            $tokenSubscription = TokenHelper::getValidTokenTransactionColombia(self::MERCHANT_ID_COLOMBIA, $amount, $type);
+        }
+        else{
+            $amount = CommonUtils::getRandomAmount();
+            $tokenSubscription = TokenHelper::getValidTokenTransaction(self::MERCHANT_ID, $amount, $type);
+        }
         $token = $tokenSubscription->getToken();
         $planName = "Premium";
         $periodicity = "monthly";

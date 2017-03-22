@@ -27,7 +27,7 @@ class KushkiClient
                 ->send();
             return new Transaction($responseRaw->content_type, $responseRaw->body, $responseRaw->code);
         }
-        else{
+        elseif ($method == "PATCH"){
             $responseRaw = \Httpful\Request::patch($url)
                 ->sendsJson()
                 ->withStrictSSL()
@@ -36,6 +36,28 @@ class KushkiClient
                 ))
                 ->body(json_encode($data["body"]))
                 ->send();
+            return new Transaction($responseRaw->content_type, $responseRaw->body, $responseRaw->code);
+        }
+        else
+        {
+            if(isset($data["body"])){
+                $responseRaw = \Httpful\Request::delete($url)
+                    ->sendsJson()
+                    ->withStrictSSL()
+                    ->addHeaders(array(
+                        'private-merchant-id' => $data["private-merchant-id"]))
+                    ->body(json_encode($data["body"]))
+                    ->send();
+            }
+            else {
+                $responseRaw = \Httpful\Request::delete($url)
+                    ->sendsJson()
+                    ->withStrictSSL()
+                    ->addHeaders(array(
+                        'private-merchant-id' => $data["private-merchant-id"]))
+                    ->send();
+            }
+
             return new Transaction($responseRaw->content_type, $responseRaw->body, $responseRaw->code);
         }
     }
@@ -71,6 +93,14 @@ class KushkiClient
         $method = 'POST';
         $requestChargeSubscription = $this->callAPI($method,$url,$data);
         return $requestChargeSubscription;
+    }
+
+    function callVoidCharge($url, $data)
+    {
+        $url = $url . KushkiConstant::CHARGE_API_URL . "/" . $data["ticketNumber"];
+        $method = 'DELETE';
+        $requestVoidCharge = $this->callAPI($method,$url,$data);
+        return $requestVoidCharge;
     }
 }
 
