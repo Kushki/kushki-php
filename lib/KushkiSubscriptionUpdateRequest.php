@@ -16,7 +16,7 @@ class KushkiSubscriptionUpdateRequest
     private $subscriptionId;
     private $body;
 
-    function __construct($merchantId, $subscriptionId, $body ,$baseUrl = KushkiEnvironment::API_PRODUCTION)
+    function __construct($merchantId, $subscriptionId, $body ,$baseUrl = KushkiEnvironment::PRODUCTION)
     {
         $this->url = $baseUrl;
         $this->merchantId = $merchantId;

@@ -16,7 +16,7 @@ class KushkiVoidRequest
     private $ticketNumber;
     private $amount;
 
-    function __construct($merchantId, $ticketNumber , $amount, $baseUrl = KushkiEnvironment::API_PRODUCTION)
+    function __construct($merchantId, $ticketNumber , $amount, $baseUrl = KushkiEnvironment::PRODUCTION)
     {
         $this->url = $baseUrl;
         $this->merchantId = $merchantId;

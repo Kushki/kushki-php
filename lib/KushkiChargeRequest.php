@@ -20,7 +20,7 @@ class KushkiChargeRequest{
     private $months;
 
     function __construct($merchantId, $token, $amount, $months, $metadata = false,
-                         $baseUrl = KushkiEnvironment::API_PRODUCTION, $currency = KushkiCurrency::USD) {
+                         $baseUrl = KushkiEnvironment::PRODUCTION, $currency = KushkiCurrency::USD) {
         $this->url = $baseUrl;
         $this->token = $token;
         $this->amount = $amount;

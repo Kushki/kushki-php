@@ -16,7 +16,7 @@ class KushkiSubscriptionChargeRequest
     private $subscriptionId;
     private $metadata;
 
-    function __construct($merchantId, $subscriptionId, $metadata = false, $baseUrl = KushkiEnvironment::API_PRODUCTION)
+    function __construct($merchantId, $subscriptionId, $metadata = false, $baseUrl = KushkiEnvironment::PRODUCTION)
     {
         $this->url = $baseUrl;
         $this->merchantId = $merchantId;

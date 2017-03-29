@@ -36,7 +36,7 @@ class TokenHelper {
     }
 
     public static function requestToken($merchantId, $cardParams, $currency) {
-        $tokenRequestBuilder = new TokenRequestBuilder($merchantId, $cardParams, KushkiEnvironment::TESTING, $currency);
+        $tokenRequestBuilder = new TokenRequestBuilder($merchantId, $cardParams, KushkiEnvironment::TESTING_TOKEN, $currency);
         $request = $tokenRequestBuilder->createRequest();
         $requestHandler = new RequestHandler();
         return $requestHandler->call($request);

@@ -27,16 +27,16 @@ class KushkiIntTest extends \PHPUnit_Framework_TestCase {
     protected function setUp() {
         $idioma = KushkiLanguage::ES;
 
-        $this->kushki = new Kushki(self::MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING);
-        $this->secretKushki = new Kushki(self::SECRET_MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING);
-        $this->newSecretKushki = new Kushki(self::SECRET_MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::API_TEST);
+        $this->kushki = new Kushki(self::MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING_TOKEN);
+        $this->secretKushki = new Kushki(self::SECRET_MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING_TOKEN);
+        $this->newSecretKushki = new Kushki(self::SECRET_MERCHANT_ID, $idioma, KushkiCurrency::USD, KushkiEnvironment::TESTING);
 
         $this->kushkiColombia = new Kushki(self::MERCHANT_ID_COLOMBIA, $idioma, KushkiCurrency::COP,
             KushkiEnvironment::TESTING);
         $this->secretKushkiColombia = new Kushki(self::SECRET_MERCHANT_ID_COLOMBIA, $idioma, KushkiCurrency::COP,
             KushkiEnvironment::TESTING);
         $this->newSecretKushkiColombia = new Kushki(self::SECRET_MERCHANT_ID_COLOMBIA, $idioma, KushkiCurrency::COP,
-            KushkiEnvironment::API_TEST);
+            KushkiEnvironment::TESTING);
     }
 
     public function testShouldReturnSuccessfulTokenTransaction_TC_001() {

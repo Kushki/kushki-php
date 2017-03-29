@@ -24,7 +24,7 @@ class KushkiSubscriptionRequest
     private $language = KushkiLanguage::ES;
 
     function __construct($merchantId, $token, $planName, $periodicity, $contactDetails, $amount, $startDate,
-                         $metadata = false, $baseUrl = KushkiEnvironment::API_PRODUCTION,
+                         $metadata = false, $baseUrl = KushkiEnvironment::PRODUCTION,
                          $currency = KushkiCurrency::USD) {
         $this->url = $baseUrl;
         $this->token = $token;
