@@ -1,10 +1,7 @@
 <?php
 namespace kushki\tests\unit\lib;
 
-use kushki\lib\KushkiConstant;
-use kushki\lib\KushkiCurrency;
 use kushki\lib\KushkiVoidRequest;
-use kushki\lib\VoidRequestBuilder;
 use kushki\tests\lib\CommonUtils;
 use PHPUnit_Framework_TestCase;
 
