@@ -62,7 +62,7 @@ class KushkiSubscriptionRequest
         );
         $metadataArray = array("metadata" => $this->metadata);
         if($this->metadata!=false)
-            array_merge($body, $metadataArray);
+            $body = array_merge($body, $metadataArray);
         $data = array(
             "private-merchant-id" => $this->merchantId,
             "body" =>$body
