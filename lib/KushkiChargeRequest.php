@@ -51,8 +51,10 @@ class KushkiChargeRequest{
         $metadataArray = array("metadata" => $this->metadata);
         if($this->months > 0)
             $body["months"] = $this->months;
-        if($this->metadata!=false)
-            array_merge($body, $metadataArray);
+        if($this->metadata!=false){
+            $body = array_merge($body, $metadataArray);
+        }
+
         $data = array(
             "private-merchant-id" => $this->merchantId,
             "body" =>$body

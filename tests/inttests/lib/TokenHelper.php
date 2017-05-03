@@ -12,7 +12,7 @@ class TokenHelper {
     public static function getValidTokenTransaction($merchantId, $amount, $type = "transaction-token") {
         $cardParams = array(
             "name" => "John Doe",
-            "number" => "4017779991118888",
+            "number" => "4098065562003655",
             "expiry_month" => "12",
             "expiry_year" => "21",
             "cvv" => "123",
